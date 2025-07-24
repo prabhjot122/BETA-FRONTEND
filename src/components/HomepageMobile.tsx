@@ -5,7 +5,6 @@ import WhyUs from "./WhyUs";
 import MarketGrowth from "./MarketGrowth";
 import WaitlistPopup from "./WaitlistPopup";
 import Footer from "./Footer";
-import ScrollProgressIndicator from "./ScrollProgressIndicator";
 import CTASection from "./CTASection";
 import { useState, useEffect, useMemo } from "react";
 import gsap from "gsap";
@@ -21,11 +20,11 @@ interface HomepageMobileProps {
 
 const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps) => {
   const [isWaitlistPopupOpen, setIsWaitlistPopupOpen] = useState(false);
-  const [activeFeatureIndex, setActiveFeatureIndex] = useState(0);
-  const [activeFoundingPerkIndex, setActiveFoundingPerkIndex] = useState(0);
   const [currentDividerTextIndex, setCurrentDividerTextIndex] = useState(0);
-  const [currentActiveSection, setCurrentActiveSection] = useState<string | null>(null);
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+
+  // Debug log to ensure mobile component is rendering
+  console.log('HomepageMobile component is rendering');
 
   // Testimonial system state
   const [currentPersonIndex, setCurrentPersonIndex] = useState(0);
@@ -159,7 +158,7 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
 
     switch (index) {
       case 0: // Features
-        targetSelector = '.homepage-mobile__content-section';
+        targetSelector = '.homepage-mobile__content-section-static';
         break;
       case 1: // Why You Should Join Us
         targetSelector = '#founding-member-perks';
@@ -379,21 +378,13 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
 
 
 
-  // Mobile-optimized GSAP animations
+  // Mobile-optimized GSAP animations - Simplified for static layout
   useEffect(() => {
-    // Set initial states
+    // Set initial states for basic elements only
     gsap.set([
       ".homepage-mobile__hero-title",
       ".homepage-mobile__hero-quote",
-      ".homepage-mobile__feature-item",
-      ".homepage-mobile__section-title",
-      ".homepage__testimonials-title",
-      ".homepage-mobile__team-title",
-      ".homepage-mobile__team-card",
-      ".testimonialimage",
-      ".homepage__testimonials-person-info",
-      ".homepage__testimonials-quote-box",
-      ".homepage__testimonials-scroll-indicator"
+      ".homepage-mobile__feature-item"
     ], {
       opacity: 0,
       y: 30
@@ -433,338 +424,108 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
       delay: 0.8
     });
 
-    // Section titles with ScrollTrigger
-    const sectionTitles = gsap.utils.toArray(".homepage-mobile__section-title, .homepage__testimonials-title, .homepage-mobile__team-title") as Element[];
-    sectionTitles.forEach((element) => {
-      gsap.to(element, {
+    // Simple scroll-triggered animations for static content
+    const staticElements = gsap.utils.toArray(".homepage-mobile__section-title, .homepage-mobile__feature-container, .founding-member-perks__content-item-static") as Element[];
+    staticElements.forEach((element) => {
+      gsap.fromTo(element,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: element,
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    });
+
+    // Testimonials section animations - Fix visibility issue
+    gsap.fromTo(".homepage-mobile__testimonial-card",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".homepage-mobile__testimonials-section",
+          start: "top 80%",
+          end: "bottom 20%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    gsap.fromTo(".homepage-mobile__testimonial-image",
+      { opacity: 0, scale: 0.8 },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".homepage-mobile__testimonials-section",
+          start: "top 70%",
+          end: "bottom 20%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    gsap.fromTo(".homepage-mobile__card-content",
+      { opacity: 0, y: 20 },
+      {
         opacity: 1,
         y: 0,
         duration: 0.8,
         ease: "power2.out",
         scrollTrigger: {
-          trigger: element,
-          start: "top 80%",
+          trigger: ".homepage-mobile__testimonials-section",
+          start: "top 60%",
           end: "bottom 20%",
           toggleActions: "play none none reverse"
         }
-      });
-    });
-
-    // Mobile testimonial card animations
-    gsap.to(".homepage-mobile__testimonial-card", {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".homepage4",
-        start: "top 80%",
-        end: "bottom 20%",
-        toggleActions: "play none none reverse"
       }
-    });
+    );
 
-    gsap.to(".homepage-mobile__testimonial-image", {
-      opacity: 1,
-      scale: 1,
-      duration: 0.8,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".homepage4",
-        start: "top 70%",
-        end: "bottom 20%",
-        toggleActions: "play none none reverse"
-      }
-    });
-
-    gsap.to(".homepage-mobile__card-content", {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".homepage4",
-        start: "top 60%",
-        end: "bottom 20%",
-        toggleActions: "play none none reverse"
-      }
-    });
-
-    gsap.to(".homepage__testimonials-scroll-indicator", {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      ease: "back.out(1.7)",
-      scrollTrigger: {
-        trigger: ".homepage4",
-        start: "top 50%",
-        end: "bottom 20%",
-        toggleActions: "play none none reverse"
-      }
-    });
-
-    // Mobile Features Section Pinned Scroll Animation
-    let mobileCurrentActiveFeature = 0;
-    let mobileIsTransitioning = false;
-    let mobileActiveTimeline: gsap.core.Timeline | null = null;
-
-    // Function to cleanup mobile animations
-    const cleanupMobileAnimations = () => {
-      if (mobileActiveTimeline) {
-        mobileActiveTimeline.kill();
-        mobileActiveTimeline = null;
-      }
-    };
-
-    // Function to transition to a specific mobile feature
-    const transitionToMobileFeature = (targetFeature: number) => {
-      if (mobileIsTransitioning || targetFeature === mobileCurrentActiveFeature) return;
-
-      mobileIsTransitioning = true;
-      cleanupMobileAnimations();
-
-      const mobileFeatureContents = document.querySelectorAll('.homepage-mobile__feature-content-item');
-      const featureImage = document.querySelector('.homepage-mobile__feature-image') as HTMLElement;
-
-      // Create timeline for synchronized transitions
-      mobileActiveTimeline = gsap.timeline({
-        onComplete: () => {
-          // Update CSS classes for proper state management
-          mobileFeatureContents.forEach((content, index) => {
-            const element = content as HTMLElement;
-            if (index === targetFeature) {
-              element.classList.add('active');
-            } else {
-              element.classList.remove('active');
-            }
-          });
-
-          mobileCurrentActiveFeature = targetFeature;
-          mobileIsTransitioning = false;
-          mobileActiveTimeline = null;
-        }
-      });
-
-      // First, fade out current feature if it's different
-      if (mobileCurrentActiveFeature !== targetFeature) {
-        const currentElement = mobileFeatureContents[mobileCurrentActiveFeature] as HTMLElement;
-        if (currentElement) {
-          mobileActiveTimeline.to(currentElement, {
-            opacity: 0,
-            y: -10,
-            duration: 0.25,
-            ease: "power2.in"
-          });
-        }
-      }
-
-      // Simultaneously change background image and fade in new content
-      mobileActiveTimeline.call(() => {
-        if (featureImage) {
-          const imageUrls = ['/feature1.png', '/feature2.png', '/feature3.png', '/feature4.png'];
-          featureImage.style.backgroundImage = `url("${imageUrls[targetFeature]}")`;
-        }
-      })
-      .to(mobileFeatureContents[targetFeature], {
+    // Testimonials header animations
+    gsap.fromTo(".homepage-mobile__testimonials-title",
+      { opacity: 0, y: 30 },
+      {
         opacity: 1,
         y: 0,
-        duration: 0.35,
-        ease: "power2.out"
-      }, mobileCurrentActiveFeature !== targetFeature ? "-=0.05" : "0"); // Slight overlap only if transitioning
-    };
-
-    ScrollTrigger.create({
-      trigger: ".homepage-mobile__content-section",
-      start: "top top",
-      end: "+=300%",
-      pin: true,
-      scrub: 1,
-      onEnter: () => {
-        setCurrentActiveSection('features');
-      },
-      onUpdate: (self) => {
-        const progress = self.progress;
-        let targetFeature = 0;
-
-        // Determine target feature based on progress with precise thresholds
-        if (progress >= 0.75) {
-          targetFeature = 3;
-        } else if (progress >= 0.5) {
-          targetFeature = 2;
-        } else if (progress >= 0.25) {
-          targetFeature = 1;
-        } else {
-          targetFeature = 0;
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".homepage-mobile__testimonials-section",
+          start: "top 85%",
+          end: "bottom 20%",
+          toggleActions: "play none none reverse"
         }
-
-        // Update scroll progress indicator
-        setActiveFeatureIndex(targetFeature);
-
-        // Only transition if we've crossed a threshold
-        transitionToMobileFeature(targetFeature);
-      },
-      onLeave: () => {
-        // Cleanup when leaving the section
-        cleanupMobileAnimations();
-        mobileIsTransitioning = false;
-        setCurrentActiveSection(null);
-      },
-      onEnterBack: () => {
-        // Reset state when entering back
-        setCurrentActiveSection('features');
-        mobileCurrentActiveFeature = 0;
-        mobileIsTransitioning = false;
-        cleanupMobileAnimations();
       }
-    });
+    );
 
-    // Initialize mobile feature content items to hidden state (except first one)
-    gsap.set(".homepage-mobile__feature-content-item", { opacity: 0, y: 20 });
-    gsap.set(".homepage-mobile__feature-content-item:first-child", { opacity: 1, y: 0 });
-
-    // Set initial CSS classes for proper state management
-    const initialMobileFeatureContents = document.querySelectorAll('.homepage-mobile__feature-content-item');
-    initialMobileFeatureContents.forEach((content, index) => {
-      const element = content as HTMLElement;
-      if (index === 0) {
-        element.classList.add('active');
-      } else {
-        element.classList.remove('active');
-      }
-    });
-
-    // Team card animation
-    gsap.to(".homepage-mobile__team-card", {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".homepage-mobile__team",
-        start: "top 80%",
-        end: "bottom 20%",
-        toggleActions: "play none none reverse"
-      }
-    });
-
-    // Initialize Founding Member Perks section elements to hidden state
-    gsap.set(".founding-member-perks__content-item", { opacity: 0, y: 50 });
-    gsap.set(".founding-member-perks__title", { opacity: 0, y: 30 });
-    // Set first perk to visible state
-    gsap.set(".founding-member-perks__content-item:first-child", { opacity: 1, y: 0 });
-
-    // Mobile Founding Member Perks Section with Pinned Scroll
-    let mobileCurrentActivePerk = 0;
-    let mobileIsTransitioningPerk = false;
-    let mobileActiveTimelinePerk: gsap.core.Timeline | null = null;
-
-    // Function to cleanup mobile perk animations
-    const cleanupMobilePerkAnimations = () => {
-      if (mobileActiveTimelinePerk) {
-        mobileActiveTimelinePerk.kill();
-        mobileActiveTimelinePerk = null;
-      }
-    };
-
-    // Function to transition to a specific perk on mobile
-    const transitionToMobilePerk = (targetPerk: number) => {
-      if (mobileIsTransitioningPerk || mobileCurrentActivePerk === targetPerk) return;
-
-      mobileIsTransitioningPerk = true;
-      cleanupMobilePerkAnimations();
-
-      const perkContents = document.querySelectorAll('.founding-member-perks__content-item');
-
-      mobileActiveTimelinePerk = gsap.timeline({
-        onComplete: () => {
-          mobileCurrentActivePerk = targetPerk;
-          mobileIsTransitioningPerk = false;
-        }
-      });
-
-      // Fade out current perk
-      if (perkContents[mobileCurrentActivePerk]) {
-        mobileActiveTimelinePerk.to(perkContents[mobileCurrentActivePerk], {
-          opacity: 0,
-          y: -30,
-          duration: 0.3,
-          ease: "power2.in"
-        });
-      }
-
-      // Fade in new perk
-      mobileActiveTimelinePerk.to(perkContents[targetPerk], {
+    gsap.fromTo(".homepage-mobile__testimonials-subtitle",
+      { opacity: 0, y: 20 },
+      {
         opacity: 1,
         y: 0,
-        duration: 0.4,
-        ease: "power2.out"
-      }, "-=0.1");
-    };
-
-    ScrollTrigger.create({
-      trigger: ".founding-member-perks-section",
-      start: "top top",
-      end: "+=300%",
-      pin: true,
-      scrub: 1,
-      onEnter: () => {
-        setCurrentActiveSection('foundingMemberPerks');
-      },
-      onUpdate: (self) => {
-        const progress = self.progress;
-        let targetPerk = 0;
-
-        // Determine target perk based on progress with precise thresholds
-        if (progress >= 0.75) {
-          targetPerk = 3;
-        } else if (progress >= 0.5) {
-          targetPerk = 2;
-        } else if (progress >= 0.25) {
-          targetPerk = 1;
-        } else {
-          targetPerk = 0;
+        duration: 0.6,
+        ease: "power2.out",
+        delay: 0.2,
+        scrollTrigger: {
+          trigger: ".homepage-mobile__testimonials-section",
+          start: "top 85%",
+          end: "bottom 20%",
+          toggleActions: "play none none reverse"
         }
-
-        // Update scroll progress indicator
-        setActiveFoundingPerkIndex(targetPerk);
-
-        // Only transition if we've crossed a threshold
-        transitionToMobilePerk(targetPerk);
-      },
-      onLeave: () => {
-        // Cleanup when leaving the section
-        cleanupMobilePerkAnimations();
-        mobileIsTransitioningPerk = false;
-        setCurrentActiveSection(null);
-      },
-      onEnterBack: () => {
-        // Reset state when entering back
-        setCurrentActiveSection('foundingMemberPerks');
-        mobileCurrentActivePerk = 0;
-        mobileIsTransitioningPerk = false;
-        cleanupMobilePerkAnimations();
-        // Reset scroll progress indicator
-        setActiveFoundingPerkIndex(0);
-        // Reset title and first perk visibility for smooth scroll-back
-        gsap.set(".founding-member-perks__title", { opacity: 1, y: 0 });
-        gsap.set(".founding-member-perks__content-item", { opacity: 0, y: 50 });
-        gsap.set(".founding-member-perks__content-item:first-child", { opacity: 1, y: 0 });
       }
-    });
-
-    // Animate title on scroll into view
-    gsap.to(".founding-member-perks__title", {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".founding-member-perks-section",
-        start: "top 80%",
-        end: "bottom 20%",
-        toggleActions: "play none none reverse"
-      }
-    });
+    );
 
     // Cleanup
     return () => {
@@ -834,6 +595,8 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
 
   return (
     <div className="homepage-mobile">
+      {/* Debug element to confirm mobile component is rendering */}
+      
       <Navbar onJoinWaitlist={handleJoinWaitlist} />
 
       {/* Hero Section */}
@@ -907,26 +670,20 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
         </div>
       </div>
 
-      {/* Content Creation Section */}
-      <section className="homepage-mobile__content-section">
-        <div className="homepage-mobile__feature-image"></div>
+      {/* Content Creation Section - Static Vertical Layout */}
+      <section className="homepage-mobile__content-section-static">
+        {featureContents.map((feature, index) => (
+          <div key={index} className="homepage-mobile__feature-container">
+            <div className="homepage-mobile__feature-image-container">
+              <div
+                className="homepage-mobile__feature-image-static"
+                style={{
+                  backgroundImage: `url("/feature${index + 1}.png")`
+                }}
+              ></div>
+            </div>
 
-        {/* Scroll Progress Indicator for Mobile Features */}
-        <ScrollProgressIndicator
-          activeIndex={activeFeatureIndex}
-          totalSections={4}
-          sectionTitles={[
-            "AI Co-Pilot",
-            "Monetization Hub",
-            "Automated Portfolio",
-            "Multilingual Engine"
-          ]}
-          visible={currentActiveSection === 'features'}
-        />
-
-        <div className="homepage-mobile__content-text">
-          {featureContents.map((feature, index) => (
-            <div key={index} className="homepage-mobile__feature-content-item" style={{ position: 'absolute', width: '100%' }}>
+            <div className="homepage-mobile__feature-content-static">
               <h2 className="homepage-mobile__section-title">
                 {feature.title.split(':')[0]}:<br />{feature.title.split(':')[1]}
               </h2>
@@ -942,8 +699,8 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
                 ))}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </section>
 
       {/* Decorative Strip Divider */}
@@ -1007,7 +764,8 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
       </div>
 
       {/* Enhanced Testimonials Section - Mobile Card Design */}
-      <div id="testimonials" className="homepage4 homepage-mobile__testimonials-section">
+      {console.log('Rendering testimonials section with data:', testimonialsData[currentPersonIndex])}
+      <div id="testimonials" className="homepage-mobile__testimonials-section">
         {/* Mobile testimonials container with card-based layout */}
         <div className="homepage-mobile__testimonials-container">
           {/* Header section */}
@@ -1108,42 +866,28 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
         </div>
       </div>
 
-      {/* Founding Member Perks Section */}
-      <div id="founding-member-perks" className="founding-member-perks-section">
-        <div className="founding-member-perks__container">
-          <div className="founding-member-perks__title">
+      {/* Founding Member Perks Section - Static Vertical Layout */}
+      <div id="founding-member-perks" className="founding-member-perks-section-static">
+        <div className="founding-member-perks__container-static">
+          <div className="founding-member-perks__title-static">
             Founding Member Perks
           </div>
 
-          <div className="founding-member-perks__content">
+          <div className="founding-member-perks__content-static">
             {foundingMemberPerks.map((perk, index) => (
               <div
                 key={index}
-                className="founding-member-perks__content-item"
-                style={{ position: 'absolute', width: '100%' }}
+                className="founding-member-perks__content-item-static"
               >
-                <div className="founding-member-perks__perk-title">
+                <div className="founding-member-perks__perk-title-static">
                   {perk.title}
                 </div>
-                <div className="founding-member-perks__perk-description">
+                <div className="founding-member-perks__perk-description-static">
                   {perk.description}
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Scroll Progress Indicator for Founding Member Perks */}
-          <ScrollProgressIndicator
-            activeIndex={activeFoundingPerkIndex}
-            totalSections={4}
-            sectionTitles={[
-              "Founding Member Badge",
-              "Early Access & Homepage Feature",
-              "Premium Access & Exclusive Events",
-              "Lifetime Status & Inner Circle"
-            ]}
-            visible={currentActiveSection === 'foundingMemberPerks'}
-          />
         </div>
       </div>
 

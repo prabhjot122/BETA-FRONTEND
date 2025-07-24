@@ -1,8 +1,12 @@
 // API configuration and environment settings
 
 export const API_CONFIG = {
-  // Base API URL - will be set from environment variable or default to localhost
-  BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:8000',
+  // Base API URL - will be set from environment variable or default based on environment
+  BASE_URL: import.meta.env.VITE_API_URL || (
+    import.meta.env.PROD 
+      ? 'https://lawvriksh.com/api'  // Production default
+      : 'http://localhost:8000'      // Development default
+  ),
 
   // API timeout in milliseconds
   TIMEOUT: parseInt(import.meta.env.VITE_API_TIMEOUT || '10000'),
@@ -174,6 +178,17 @@ export const HTTP_STATUS = {
 export const isDevelopment = import.meta.env.DEV;
 export const isProduction = import.meta.env.PROD;
 export const isTest = import.meta.env.MODE === 'test';
+
+// Debug environment configuration (remove in production)
+if (typeof window !== 'undefined') {
+  console.log('=== FRONTEND ENVIRONMENT DEBUG ===');
+  console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
+  console.log('API_CONFIG.BASE_URL:', API_CONFIG.BASE_URL);
+  console.log('import.meta.env.PROD:', import.meta.env.PROD);
+  console.log('import.meta.env.DEV:', import.meta.env.DEV);
+  console.log('import.meta.env.MODE:', import.meta.env.MODE);
+  console.log('================================');
+}
 
 // Feature flags
 export const FEATURES = {

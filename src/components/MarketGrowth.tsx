@@ -45,13 +45,7 @@ export default function MarketGrowth() {
       unit: "B",
       color: "#e5cca4"
     },
-    {
-      label: "Total Addressable Market",
-      current: 0,
-      projected: 917,
-      unit: "B",
-      color: "#8b5a2b"
-    }
+   
   ];
 
   useEffect(() => {

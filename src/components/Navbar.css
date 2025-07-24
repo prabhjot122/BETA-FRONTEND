@@ -179,6 +179,9 @@
   .navbar__nav {
     display: none;
   }
+  .navbar{
+    z-index: 10;
+  }
 
   .navbar__content {
     flex-direction: row;
@@ -188,5 +191,17 @@
   .navbar--scrolled .navbar__content {
     flex-direction: row;
     justify-content: space-between;
+  }
+  .navbar__content .button {
+    
+    max-height: 30px;
+    
+    min-height: 30px;
+    max-width: 150px;
+    min-width: 50px;
+    
+    padding: 12px 10px;
+    font-size: 12px;
+    line-height: 20px;
   }
 }
