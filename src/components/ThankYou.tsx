@@ -133,13 +133,13 @@ export default function ThankYou() {
   // Additional effect to ensure content is visible when data loads
   useEffect(() => {
     console.log('🔄 Data state changed:');
-    console.log('  - leaderboard length:', leaderboard.length);
-    console.log('  - surroundingUsers length:', surroundingUsers.length);
+    console.log('  - leaderboard length:', (leaderboard || []).length);
+    console.log('  - surroundingUsers length:', (surroundingUsers || []).length);
     console.log('  - userStats:', userStats);
     console.log('  - aroundMeUserStats:', aroundMeUserStats);
 
     // Force visibility of content when data is available
-    if (leaderboard.length > 0 || surroundingUsers.length > 0 || userStats || aroundMeUserStats) {
+    if ((leaderboard || []).length > 0 || (surroundingUsers || []).length > 0 || userStats || aroundMeUserStats) {
       console.log('📊 Data available, forcing content visibility');
 
       // Use GSAP to ensure content is visible
@@ -341,7 +341,7 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
     return null; // Will redirect to home
   }
 
-  const leaderboardData = leaderboard.slice(0, 10); // Use top 10 from hook
+  const leaderboardData = (leaderboard || []).slice(0, 10); // Use top 10 from hook
 
   // Demo data for surrounding users when in demo mode
   const demoSurroundingUsers = isDemoRoute ? [
@@ -352,15 +352,15 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
     { rank: 44, name: 'David Wilson', points: 1180, is_current_user: false }
   ] : [];
 
-  const displaySurroundingUsers = surroundingUsers.length > 0 ? surroundingUsers : demoSurroundingUsers;
+  const displaySurroundingUsers = (surroundingUsers || []).length > 0 ? surroundingUsers : demoSurroundingUsers;
 
   // DEBUG: Log current data state
   console.log('🔍 ThankYou Component Render State:');
   console.log('  - userName:', userName);
   console.log('  - isDemoRoute:', isDemoRoute);
   console.log('  - rightSideView:', rightSideView);
-  console.log('  - leaderboard data:', leaderboard.length, 'items');
-  console.log('  - surroundingUsers:', surroundingUsers.length, 'items');
+  console.log('  - leaderboard data:', (leaderboard || []).length, 'items');
+  console.log('  - surroundingUsers:', (surroundingUsers || []).length, 'items');
   console.log('  - displaySurroundingUsers:', displaySurroundingUsers.length, 'items');
   console.log('  - currentUserRank:', currentUserRank);
   console.log('  - currentUserPoints:', currentUserPoints);
@@ -497,7 +497,7 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
                 <p className="leaderboard__subtitle">Your Performance</p>
                 {/* DEBUG INFO */}
                 <div style={{fontSize: '10px', color: '#666', marginTop: '5px'}}>
-                  DEBUG: Users: {surroundingUsers.length} | Stats: {userStats ? 'Yes' : 'No'} | AroundMe: {aroundMeUserStats ? 'Yes' : 'No'}
+                  DEBUG: Users: {(surroundingUsers || []).length} | Stats: {userStats ? 'Yes' : 'No'} | AroundMe: {aroundMeUserStats ? 'Yes' : 'No'}
                 </div>
               </div>
               <div className="leaderboard__content">
@@ -528,11 +528,11 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
                     </div>
                   </div>
 
-                  {displaySurroundingUsers.length > 0 && (
+                  {(displaySurroundingUsers || []).length > 0 && (
                     <div className="around-me__surrounding">
                       <h4 className="around-me__surrounding-title">Users Around You</h4>
                       <div className="around-me__surrounding-list">
-                        {displaySurroundingUsers.slice(0, 5).map((user, index) => (
+                        {(displaySurroundingUsers || []).slice(0, 5).map((user, index) => (
                           <div key={index} className={`around-me__surrounding-item ${user.is_current_user ? 'current-user' : ''}`}>
                             <div className="around-me__surrounding-rank">#{user.rank}</div>
                             <div className="around-me__surrounding-name">{user.name}</div>
@@ -561,7 +561,7 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
                 <p className="leaderboard__subtitle">Top Legal Professionals</p>
                 {/* DEBUG INFO */}
                 <div style={{fontSize: '10px', color: '#666', marginTop: '5px'}}>
-                  DEBUG: Leaderboard: {leaderboard.length} items
+                  DEBUG: Leaderboard: {(leaderboard || []).length} items
                 </div>
               </div>
               <div className="leaderboard__content">

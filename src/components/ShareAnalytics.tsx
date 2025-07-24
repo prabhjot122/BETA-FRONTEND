@@ -214,7 +214,7 @@ const ShareAnalytics: React.FC = () => {
                 <h4 className="timeline-title">Share Timeline</h4>
                 <div className="timeline-chart">
                   <div className="timeline-grid">
-                    {analytics.timeline.slice(-7).map((day, index) => (
+                    {(analytics.timeline || []).slice(-7).map((day, index) => (
                       <div key={index} className="timeline-day">
                         <div className="timeline-day-label">
                           {new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' })}
