@@ -26,9 +26,11 @@ class ApiClient {
 
   private async makeRequest<T>(config: ApiRequestConfig): Promise<ApiResponse<T>> {
     const { method, url, data, params, headers = {} } = config;
-    
+
     // Build full URL
     const fullUrl = new URL(url, this.baseURL);
+
+    console.log(`🌐 API Request: ${method} ${fullUrl.toString()}`);
     
     // Add query parameters
     if (params) {
@@ -57,11 +59,12 @@ class ApiClient {
 
     try {
       const response = await fetch(fullUrl.toString(), requestOptions);
-      
+      console.log(`📡 API Response: ${response.status} ${response.statusText}`);
+
       // Handle different response types
       let responseData;
       const contentType = response.headers.get('content-type');
-      
+
       if (contentType?.includes('application/json')) {
         responseData = await response.json();
       } else if (contentType?.includes('text/')) {
@@ -71,6 +74,7 @@ class ApiClient {
       }
 
       if (!response.ok) {
+        console.error(`❌ API Error: ${response.status} ${response.statusText}`, responseData);
         // Extract error message from different possible response formats
         let errorMessage = `HTTP ${response.status}`;
 
@@ -95,11 +99,13 @@ class ApiClient {
         throw new Error(errorMessage);
       }
 
+      console.log(`✅ API Success: ${method} ${fullUrl.toString()}`, responseData);
       return {
         data: responseData,
         status: response.status,
       };
     } catch (error) {
+      console.error(`💥 API Request Failed: ${method} ${fullUrl.toString()}`, error);
       if (error instanceof ApiError) {
         throw error;
       }

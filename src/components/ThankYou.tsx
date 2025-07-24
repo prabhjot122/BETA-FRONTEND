@@ -47,11 +47,19 @@ export default function ThankYou() {
 
   // Initialize user stats on mount if authenticated
   useEffect(() => {
+    console.log('🔐 Authentication check:', authService.isAuthenticated());
+    console.log('🔑 Auth token:', localStorage.getItem('authToken') ? 'Present' : 'Missing');
+    console.log('🌐 API URL:', import.meta.env.VITE_API_URL);
+
     if (authService.isAuthenticated()) {
-      refreshUserStats();
-      refreshAroundMe();
+      console.log('✅ User authenticated, fetching data...');
+      refreshUserStats().catch(err => console.error('❌ refreshUserStats failed:', err));
+      refreshAroundMe().catch(err => console.error('❌ refreshAroundMe failed:', err));
+      refreshLeaderboard().catch(err => console.error('❌ refreshLeaderboard failed:', err));
+    } else {
+      console.log('❌ User not authenticated');
     }
-  }, [refreshUserStats, refreshAroundMe]);
+  }, [refreshUserStats, refreshAroundMe, refreshLeaderboard]);
 
   // Update local state when userStats change (only if we don't have current data)
   useEffect(() => {
