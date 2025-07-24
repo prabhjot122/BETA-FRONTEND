@@ -18,7 +18,7 @@ interface HomepageMobileProps {
   onJoinWaitlist: () => void;
 }
 
-const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps) => {
+const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps): JSX.Element => {
   const [isWaitlistPopupOpen, setIsWaitlistPopupOpen] = useState(false);
   const [currentDividerTextIndex, setCurrentDividerTextIndex] = useState(0);
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
@@ -245,6 +245,9 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
           // Update testimonial index
           setCurrentTestimonialIndex(prevIndex => {
             const currentPerson = testimonialsData[currentPersonIndex];
+            if (!currentPerson || !currentPerson.testimonials || currentPerson.testimonials.length === 0) {
+              return 0;
+            }
             return (prevIndex + 1) % currentPerson.testimonials.length;
           });
 
@@ -352,7 +355,7 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
     })
     .call(() => {
       // Click - go to next person
-      setCurrentPersonIndex(prevIndex => (prevIndex + 1) % testimonialsData.length);
+      setCurrentPersonIndex(prevIndex => testimonialsData.length > 0 ? (prevIndex + 1) % testimonialsData.length : 0);
 
       // Reset testimonial index when switching person
       setCurrentTestimonialIndex(0);
@@ -594,7 +597,8 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
 
 
   return (
-    <div className="homepage-mobile">
+    <>
+      <div className="homepage-mobile">
       {/* Debug element to confirm mobile component is rendering */}
       
       <Navbar onJoinWaitlist={handleJoinWaitlist} />
@@ -719,16 +723,14 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
         </div>
       </div>
 
-      {/* Market Growth Section */}
-      <MarketGrowth />
+      <MarketGrowth/>
 
-      {/* First CTA Section */}
       <CTASection
         contentItems={ctaContent.first}
         onButtonClick={handleJoinWaitlist}
       />
 
-      {/* Decorative Strip Divider */}
+
       <div className="homepage__divider-strip">
         <div className="homepage__divider-content">
           <div className="homepage__divider-text">
@@ -764,7 +766,7 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
       </div>
 
       {/* Enhanced Testimonials Section - Mobile Card Design */}
-      {console.log('Rendering testimonials section with data:', testimonialsData[currentPersonIndex])}
+     
       <div id="testimonials" className="homepage-mobile__testimonials-section">
         {/* Mobile testimonials container with card-based layout */}
         <div className="homepage-mobile__testimonials-container">
@@ -785,7 +787,7 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
               <div
                 className="homepage-mobile__testimonial-image"
                 style={{
-                  backgroundImage: `url(${testimonialsData[currentPersonIndex].image})`
+                  backgroundImage: `url(${testimonialsData[currentPersonIndex]?.image || ''})`
                 }}
                 onClick={handleTestimonialClick}
                 onKeyDown={(e) => {
@@ -796,7 +798,7 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
                 }}
                 role="button"
                 tabIndex={0}
-                aria-label={`View next testimonial. Currently showing ${testimonialsData[currentPersonIndex].name}`}
+                aria-label={`View next testimonial. Currently showing ${testimonialsData[currentPersonIndex]?.name || 'testimonial'}`}
               >
                 <div className="homepage-mobile__tap-indicator">
                   <div className="homepage-mobile__tap-text">Tap to see next</div>
@@ -809,17 +811,17 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
               {/* Person info */}
               <div className="homepage-mobile__person-info">
                 <div className="homepage-mobile__person-name">
-                  {testimonialsData[currentPersonIndex].name}
+                  {testimonialsData[currentPersonIndex]?.name || ''}
                 </div>
                 <div className="homepage-mobile__person-credentials">
-                  {testimonialsData[currentPersonIndex].credentials}
+                  {testimonialsData[currentPersonIndex]?.credentials || ''}
                 </div>
               </div>
 
               {/* Quote section */}
               <div className="homepage-mobile__quote-section">
                 <div className="homepage-mobile__quote-text">
-                  {testimonialsData[currentPersonIndex].testimonials[currentTestimonialIndex]}
+                  {testimonialsData[currentPersonIndex]?.testimonials?.[currentTestimonialIndex] || ''}
                 </div>
               </div>
 
@@ -834,7 +836,7 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
                   ))}
                 </div>
                 <div className="homepage-mobile__quote-dots">
-                  {testimonialsData[currentPersonIndex].testimonials.map((_, index) => (
+                  {(testimonialsData[currentPersonIndex]?.testimonials || []).map((_, index) => (
                     <div
                       key={index}
                       className={`homepage-mobile__quote-dot ${index === currentTestimonialIndex ? 'active' : ''}`}
@@ -922,7 +924,8 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
         isOpen={isWaitlistPopupOpen}
         onClose={handleCloseWaitlistPopup}
       />
-    </div>
+      </div>
+    </>
   );
 };
 

@@ -2,6 +2,9 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// Import CSS
+
+
 gsap.registerPlugin(ScrollTrigger);
 
 interface MarketData {
@@ -12,7 +15,7 @@ interface MarketData {
   color: string;
 }
 
-export default function MarketGrowth() {
+export default function MarketGrowth(): JSX.Element {
   const sectionRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<HTMLDivElement>(null);
 
