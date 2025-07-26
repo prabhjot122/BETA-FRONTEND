@@ -357,11 +357,11 @@ class AdminService {
     }
 
     const response = await withErrorHandling(() =>
-      apiClient.post('/admin/delete-all-users')
+      apiClient.post<{ message: string; export_file: string; export_data: any }>('/admin/delete-all-users')
     );
 
     // If the response contains export data, trigger download
-    if (response.export_data) {
+    if (response && 'export_data' in response) {
       const blob = new Blob([JSON.stringify(response.export_data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');

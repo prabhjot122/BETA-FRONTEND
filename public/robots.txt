@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+
+# Main pages
+Allow: /login
+Allow: /signup
+Allow: /leaderboard
+Allow: /dashboard
+Allow: /admin
+
+# Static assets
+Allow: /assets/
+Allow: /images/
+Allow: /favicon.ico
+
+# Block admin-only areas from general crawling
+Disallow: /admin/users
+Disallow: /admin/bulk-email
+Disallow: /admin/promote
+
+# Block API endpoints
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://lawvriksh.com/sitemap.xml
+
+# Crawl delay to be respectful
+Crawl-delay: 1
