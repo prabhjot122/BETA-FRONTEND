@@ -87,7 +87,7 @@
 }
 
 .thankyou__post-header {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 15px;
   margin-bottom: 25px;
@@ -975,6 +975,7 @@
   }
   .thankyou__title-glass {
     font-size: 1.5rem;
+    padding-top: 80px;
   }
   .thankyou__desc-glass {
     font-size: 1rem;
@@ -1111,6 +1112,7 @@
 
   .thankyou__post-header {
     margin-bottom: 20px !important;
+    display:flex
   }
 
   .thankyou__post-avatar {

@@ -56,6 +56,7 @@ class LeaderboardService {
         apiClient.get<LeaderboardResponse>('/leaderboard', params)
       );
     } catch (error) {
+      console.warn('📊 Leaderboard API failed, returning empty data:', error);
       // Return empty leaderboard on error
       return {
         leaderboard: [],
@@ -78,6 +79,11 @@ class LeaderboardService {
    * Get leaderboard around current user's position
    */
   async getAroundMe(range: number = 5): Promise<AroundMeResponse> {
+    // Validate range parameter
+    if (range <= 0) {
+      console.warn(`⚠️ Invalid range ${range}, using default value 5`);
+      range = 5;
+    }
     if (MOCK_MODE) {
       await mockDelay();
 
@@ -133,7 +139,30 @@ class LeaderboardService {
         apiClient.get<AroundMeResponse>('/leaderboard/around-me', { range })
       );
     } catch (error) {
-      throw error;
+      console.warn('👥 Around-me API failed, returning empty data:', error);
+
+      // If it's a validation error (422), try with default range
+      if (error instanceof Error && error.message.includes('422')) {
+        console.log('🔄 Retrying around-me API with default range...');
+        try {
+          return await withErrorHandling(() =>
+            apiClient.get<AroundMeResponse>('/leaderboard/around-me', { range: 5 })
+          );
+        } catch (retryError) {
+          console.warn('👥 Retry also failed:', retryError);
+        }
+      }
+
+      // Return empty around-me data on error
+      return {
+        surrounding_users: [],
+        your_stats: {
+          rank: 0,
+          points: 0,
+          points_to_next_rank: 0,
+          percentile: 0
+        }
+      };
     }
   }
 

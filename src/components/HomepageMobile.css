@@ -670,6 +670,7 @@
 /* Mobile-specific divider styling - slimmer than desktop */
 .homepage-mobile .homepage__divider-strip {
   height: 50px; /* 30-40% smaller than desktop 80px */
+  
 }
 
 .homepage-mobile .homepage__divider-content {

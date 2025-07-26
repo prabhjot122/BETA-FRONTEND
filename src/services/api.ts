@@ -5,7 +5,7 @@ import { ApiResponse, ApiRequestConfig } from '../types/api';
 // API Configuration
 const API_CONFIG = {
   BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:8000',
-  TIMEOUT: 10000,
+  TIMEOUT: 5000, // Reduced timeout to 5 seconds
   RETRY_ATTEMPTS: 3,
 };
 
@@ -13,6 +13,10 @@ const API_CONFIG = {
 class ApiClient {
   private baseURL: string;
   private timeout: number;
+  private requestCache: Map<string, Promise<any>> = new Map();
+  private lastRequestTime: Map<string, number> = new Map();
+  private minRequestInterval = 200; // Minimum 200ms between same requests
+  private rateLimitingEnabled = false; // Disable initially to allow first load
 
   constructor(baseURL: string = API_CONFIG.BASE_URL, timeout: number = API_CONFIG.TIMEOUT) {
     this.baseURL = baseURL;
@@ -27,10 +31,45 @@ class ApiClient {
   private async makeRequest<T>(config: ApiRequestConfig): Promise<ApiResponse<T>> {
     const { method, url, data, params, headers = {} } = config;
 
-    // Build full URL
-    const fullUrl = new URL(url, this.baseURL);
+    // Build full URL - ensure proper path concatenation
+    const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
+    const baseUrlWithSlash = this.baseURL.endsWith('/') ? this.baseURL : this.baseURL + '/';
+    const fullUrl = new URL(cleanUrl, baseUrlWithSlash);
 
-    console.log(`🌐 API Request: ${method} ${fullUrl.toString()}`);
+    // Create cache key for GET requests to prevent duplicates
+    const cacheKey = method === 'GET' ? `${method}:${fullUrl.toString()}` : null;
+
+    // Rate limiting: check if we made the same request too recently
+    if (cacheKey && this.rateLimitingEnabled) {
+      const lastTime = this.lastRequestTime.get(cacheKey);
+      const now = Date.now();
+
+      // Different intervals for different endpoints
+      let interval = this.minRequestInterval;
+      if (url.includes('/leaderboard/around-me')) {
+        interval = 100; // Allow around-me requests more frequently
+      }
+
+      if (lastTime && (now - lastTime) < interval) {
+        console.log(`⏱️ Rate limited: ${method} ${fullUrl.toString()}`);
+        return Promise.reject(new ApiError('Rate limited: too many requests', 429));
+      }
+      this.lastRequestTime.set(cacheKey, now);
+    }
+
+    // Enable rate limiting after first few requests
+    if (!this.rateLimitingEnabled && this.lastRequestTime.size > 3) {
+      this.rateLimitingEnabled = true;
+      console.log('🔒 Rate limiting enabled after initial load');
+    }
+
+    // Check if we already have this request in progress (for GET requests only)
+    if (cacheKey && this.requestCache.has(cacheKey)) {
+      console.log(`🔄 Using cached request: ${method} ${fullUrl.toString()}`);
+      return this.requestCache.get(cacheKey)!;
+    }
+
+    // console.log(`🌐 API Request: ${method} ${fullUrl.toString()}`);
     
     // Add query parameters
     if (params) {
@@ -57,9 +96,27 @@ class ApiClient {
       requestOptions.body = JSON.stringify(data);
     }
 
+    // Create the actual request promise
+    const requestPromise = this.executeRequest<T>(fullUrl.toString(), requestOptions, method);
+
+    // Cache GET requests to prevent duplicates
+    if (cacheKey) {
+      this.requestCache.set(cacheKey, requestPromise);
+      // Clean up cache after request completes or after 30 seconds
+      requestPromise.finally(() => {
+        setTimeout(() => {
+          this.requestCache.delete(cacheKey);
+        }, 30000); // Keep cache for 30 seconds
+      });
+    }
+
+    return requestPromise;
+  }
+
+  private async executeRequest<T>(url: string, options: RequestInit, method: string): Promise<ApiResponse<T>> {
     try {
-      const response = await fetch(fullUrl.toString(), requestOptions);
-      console.log(`📡 API Response: ${response.status} ${response.statusText}`);
+      const response = await fetch(url, options);
+      // console.log(`📡 API Response: ${response.status} ${response.statusText}`);
 
       // Handle different response types
       let responseData;
@@ -99,18 +156,36 @@ class ApiClient {
         throw new Error(errorMessage);
       }
 
-      console.log(`✅ API Success: ${method} ${fullUrl.toString()}`, responseData);
+      // console.log(`✅ API Success: ${method} ${url}`, responseData);
       return {
         data: responseData,
         status: response.status,
       };
     } catch (error) {
-      console.error(`💥 API Request Failed: ${method} ${fullUrl.toString()}`, error);
+      console.error(`💥 API Request Failed: ${method} ${url}`, error);
       if (error instanceof ApiError) {
         throw error;
       }
-      
-      // Handle network errors, timeouts, etc.
+
+      // Handle specific network errors
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        console.warn(`🌐 Network error for ${url}, this might be a CORS or connectivity issue`);
+        throw new ApiError('Network connection failed. Please check your internet connection.', 0, error);
+      }
+
+      // Handle ERR_INSUFFICIENT_RESOURCES
+      if (error instanceof Error && error.message.includes('ERR_INSUFFICIENT_RESOURCES')) {
+        console.warn(`⚠️ Too many requests for ${url}, implementing backoff`);
+        throw new ApiError('Too many requests. Please wait a moment and try again.', 429, error);
+      }
+
+      // Handle timeout errors
+      if (error instanceof DOMException && error.name === 'TimeoutError') {
+        console.warn(`⏰ Request timeout for ${url}`);
+        throw new ApiError('Request timed out. Please try again.', 408, error);
+      }
+
+      // Handle other network errors
       throw new ApiError(
         error instanceof Error ? error.message : 'Network error occurred',
         0,

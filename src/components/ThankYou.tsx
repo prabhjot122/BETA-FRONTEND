@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import LoadingSpinner from './LoadingSpinner';
@@ -26,6 +26,9 @@ export default function ThankYou() {
   const [currentUserRank, setCurrentUserRank] = useState<number | null>(null);
   const [currentUserPoints, setCurrentUserPoints] = useState<number | null>(null);
 
+  // Flag to prevent multiple API calls
+  const dataFetched = useRef(false);
+
   const [shareStates, setShareStates] = useState({
     facebook: { loading: false, shared: false, error: null },
     twitter: { loading: false, shared: false, error: null },
@@ -47,19 +50,47 @@ export default function ThankYou() {
 
   // Initialize user stats on mount if authenticated
   useEffect(() => {
+    // Prevent multiple API calls
+    if (dataFetched.current) {
+      console.log('🔄 Data already fetched, skipping...');
+      return;
+    }
+
     console.log('🔐 Authentication check:', authService.isAuthenticated());
     console.log('🔑 Auth token:', localStorage.getItem('authToken') ? 'Present' : 'Missing');
     console.log('🌐 API URL:', import.meta.env.VITE_API_URL);
 
     if (authService.isAuthenticated()) {
       console.log('✅ User authenticated, fetching data...');
-      refreshUserStats().catch(err => console.error('❌ refreshUserStats failed:', err));
-      refreshAroundMe().catch(err => console.error('❌ refreshAroundMe failed:', err));
-      refreshLeaderboard().catch(err => console.error('❌ refreshLeaderboard failed:', err));
+      dataFetched.current = true;
+
+      // Stagger API calls to prevent ERR_INSUFFICIENT_RESOURCES
+      const fetchData = async () => {
+        try {
+          // Fetch user stats first
+          await refreshUserStats();
+
+          // Wait a bit before next call
+          await new Promise(resolve => setTimeout(resolve, 100));
+
+          // Fetch around-me data
+          await refreshAroundMe();
+
+          // Wait a bit before next call
+          await new Promise(resolve => setTimeout(resolve, 100));
+
+          // Fetch leaderboard data
+          await refreshLeaderboard();
+        } catch (err) {
+          console.error('❌ Data fetching failed:', err);
+        }
+      };
+
+      fetchData();
     } else {
       console.log('❌ User not authenticated');
     }
-  }, [refreshUserStats, refreshAroundMe, refreshLeaderboard]);
+  }, []); // Remove dependencies to prevent infinite loop
 
   // Update local state when userStats change (only if we don't have current data)
   useEffect(() => {
@@ -389,21 +420,7 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
           {/* Social Media Post Style Card */}
           <div className="thankyou__social-media-post">
             {/* Post Header */}
-            <div className="thankyou__post-header">
-              <div className="thankyou__post-avatar">
-                <div className="thankyou__brand-logo">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
-                  </svg>
-                </div>
-              </div>
-              <div className="thankyou__post-info">
-                <h3 className="thankyou__brand-name">LawVriksh</h3>
-                <p className="thankyou__post-meta">Legal Community Platform • Just now</p>
-              </div>
-              <div className="thankyou__verified-badge">✓</div>
-            </div>
-
+            
             {/* Card Body - Two Column Layout */}
             <div className="thankyou__card-body">
               {/* Main Content Area (Left Side) */}
@@ -504,9 +521,7 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
                 <h2 className="leaderboard__title">My Stats</h2>
                 <p className="leaderboard__subtitle">Your Performance</p>
                 {/* DEBUG INFO */}
-                <div style={{fontSize: '10px', color: '#666', marginTop: '5px'}}>
-                  DEBUG: Users: {(surroundingUsers || []).length} | Stats: {userStats ? 'Yes' : 'No'} | AroundMe: {aroundMeUserStats ? 'Yes' : 'No'}
-                </div>
+                
               </div>
               <div className="leaderboard__content">
                 <div className="around-me__stats">
@@ -568,9 +583,7 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
                 <h2 className="leaderboard__title">Leaderboard</h2>
                 <p className="leaderboard__subtitle">Top Legal Professionals</p>
                 {/* DEBUG INFO */}
-                <div style={{fontSize: '10px', color: '#666', marginTop: '5px'}}>
-                  DEBUG: Leaderboard: {(leaderboard || []).length} items
-                </div>
+                
               </div>
               <div className="leaderboard__content">
                 <div className="leaderboard__list">
@@ -622,3 +635,5 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
     </div>
   );
 }
+
+

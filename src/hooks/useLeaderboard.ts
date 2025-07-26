@@ -50,10 +50,7 @@ export function useLeaderboard(initialParams: PaginationParams = { page: 1, limi
     return execute(() => loadLeaderboard({ page: 1, limit }));
   }, [execute, loadLeaderboard]);
 
-  // Auto-load on mount
-  useEffect(() => {
-    refresh();
-  }, []);
+  // Note: Auto-loading removed to prevent conflicts with manual refresh calls
 
   return {
     leaderboard,
@@ -69,6 +66,8 @@ export function useLeaderboard(initialParams: PaginationParams = { page: 1, limi
 
 // Hook for "Around Me" leaderboard
 export function useAroundMe(range: number = 5) {
+  // Ensure range is always a positive number
+  const validRange = Math.max(1, Math.floor(range));
   const {
     data,
     loading,
@@ -81,9 +80,9 @@ export function useAroundMe(range: number = 5) {
   } | null>(null);
 
   const loadAroundMe = useCallback(async (newRange?: number) => {
-    const finalRange = newRange ?? range;
+    const finalRange = newRange ?? validRange;
     return await leaderboardService.getAroundMe(finalRange);
-  }, [range]);
+  }, [validRange]);
 
   const refresh = useCallback(() => {
     return execute(() => loadAroundMe());
@@ -150,10 +149,7 @@ export function useTopPerformers(
     return execute(() => loadTopPerformers(undefined, newLimit));
   }, [execute, loadTopPerformers]);
 
-  // Auto-load on mount
-  useEffect(() => {
-    refresh();
-  }, []);
+  // Note: Auto-loading removed to prevent conflicts with manual refresh calls
 
   return {
     topPerformersData: data,

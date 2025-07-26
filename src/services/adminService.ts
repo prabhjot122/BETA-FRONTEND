@@ -279,26 +279,101 @@ class AdminService {
   async promoteUser(userId: number): Promise<{ message: string; user: string }> {
     if (MOCK_MODE) {
       await mockDelay();
-      
+
       const user = mockUsers.find(u => u.id === userId);
       if (!user) {
         throw new Error('User not found');
       }
-      
+
       // Update user admin status (in real app, this would be persisted)
       user.isAdmin = true;
-      
+
       return {
         message: `User ${user.name} promoted to admin successfully`,
         user: user.name
       };
     }
 
-    const response = await withErrorHandling(() => 
+    const response = await withErrorHandling(() =>
       apiClient.post('/admin/promote', { user_id: userId })
     );
 
     return response as { message: string; user: string };
+  }
+
+  /**
+   * Delete all non-admin users and export their data
+   */
+  async deleteAllUsers(): Promise<{ message: string; export_file: string; export_data: any }> {
+    if (MOCK_MODE) {
+      await mockDelay();
+
+      // In mock mode, simulate the export and deletion
+      const nonAdminUsers = mockUsers.filter(user => !user.isAdmin);
+
+      if (nonAdminUsers.length === 0) {
+        throw new Error('No non-admin users found to delete');
+      }
+
+      // Create export data
+      const exportData = {
+        export_timestamp: new Date().toISOString(),
+        exported_by_admin: 'mock_admin@example.com',
+        total_users_exported: nonAdminUsers.length,
+        users: nonAdminUsers.map(user => ({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          total_points: user.points,
+          shares_count: user.sharesCount,
+          default_rank: user.rank,
+          current_rank: user.rank,
+          is_active: user.status === 'active',
+          created_at: user.registrationDate,
+          updated_at: user.lastActivity,
+          share_events: [] // Mock empty share events
+        }))
+      };
+
+      // Simulate file download
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `users_backup_${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      // Remove non-admin users from mock data
+      mockUsers.splice(0, mockUsers.length, ...mockUsers.filter(user => user.isAdmin));
+
+      return {
+        message: `Successfully deleted ${nonAdminUsers.length} users`,
+        export_file: `users_backup_${new Date().toISOString().split('T')[0]}.json`,
+        export_data: exportData
+      };
+    }
+
+    const response = await withErrorHandling(() =>
+      apiClient.post('/admin/delete-all-users')
+    );
+
+    // If the response contains export data, trigger download
+    if (response.export_data) {
+      const blob = new Blob([JSON.stringify(response.export_data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = response.export_file || 'users_backup.json';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    return response as { message: string; export_file: string; export_data: any };
   }
 
   /**

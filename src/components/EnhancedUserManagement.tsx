@@ -43,6 +43,8 @@ const EnhancedUserManagement: React.FC = () => {
   const [selectedUsers, setSelectedUsers] = useState<Set<number>>(new Set());
   const [showExportModal, setShowExportModal] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
+  const [deletingAll, setDeletingAll] = useState(false);
   const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
 
   const loadUsers = useCallback(async () => {
@@ -207,17 +209,40 @@ const EnhancedUserManagement: React.FC = () => {
   const handlePromoteUser = async (userId: number) => {
     try {
       await adminService.promoteUser(userId);
-      
+
       // Update local state
-      setUsers(prev => prev.map(user => 
-        user.user_id === userId 
+      setUsers(prev => prev.map(user =>
+        user.user_id === userId
           ? { ...user, is_admin: true }
           : user
       ));
-      
+
       alert('User promoted to admin successfully!');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to promote user');
+    }
+  };
+
+  const handleDeleteAllUsers = async () => {
+    try {
+      setDeletingAll(true);
+      setError(null);
+
+      const result = await adminService.deleteAllUsers();
+
+      // Clear the users list
+      setUsers([]);
+      setPagination(prev => ({ ...prev, total: 0, pages: 0 }));
+
+      alert(`${result.message}\nData exported to: ${result.export_file}`);
+      setShowDeleteAllModal(false);
+
+      // Refresh the user list
+      await loadUsers();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to delete all users');
+    } finally {
+      setDeletingAll(false);
     }
   };
 
@@ -249,6 +274,12 @@ const EnhancedUserManagement: React.FC = () => {
               className="user-management-button primary"
             >
               Export Users
+            </button>
+            <button
+              onClick={() => setShowDeleteAllModal(true)}
+              className="user-management-button danger"
+            >
+              Delete All Users
             </button>
             <button
               onClick={loadUsers}
@@ -511,6 +542,40 @@ const EnhancedUserManagement: React.FC = () => {
               >
                 Cancel
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete All Users Modal */}
+      {showDeleteAllModal && (
+        <div className="modal-overlay">
+          <div className="modal-container">
+            <div className="modal-content">
+              <h3 className="modal-title">⚠️ Delete All Users</h3>
+              <div className="modal-text">
+                <p><strong>This action will permanently delete ALL non-admin users and their registration data!</strong></p>
+                <p><strong>What will be deleted:</strong> User accounts, share events, and points</p>
+                <p><strong>What will be preserved:</strong> Feedback responses (anonymized)</p>
+                <p>Before deletion, all user data will be automatically exported to a JSON file for backup.</p>
+                <p>This action cannot be undone. Are you sure you want to proceed?</p>
+              </div>
+              <div className="modal-actions">
+                <button
+                  onClick={handleDeleteAllUsers}
+                  disabled={deletingAll}
+                  className="modal-button danger"
+                >
+                  {deletingAll ? 'Deleting & Exporting...' : 'Yes, Delete All Users'}
+                </button>
+                <button
+                  onClick={() => setShowDeleteAllModal(false)}
+                  disabled={deletingAll}
+                  className="modal-button secondary"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         </div>

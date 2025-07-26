@@ -179,8 +179,8 @@
   .navbar__nav {
     display: none;
   }
-  .navbar{
-    z-index: 10;
+  .navbar--scrolled{
+    z-index: 1003;
   }
 
   .navbar__content {
