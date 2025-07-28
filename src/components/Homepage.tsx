@@ -51,7 +51,7 @@ export default function Homepage() {
         id: 1,
         name: "Suhani Jain",
         credentials: "BA. LLB, 3rd Year, Jagran Lakecity University, Bhopal",
-        image: "/suhanijain.jpg",
+        image: "/suhanijain.webp",
         testimonials: [
           "One of the biggest challenges I face... is striking the right balance between accessibility and accuracy. Simplifying them for a general audience without losing the nuance—or worse, spreading misinformation—is a constant struggle.",
           "I believe lawyers should absolutely monetize their expertise through writing... However, the reason many... may hesitate... is due to a mix of time constraints, uncertainty about monetization models, and fear of non-compliance.",
@@ -62,7 +62,7 @@ export default function Homepage() {
         id: 2,
         name: "Ritanshu Dhangar",
         credentials: "BA. LLB, 5th Year, Mangalayatan University, Jabalpur",
-        image: "/ritanshu.jpg",
+        image: "/ritanshu.webp",
         testimonials: [
           "Between court, clients, and paperwork, it's tough to sit down and write.",
           "Research: Even if you know the topic, you need to check the latest laws and cases.",
@@ -73,7 +73,7 @@ export default function Homepage() {
         id: 3,
         name: "Tanisha Srivastava",
         credentials: "BA. LLB, 5th Year, Mangalayatan University, Jabalpur",
-        image: "/tanisha.jpg",
+        image: "/tanisha.webp",
         testimonials: [
           "...rather than focusing on what I am saying they start to judge my credibility... and that in turn makes it difficult to... put forth your Idea or your insight."
         ]
@@ -82,7 +82,7 @@ export default function Homepage() {
         id: 4,
         name: "Dr. Vartika Pandey",
         credentials: "Professor, MUJ",
-        image: "/suhanijain.jpg",
+        image: "/suhanijain.webp",
         testimonials: [
           "The most significant investment of time in my writing process is dedicated to the rigorous task of plagiarism removal. This crucial step ensures the absolute credibility and originality of the final work."
         ]
@@ -91,7 +91,7 @@ export default function Homepage() {
         id: 5,
         name: "Paras Shukla",
         credentials: "LLB(H) complete. Practicing lawyer at MP High court and District and session court Jabalpur",
-        image: "/paras.jpg",
+        image: "/paras.webp",
         testimonials: [
           "The biggest hurdle is simplifying complex legal concepts for a general audience without losing accuracy, along with the lack of visibility on credible platforms.",
           "Monetizing legal writing is a great idea, but uncertainty about where to start and ethical concerns have kept me from exploring it more.",
@@ -102,7 +102,7 @@ export default function Homepage() {
         id: 6,
         name: "Om Patil",
         credentials: "Mangalayatan University Jabalpur Ba.llb 5th year",
-        image: "/ompatil.jpg",
+        image: "/ompatil.webp",
         testimonials: [
           "When sharing legal insights online, a big frustration is second-guessing my opinion—worrying it might hurt someone's feelings or credibility. Another is explaining my thoughts to overconfident people who act like they already know everything.",
           "The most time consuming part of the legal article writing is content framing and the legal citeations and formatting all the articles and  , these are the main reasons which causes time consuming parts of the article writing"
@@ -660,7 +660,7 @@ export default function Homepage() {
         // Simultaneously change background image and fade in new content
         activeTimeline.call(() => {
           if (featureImage) {
-            const imageUrls = ['/feature1.png', '/feature2.png', '/feature3.png', '/feature4.png'];
+            const imageUrls = ['/feature1.webp', '/feature2.webp', '/feature3.webp', '/feature4.webp'];
             featureImage.style.backgroundImage = `url("${imageUrls[targetFeature]}")`;
           }
         })
