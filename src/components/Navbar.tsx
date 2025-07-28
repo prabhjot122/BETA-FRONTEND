@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from './Button';
 import './Navbar.css';
 import { gsap } from 'gsap';
@@ -194,9 +195,9 @@ export default function Navbar({ onJoinWaitlist }: NavbarProps) {
 
   return (
     <nav className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
-      <div className="navbar__brand">
+      <Link to="/" className="navbar__brand">
         LawVriksh
-      </div>
+      </Link>
 
       <div className="navbar__content">
         <Navigation />

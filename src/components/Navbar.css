@@ -40,12 +40,23 @@
   display: flex;
   align-items: center;
   height: auto;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.navbar__brand:hover {
+  color: #966F33;
 }
 
 /* Brand styling in scrolled state */
 .navbar--scrolled .navbar__brand {
   font-size: 26px;
   line-height: 36px;
+  color: black;
+}
+
+.navbar--scrolled .navbar__brand:hover {
+  color: #966F33;
 }
 
 .navbar__content {
