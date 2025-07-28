@@ -34,7 +34,39 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
   // Testimonial data structure for the new interactive system
   const testimonialsData = useMemo(() => [
     {
-      id: 1,
+          id: 1,
+          name: "Om Patil",
+          credentials: "Mangalayatan University Jabalpur Ba.llb 5th year",
+          image: "/ompatil.webp",
+          testimonials: [
+            "When sharing legal insights online, a big frustration is second-guessing my opinion—worrying it might hurt someone's feelings or credibility. Another is explaining my thoughts to overconfident people who act like they already know everything.",
+            "The most time consuming part of the legal article writing is content framing and the legal citeations and formatting all the articles and  , these are the main reasons which causes time consuming parts of the article writing"
+          ]
+        },
+    {
+          id: 2,
+          name: "Paras Shukla",
+          credentials: "LLB(H) complete. Practicing lawyer at MP High court and District and session court Jabalpur",
+          image: "/paras.webp",
+          testimonials: [
+            "The biggest hurdle is simplifying complex legal concepts for a general audience without losing accuracy, along with the lack of visibility on credible platforms.",
+            "Monetizing legal writing is a great idea, but uncertainty about where to start and ethical concerns have kept me from exploring it more.",
+            "Research and ensuring legal accuracy take the most time, especially when balancing clarity with technical depth."
+          ]
+        },
+    {
+          id: 3,
+          name: "Ritanshu Dhangar",
+          credentials: "BA. LLB, 5th Year, Mangalayatan University, Jabalpur",
+          image: "/ritanshu.webp",
+          testimonials: [
+            "Between court, clients, and paperwork, it's tough to sit down and write.",
+            "Research: Even if you know the topic, you need to check the latest laws and cases.",
+            "Not sure how to start or where to post and earn."
+          ]
+        },
+    {
+      id: 4,
       name: "Suhani Jain",
       credentials: "BA. LLB, 3rd Year, Jagran Lakecity University, Bhopal",
       image: "/suhanijain.webp",
@@ -44,19 +76,9 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
         "For me, the most time-consuming part of writing a legal article is the structuring and outlining phase... crafting a coherent flow that integrates statutes, case law, and interpretation is a mentally demanding task."
       ]
     },
+
     {
-      id: 2,
-      name: "Ritanshu Dhangar",
-      credentials: "BA. LLB, 5th Year, Mangalayatan University, Jabalpur",
-      image: "/ritanshu.webp",
-      testimonials: [
-        "Between court, clients, and paperwork, it's tough to sit down and write.",
-        "Research: Even if you know the topic, you need to check the latest laws and cases.",
-        "Not sure how to start or where to post and earn."
-      ]
-    },
-    {
-      id: 3,
+      id: 5,
       name: "Tanisha Srivastava",
       credentials: "BA. LLB, 5th Year, Mangalayatan University, Jabalpur",
       image: "/tanisha.webp",
@@ -65,35 +87,16 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
       ]
     },
     {
-      id: 4,
+      id: 6,
       name: "Dr. Vartika Pandey",
       credentials: "Professor, MUJ",
       image: "/suhanijain.webp",
       testimonials: [
         "The most significant investment of time in my writing process is dedicated to the rigorous task of plagiarism removal. This crucial step ensures the absolute credibility and originality of the final work."
       ]
-    },
-    {
-      id: 5,
-      name: "Paras Shukla",
-      credentials: "LLB(H) complete. Practicing lawyer at MP High court and District and session court Jabalpur",
-      image: "/paras.webp",
-      testimonials: [
-        "The biggest hurdle is simplifying complex legal concepts for a general audience without losing accuracy, along with the lack of visibility on credible platforms.",
-        "Monetizing legal writing is a great idea, but uncertainty about where to start and ethical concerns have kept me from exploring it more.",
-        "Research and ensuring legal accuracy take the most time, especially when balancing clarity with technical depth."
-      ]
-    },
-    {
-      id: 6,
-      name: "Om Patil",
-      credentials: "Mangalayatan University Jabalpur Ba.llb 5th year",
-      image: "/ompatil.webp",
-      testimonials: [
-        "When sharing legal insights online, a big frustration is second-guessing my opinion—worrying it might hurt someone's feelings or credibility. Another is explaining my thoughts to overconfident people who act like they already know everything.",
-        "The most time consuming part of the legal article writing is content framing and the legal citeations and formatting all the articles and  , these are the main reasons which causes time consuming parts of the article writing"
-      ]
     }
+
+
   ], []);
 
   // Hero quotes array for dynamic rotation (same as desktop)

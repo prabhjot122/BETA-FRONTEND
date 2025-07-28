@@ -2082,7 +2082,7 @@ code {
   display: flex;
   gap: 0;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   justify-content: space-between;
   min-height: 100vh;
 }
@@ -2114,6 +2114,7 @@ code {
     /* Exact desktop positioning preserved */
     height: 100vh;
     width: 100vw;
+    overflow: visible;
   }
 }
 .homepage__hero2 {
@@ -2123,6 +2124,8 @@ code {
   align-items: center;
   position: relative;
   box-shadow: 0px 4px 47.7px 0px rgba(0, 0, 0, 0.25);
+  z-index: 5;
+  overflow: visible;
 }
 
 /* Mobile styles for hero2 */
@@ -2156,6 +2159,8 @@ code {
     /* Exact desktop positioning preserved */
     height: 100vh;
     width: 48vw;
+    overflow: visible;
+    z-index: 10;
   }
 }
 
@@ -2298,16 +2303,33 @@ code {
 
 /* Mobile styles for testimonial image */
 @media (max-width: 767px) {
-
+  .testimonialimage {
+    border-radius: 8px;
+    overflow: hidden;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-
+  .testimonialimage {
+    border-radius: 4px;
+    overflow: hidden;
+  }
 }
 
 /* Preserve exact desktop layout at 1025px and above */
 @media (min-width: 1025px) {
+  .testimonialimage {
+    border-radius: 0;
+    overflow: visible;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 15;
+    min-height: 100vh;
+    width: 100%;
+  }
 
+  .testimonialimage:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .homepage__testimonials-content {
@@ -2598,14 +2620,52 @@ code {
 }
 
 /* Enhanced testimonial image with cursor pointer */
+.testimonialimage {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  z-index: 10;
+  overflow: visible;
+}
 
+.testimonialimage:hover {
+  transform: scale(1.02);
+  filter: brightness(1.05);
+}
 
+.testimonialimage:active {
+  transform: scale(0.98);
+}
 
 /* Mobile styles for testimonial image interaction */
 @media (max-width: 767px) {
+  .testimonialimage {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    touch-action: manipulation;
+  }
 
+  .testimonialimage:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  }
 
+  .testimonialimage:active {
+    transform: scale(0.98);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
 
+  .testimonialimage:focus {
+    outline: 3px solid #d4af37;
+    outline-offset: 4px;
+  }
 }
 
 .homepage__testimonials-navigation {

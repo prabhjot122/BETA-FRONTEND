@@ -108,14 +108,8 @@ const NotFound: React.FC = () => {
                 <span className="not-found-link-icon">🏠</span>
                 <span>Homepage</span>
               </Link>
-              <Link to="/feedback" className="not-found-link">
-                <span className="not-found-link-icon">💬</span>
-                <span>Feedback</span>
-              </Link>
-              <Link to="/admin/login" className="not-found-link">
-                <span className="not-found-link-icon">👤</span>
-                <span>Admin Login</span>
-              </Link>
+
+
             </div>
           </div>
         </div>
