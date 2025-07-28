@@ -7,6 +7,7 @@ import AdminDashboard from './components/AdminDashboard'
 import ForgotPassword from './components/ForgotPassword'
 import ResetPassword from './components/ResetPassword'
 import ProtectedRoute from './components/ProtectedRoute'
+import NotFound from './components/NotFound'
 
 function App() {
   return (
@@ -35,6 +36,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+        {/* Catch-all route for 404 - must be last */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   )

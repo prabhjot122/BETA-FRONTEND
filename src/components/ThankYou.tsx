@@ -22,7 +22,7 @@ export default function ThankYou() {
   // State for managing right-side view
   const [rightSideView, setRightSideView] = useState<'around-me' | 'leaderboard'>('around-me');
 
-  // State for tracking the most recent user rank and points (from share responses)
+  // Staate for tracking the most recent user rank and points (from share responses)
   const [currentUserRank, setCurrentUserRank] = useState<number | null>(null);
   const [currentUserPoints, setCurrentUserPoints] = useState<number | null>(null);
 
@@ -70,17 +70,22 @@ export default function ThankYou() {
           // Fetch user stats first
           await refreshUserStats();
 
-          // Wait a bit before next call
-          await new Promise(resolve => setTimeout(resolve, 100));
-
-          // Fetch around-me data
-          await refreshAroundMe();
-
-          // Wait a bit before next call
-          await new Promise(resolve => setTimeout(resolve, 100));
+          // Wait 1 second before fetching leaderboard data
+          console.log('⏳ Waiting 1s before fetching leaderboard...');
+          await new Promise(resolve => setTimeout(resolve, 1000));
 
           // Fetch leaderboard data
           await refreshLeaderboard();
+          console.log('✅ Leaderboard data fetched.');
+
+          // Wait 1 second after leaderboard, before fetching around-me data
+          console.log('⏳ Waiting 1s before fetching around-me data...');
+          await new Promise(resolve => setTimeout(resolve, 1000));
+
+          // Fetch around-me data
+          await refreshAroundMe();
+          console.log('✅ Around-me data fetched.');
+
         } catch (err) {
           console.error('❌ Data fetching failed:', err);
         }
@@ -152,7 +157,7 @@ export default function ThankYou() {
         opacity: 1,
         y: 0,
         visibility: 'visible',
-        
+
       })
       .fromTo('.leaderboard__item, .around-me__user-card, .around-me__surrounding-item',
         { opacity: 0, y: 20 },
@@ -185,7 +190,7 @@ export default function ThankYou() {
       gsap.set('.leaderboard__item, .around-me__user-card, .around-me__surrounding-item', {
         opacity: 1,
         visibility: 'visible',
-       
+
       });
 
       // Also ensure the leaderboard container is visible
@@ -215,6 +220,7 @@ export default function ThankYou() {
   const handleViewAroundMe = () => {
     gsap.to('.leaderboard__content', {
       opacity: 0,
+      delay:2,
       duration: 0.2,
       onComplete: () => {
         setRightSideView('around-me');
@@ -249,7 +255,7 @@ export default function ThankYou() {
       }
 
       // Create personalized share content
-      const shareText = `� Congratulations to ${userName} for becoming a beta testing founding member at LawVriksh!
+      const shareText = ` Congratulations to ${userName} for becoming a beta testing founding member at LawVriksh!
 
 ✨ Welcome aboard! We're thrilled to have you join our growing community of legal professionals and enthusiasts.
 
@@ -420,7 +426,7 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
           {/* Social Media Post Style Card */}
           <div className="thankyou__social-media-post">
             {/* Post Header */}
-            
+
             {/* Card Body - Two Column Layout */}
             <div className="thankyou__card-body">
               {/* Main Content Area (Left Side) */}
@@ -455,11 +461,11 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
                     <span className="thankyou__engagement-count">247</span>
                   </span>
                   <span className="thankyou__engagement-item">
-                    <span className="thankyou__engagement-icon">�</span>
+                    <span className="thankyou__engagement-icon"></span>
                     <span className="thankyou__engagement-count">18</span>
                   </span>
                   <span className="thankyou__engagement-item">
-                    <span className="thankyou__engagement-icon">�</span>
+                    <span className="thankyou__engagement-icon"></span>
                     <span className="thankyou__engagement-count">42</span>
                   </span>
                 </div>
@@ -521,7 +527,7 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
                 <h2 className="leaderboard__title">My Stats</h2>
                 <p className="leaderboard__subtitle">Your Performance</p>
                 {/* DEBUG INFO */}
-                
+
               </div>
               <div className="leaderboard__content">
                 <div className="around-me__stats">
@@ -583,7 +589,7 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
                 <h2 className="leaderboard__title">Leaderboard</h2>
                 <p className="leaderboard__subtitle">Top Legal Professionals</p>
                 {/* DEBUG INFO */}
-                
+
               </div>
               <div className="leaderboard__content">
                 <div className="leaderboard__list">
@@ -635,5 +641,3 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
     </div>
   );
 }
-
-

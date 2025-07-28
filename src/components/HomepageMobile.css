@@ -380,7 +380,7 @@
 }
 
 .homepage-mobile__feature-image {
-  background-image: url("/feature1.png");
+  background-image: url("/feature1.webp");
   background-size: cover;
   background-position: center;
   box-shadow: 0px 4px 47.7px 0px rgba(0, 0, 0, 0.1);
