@@ -8,31 +8,31 @@ gsap.registerPlugin(ScrollTrigger);
 import TeamMemberCard from './TeamMemberCard';
 import './TeamSection.css';
 
-// Team member data - 4 members with alternating Y offsets
+// Team member data - 4 members with responsive offset pattern
 const teamMembers = [
   {
     name: 'ANNA DEAN',
     role: 'React Engineer',
     imageUrl: '/person1.png',
-    offsetY: false, // Top aligned (1st)
+    offsetY: false, // Top aligned
   },
   {
     name: 'CHRIS MEZY',
     role: 'Data Engineer',
     imageUrl: '/person2.png',
-    offsetY: true, // Bottom aligned (2nd)
+    offsetY: true, // Bottom aligned
   },
   {
     name: 'LESLIE SCHNIDER',
     role: 'Backend Developer',
     imageUrl: '/person3.png',
-    offsetY: false, // Top aligned (3rd)
+    offsetY: false, // Top aligned
   },
   {
     name: 'JIM BRICKTON',
     role: 'AI Specialist',
     imageUrl: '/person4.png',
-    offsetY: true, // Bottom aligned (4th)
+    offsetY: true, // Bottom aligned
   },
 ];
 
@@ -76,7 +76,7 @@ const TeamSection: React.FC = () => {
           Meet Our Team
         </div>
         <motion.div
-          className="team-section__cards"
+          className="team-section__cards team-section__cards--responsive"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
@@ -89,6 +89,7 @@ const TeamSection: React.FC = () => {
               role={member.role}
               imageUrl={member.imageUrl}
               offsetY={member.offsetY}
+              index={index}
             />
           ))}
         </motion.div>
