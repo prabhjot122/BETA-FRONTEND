@@ -10,6 +10,7 @@ import { useState, useEffect, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import TeamSection from "./homepage/TeamSection";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -768,6 +769,21 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
         </div>
       </div>
 
+      <TeamSection />
+      <div className="homepage__divider-strip">
+        <div className="homepage__divider-content">
+          <div className="homepage__divider-text">
+            {dividerTexts[currentDividerTextIndex]}
+          </div>
+        </div>
+        <div className="homepage__divider-pattern">
+          <div className="homepage__divider-dot"></div>
+          <div className="homepage__divider-dot"></div>
+          <div className="homepage__divider-dot"></div>
+          <div className="homepage__divider-dot"></div>
+          <div className="homepage__divider-dot"></div>
+        </div>
+      </div>
       {/* Enhanced Testimonials Section - Mobile Card Design */}
      
       <div id="testimonials" className="homepage-mobile__testimonials-section">
@@ -870,7 +886,6 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
           <div className="homepage__divider-dot"></div>
         </div>
       </div>
-
       {/* Founding Member Perks Section - Static Vertical Layout */}
       <div id="founding-member-perks" className="founding-member-perks-section-static">
         <div className="founding-member-perks__container-static">

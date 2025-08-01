@@ -1,0 +1,79 @@
+.team-section {
+    background-color: #FDFBF4;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+}
+
+.team-section::before,
+.team-section::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #966f33 50%, transparent 100%);
+    opacity: 0.3;
+}
+
+.team-section::before {
+    top: 0;
+}
+
+.team-section::after {
+    bottom: 0;
+}
+
+.team-section__container {
+    max-width: 1280px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.team-section__title {
+    font-family: "Baskerville Old Face", "Times New Roman", serif;
+    color: #5D4037;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    text-align: center;
+    letter-spacing: -0.02em;
+}
+
+.team-section__cards {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: nowrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .team-section__cards {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .team-section {
+        height: auto;
+        padding: 3rem 1rem;
+    }
+    .team-section__container {
+        gap: 2rem;
+    }
+    .team-section__cards {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+}
