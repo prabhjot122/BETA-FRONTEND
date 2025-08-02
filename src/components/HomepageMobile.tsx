@@ -10,6 +10,7 @@ import { useState, useEffect, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import TeamSection from "./homepage/TeamSection";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -79,7 +80,7 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
 
     {
       id: 5,
-      name: "Tanisha Srivastava",
+      name: "Tanisha Srivastav",
       credentials: "BA. LLB, 5th Year, Mangalayatan University, Jabalpur",
       image: "/tanisha.webp",
       testimonials: [
@@ -408,26 +409,23 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
       y: 0,
       duration: 1,
       ease: "power2.out",
-      delay: 0.3
+      delay: 0.1
     });
 
     // Hero quote animation
     gsap.to(".homepage-mobile__hero-quote", {
       opacity: 1,
       y: 0,
-      duration: 0.8,
+      duration: 0.3,
       ease: "power2.out",
-      delay: 0.6
+      delay: 0.2
     });
 
     // Feature items animation
     gsap.to(".homepage-mobile__feature-item", {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      ease: "power2.out",
-      stagger: 0.2,
-      delay: 0.8
+      
     });
 
     // Simple scroll-triggered animations for static content
@@ -768,6 +766,21 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
         </div>
       </div>
 
+      <TeamSection />
+      <div className="homepage__divider-strip">
+        <div className="homepage__divider-content">
+          <div className="homepage__divider-text">
+            {dividerTexts[currentDividerTextIndex]}
+          </div>
+        </div>
+        <div className="homepage__divider-pattern">
+          <div className="homepage__divider-dot"></div>
+          <div className="homepage__divider-dot"></div>
+          <div className="homepage__divider-dot"></div>
+          <div className="homepage__divider-dot"></div>
+          <div className="homepage__divider-dot"></div>
+        </div>
+      </div>
       {/* Enhanced Testimonials Section - Mobile Card Design */}
      
       <div id="testimonials" className="homepage-mobile__testimonials-section">
@@ -870,7 +883,6 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
           <div className="homepage__divider-dot"></div>
         </div>
       </div>
-
       {/* Founding Member Perks Section - Static Vertical Layout */}
       <div id="founding-member-perks" className="founding-member-perks-section-static">
         <div className="founding-member-perks__container-static">

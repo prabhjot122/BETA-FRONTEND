@@ -1,11 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef, useState } from 'react';
 
 // Import CSS
-
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface MarketData {
   label: string;
@@ -15,9 +10,47 @@ interface MarketData {
   color: string;
 }
 
+const AnimatedNumber = ({ value, unit, isVisible, delay = 0 }: { value: number; unit: string; isVisible: boolean; delay?: number }) => {
+    const [displayValue, setDisplayValue] = useState(0);
+    const started = useRef(false);
+
+    useEffect(() => {
+        if (isVisible && !started.current) {
+            setTimeout(() => {
+                started.current = true;
+                let start = 0;
+                const end = value;
+                const duration = 1500;
+                let startTime: number | null = null;
+
+                const animate = (timestamp: number) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = timestamp - startTime;
+                    const percentage = Math.min(progress / duration, 1);
+                    const animatedValue = start + (end - start) * percentage;
+                    setDisplayValue(animatedValue);
+
+                    if (percentage < 1) {
+                        requestAnimationFrame(animate);
+                    }
+                };
+
+                requestAnimationFrame(animate);
+            }, delay);
+        }
+    }, [isVisible, value, delay]);
+
+    if (!isVisible) {
+        return <span>$0{unit}</span>;
+    }
+
+    return <span>${displayValue.toFixed(1)}{unit}</span>;
+};
+
+
 export default function MarketGrowth(): JSX.Element {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const chartRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const marketData: MarketData[] = [
     {
@@ -52,164 +85,124 @@ export default function MarketGrowth(): JSX.Element {
   ];
 
   useEffect(() => {
-    if (!chartRef.current) return;
-
-    // Set initial state for all bars and values
-    gsap.set('.market-growth__bar-current', { width: 0 });
-    gsap.set('.market-growth__bar-projected', { width: 0 });
-    gsap.set('.market-growth__value', { textContent: '0' });
-
-    // Create scroll trigger for the market growth section
-    ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: "top 70%",
-      end: "bottom 30%",
-      onEnter: () => {
-        // Animate bars and values
-        marketData.forEach((data, index) => {
-          const currentBar = document.querySelector(`.market-growth__bar-current-${index}`);
-          const projectedBar = document.querySelector(`.market-growth__bar-projected-${index}`);
-          const currentValue = document.querySelector(`.market-growth__value-current-${index}`);
-          const projectedValue = document.querySelector(`.market-growth__value-projected-${index}`);
-
-          if (currentBar && projectedBar && currentValue && projectedValue) {
-            // Calculate widths based on the largest projected value for scaling
-            const maxValue = Math.max(...marketData.map(d => d.projected));
-            const currentWidth = (data.current / maxValue) * 100;
-            const projectedWidth = (data.projected / maxValue) * 100;
-
-            // Animate current bars first (if they exist)
-            if (data.current > 0) {
-              gsap.to(currentBar, {
-                width: `${currentWidth}%`,
-                duration: 1.5,
-                delay: index * 0.15,
-                ease: "power2.out"
-              });
-
-              // Animate current values counting up
-              gsap.to(currentValue, {
-                textContent: data.current,
-                duration: 1.5,
-                delay: index * 0.15,
-                ease: "power2.out",
-                snap: { textContent: 0.1 },
-                onUpdate: function() {
-                  const value = parseFloat(this.targets()[0].textContent);
-                  this.targets()[0].textContent = `$${value.toFixed(1)}${data.unit}`;
-                }
-              });
-            }
-
-            // Animate projected bars with slight delay
-            gsap.to(projectedBar, {
-              width: `${projectedWidth}%`,
-              duration: 1.5,
-              delay: index * 0.15 + (data.current > 0 ? 0.2 : 0),
-              ease: "power2.out"
-            });
-
-            // Animate projected values counting up
-            gsap.to(projectedValue, {
-              textContent: data.projected,
-              duration: 1.5,
-              delay: index * 0.15 + (data.current > 0 ? 0.2 : 0),
-              ease: "power2.out",
-              snap: { textContent: 0.1 },
-              onUpdate: function() {
-                const value = parseFloat(this.targets()[0].textContent);
-                this.targets()[0].textContent = `$${value.toFixed(1)}${data.unit}`;
-              }
-            });
-          }
-        });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
       },
-      // Add onLeave to reset animations when scrolling back up
-      onLeave: () => {
-        // Optional: Reset animations when leaving the section
-      },
-      onEnterBack: () => {
-        // Optional: Re-trigger animations when scrolling back down
+      {
+        threshold: 0.2,
       }
-    });
+    );
+
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.trigger === sectionRef.current) {
-          trigger.kill();
-        }
-      });
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
     };
   }, []);
 
+  const maxValue = Math.max(...marketData.map(d => d.projected));
+
   return (
-    <div ref={sectionRef} className="market-growth">
-      <div className="market-growth__content">
-        <div className="market-growth__text">
-          {/* Mobile heading */}
-          <h2 className="market-growth__title market-growth__title--mobile">
-            Market Growth &<br />Revenue Projections
-          </h2>
-          {/* Desktop heading */}
-          <h2 className="market-growth__title market-growth__title--desktop">
-            Market <br />Growth &<br />Revenue<br /> Projections
-          </h2>
-          <p className="market-growth__description hide-on-mobile">
-            LawVriksh is positioned at the intersection of rapidly expanding markets. 
-            The legal technology sector is experiencing unprecedented growth, while the 
-            creator economy and online education markets are reshaping how professionals 
-            monetize their expertise. Our platform captures value across these converging 
-            trillion-dollar opportunities.
-          </p>
+    <>
+      <style>{`
+        .market-growth__bar {
+          transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+      `}</style>
+      <div ref={sectionRef} className="market-growth">
+        <div className="market-growth__content">
+          <div className="market-growth__text">
+            {/* Mobile heading */}
+            <h2 className="market-growth__title market-growth__title--mobile">
+              Market Growth &<br />Revenue Projections
+            </h2>
+            {/* Desktop heading */}
+            <h2 className="market-growth__title market-growth__title--desktop">
+              Market <br />Growth &<br />Revenue<br /> Projections
+            </h2>
+            <p className="market-growth__description hide-on-mobile">
+              LawVriksh is positioned at the intersection of rapidly expanding markets. 
+              The legal technology sector is experiencing unprecedented growth, while the 
+              creator economy and online education markets are reshaping how professionals 
+              monetize their expertise. Our platform captures value across these converging 
+              trillion-dollar opportunities.
+            </p>
+          </div>
         </div>
-      </div>
-      
-      <div className="market-growth__chart" ref={chartRef}>
-        <div className="market-growth__chart-container">
-          <h3 className="market-growth__chart-title">Market Size by 2030</h3>
-          <div className="market-growth__bars">
-            {marketData.map((data, index) => (
-              <div key={index} className="market-growth__bar-group">
-                <div className="market-growth__bar-label">{data.label}</div>
-                <div className="market-growth__bar-container">
-                  <div className="market-growth__bar-track">
-                    {data.current > 0 && (
-                      <div 
-                        className={`market-growth__bar market-growth__bar-current market-growth__bar-current-${index}`}
-                        style={{ backgroundColor: data.color }}
-                      />
-                    )}
-                    <div 
-                      className={`market-growth__bar market-growth__bar-projected market-growth__bar-projected-${index}`}
-                      style={{ backgroundColor: data.color, opacity: 0.7 }}
-                    />
+        
+        <div className="market-growth__chart">
+          <div className="market-growth__chart-container">
+            <h3 className="market-growth__chart-title">Market Size by 2030</h3>
+            <div className="market-growth__bars">
+              {marketData.map((data, index) => {
+                const currentWidth = (data.current / maxValue) * 100;
+                const projectedWidth = (data.projected / maxValue) * 100;
+                
+                const initialCurrentWidth = currentWidth * 0.3;
+                const initialProjectedWidth = projectedWidth * 0.3;
+
+                return (
+                  <div key={index} className="market-growth__bar-group">
+                    <div className="market-growth__bar-label">{data.label}</div>
+                    <div className="market-growth__bar-container">
+                      <div className="market-growth__bar-track">
+                        {data.current > 0 && (
+                          <div 
+                            className="market-growth__bar market-growth__bar-current"
+                            style={{ 
+                              backgroundColor: data.color,
+                              width: isVisible ? `${currentWidth}%` : `${initialCurrentWidth}%`,
+                              transitionDelay: `${index * 0.15}s`
+                            }}
+                          />
+                        )}
+                        <div 
+                          className="market-growth__bar market-growth__bar-projected"
+                          style={{ 
+                            backgroundColor: data.color, 
+                            opacity: 0.7,
+                            width: isVisible ? `${projectedWidth}%` : `${initialProjectedWidth}%`,
+                            transitionDelay: `${index * 0.15 + (data.current > 0 ? 0.2 : 0)}s`
+                          }}
+                        />
+                      </div>
+                      <div className="market-growth__values">
+                        {data.current > 0 && (
+                          <span className="market-growth__value market-growth__value-current">
+                            <AnimatedNumber value={data.current} unit={data.unit} isVisible={isVisible} delay={index * 150} />
+                          </span>
+                        )}
+                        <span className="market-growth__value market-growth__value-projected">
+                           <AnimatedNumber value={data.projected} unit={data.unit} isVisible={isVisible} delay={index * 150 + (data.current > 0 ? 200 : 0)} />
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="market-growth__values">
-                    {data.current > 0 && (
-                      <span className={`market-growth__value market-growth__value-current-${index}`}>
-                        $0{data.unit}
-                      </span>
-                    )}
-                    <span className={`market-growth__value market-growth__value-projected market-growth__value-projected-${index}`}>
-                      $0{data.unit}
-                    </span>
-                  </div>
-                </div>
+                )
+              })}
+            </div>
+            <div className="market-growth__legend">
+              <div className="market-growth__legend-item">
+                <div className="market-growth__legend-color" style={{ backgroundColor: '#966f33' }}></div>
+                <span>Current Market Size</span>
               </div>
-            ))}
-          </div>
-          <div className="market-growth__legend">
-            <div className="market-growth__legend-item">
-              <div className="market-growth__legend-color" style={{ backgroundColor: '#966f33' }}></div>
-              <span>Current Market Size</span>
-            </div>
-            <div className="market-growth__legend-item">
-              <div className="market-growth__legend-color" style={{ backgroundColor: '#966f33', opacity: 0.7 }}></div>
-              <span>Projected by 2030</span>
+              <div className="market-growth__legend-item">
+                <div className="market-growth__legend-color" style={{ backgroundColor: '#966f33', opacity: 0.7 }}></div>
+                <span>Projected by 2030</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

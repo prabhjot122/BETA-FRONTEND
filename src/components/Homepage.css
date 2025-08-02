@@ -217,10 +217,132 @@ code {
 }
 
 .homepage2 {
-  height: 100vh;
-  width: 100vw;
+  background-color: #FDFBF4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  padding: clamp(2rem, 5vw, 4rem);
+  box-sizing: border-box;
+}
+
+.homepage__feature-card {
+  background: #FFF8E4;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 1200px;
+  height: 600px;
+  max-height: 80vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.homepage__feature-image {
+  width: 50%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  will-change: opacity;
+}
+
+.homepage__content-engine-content {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: clamp(2rem, 4vw, 4rem);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.homepage__feature-content-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(2rem, 4vw, 4rem);
+  box-sizing: border-box;
+  gap: 2rem;
+  /* GSAP will manage visibility and opacity */
+}
+
+.homepage__content-engine-title {
+  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  color: #966f33;
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.homepage__content-engine-description {
+  font-family: "Source Sans Pro", sans-serif;
+  color: black;
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  line-height: 1.6;
+}
+
+.homepage__feature-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.homepage__feature-bullets li {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+  color: black;
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
+  line-height: 1.5;
+}
+
+.homepage__feature-bullets li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #3c1f13;
+  font-size: 1.5em;
+  line-height: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .homepage2 {
+    height: auto;
+    padding: 2rem 1rem;
+  }
+  .homepage__feature-card {
+    flex-direction: column;
+    height: auto;
+    max-height: none;
+  }
+  .homepage__feature-image,
+  .homepage__content-engine-content {
+    width: 100%;
+  }
+  .homepage__feature-image {
+    height: 300px;
+  }
+  .homepage__content-engine-content {
+    height: auto;
+    min-height: 350px;
+    padding: 2rem 1.5rem;
+  }
 }
 
 .homepage3 {
@@ -295,6 +417,13 @@ code {
   position: relative;
   gap: clamp(1rem, 2vw, 1.25rem);
   align-items: center;
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+}
+
+.homepage__feature-item:hover {
+  transform: translateY(-4px) scale(1.02);
+  cursor: pointer;
 }
 
 /* Mobile styles for feature items */
@@ -655,11 +784,41 @@ code {
   }
 }
 .homepage__hero {
-  background-color: #fefaef;
+  background-color: transparent; /* Make original background transparent */
   display: flex;
   justify-content: center;
   align-items: end;
   box-shadow: 0px 4px 47.7px 0px rgba(0, 0, 0, 0.25);
+  position: relative; /* Required for pseudo-element positioning */
+  transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.homepage__hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0; /* Sit behind the content */
+  background-color: #fefaef; /* The actual background color */
+  opacity: 1;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* When a feature is hovered, dim the background and soften the shadow */
+.homepage.feature-hovered .homepage__hero {
+  box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
+.homepage.feature-hovered .homepage__hero::before {
+  opacity: 0.5; /* This creates the "dull" effect on the background only */
+}
+
+/* Ensure all direct children of .homepage__hero are rendered above the pseudo-element */
+.homepage__hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Mobile styles for hero */
@@ -931,7 +1090,8 @@ code {
     padding: var(--space-md);
     height: auto;
     min-height: auto;
-    justify-content: flex-start;
+    margin-top: 4rem;
+    justify-content: flex;
     gap: var(--space-lg);
     order: 1;
   }
@@ -1100,15 +1260,38 @@ code {
   }
 }
 
+/* --- Optimization: Set a stable height and use flexbox to center content, preventing CLS --- */
+.homepage__content-engine-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the content */
+  position: relative;
+  padding: clamp(2rem, 4vw, 4rem);
+  width: 50%; /* Corrected width from 60% to 50% */
+  height: 500px; /* Fixed height to prevent layout shift */
+  overflow: hidden; /* Hide any content that might overflow */
+}
+
+/* Mobile styles for content engine content */
+@media (max-width: 1024px) {
+  .homepage__content-engine-content {
+    width: 100%;
+    height: auto; /* Allow height to be flexible on mobile/tablet */
+    min-height: 320px;
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+  }
+}
+
 .homepage__feature-image {
-  background-image: url("/feature1.png");
   background-size: cover;
   background-position: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
-  transition: background-image 0.3s ease;
-  
-  
+  width: 50%; /* Corrected width */
+  height: 500px; /* Fixed height to match content */
+  /* --- Optimization: Use will-change to hint animations to the browser --- */
+  will-change: opacity;
+  transition: opacity 0.3s ease-in-out;
 }
 
 /* Mobile styles for feature image */
@@ -1128,211 +1311,14 @@ code {
   }
 }
 
-/* Preserve exact desktop layout at 1025px and above */
-@media (min-width: 1025px) {
-  .homepage__feature-image {
-    /* Card-based layout */
-    width: 50%;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    height: 100%;
-    min-height: 500px;
-  }
-}
-
-.homepage__content-engine-ratings {
-  display: inline-flex;
-  gap: clamp(0.25rem, 0.5vw, 0.375rem);
-  align-items: center;
-  justify-content: center;
-  height: auto;
-  
-  width: auto;
-}
-
-/* Mobile styles for content engine ratings */
-@media (max-width: 767px) {
-  .homepage__content-engine-ratings {
-    justify-content: center;
-    margin: var(--space-md) auto;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  .homepage__content-engine-ratings {
-    justify-content: center;
-    margin: var(--space-lg) auto;
-  }
-}
-
-/* Preserve exact desktop layout at 1025px and above */
-@media (min-width: 1025px) {
-  .homepage__content-engine-ratings {
-    /* Exact desktop positioning preserved */
-    gap: 6px;
-    height: 37px;
-    width: 124px;
-  }
-}
-
-.homepage__content-engine-rating-star {
-  object-fit: cover;
-  position: relative;
-  aspect-ratio: 38/37;
-  /* Responsive sizing */
-  height: clamp(24px, 3vw, 37px);
-  width: clamp(24px, 3vw, 38px);
-}
-
-/* Preserve exact desktop layout at 1025px and above */
-@media (min-width: 1025px) {
-  .homepage__content-engine-rating-star {
-    /* Exact desktop positioning preserved */
-    height: 37px;
-    width: 38px;
-  }
-}
-
-.homepage__content-engine-content {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  flex-shrink: 0;
-  z-index: 2;
-  position: relative;
-  gap: clamp(2rem, 4vw, 3.5rem);
-  padding: clamp(2rem, 4vw, 4rem);
-  width: 60%;
-  height: auto;
-  min-height: 500px;
-}
-
-/* Mobile styles for content engine content */
-@media (max-width: 767px) {
-  .homepage__content-engine-content {
-    width: 100%;
-    height: auto;
-    padding: 2rem 1.5rem;
-    text-align: left;
-    gap: 1.5rem;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  .homepage__content-engine-content {
-    width: 100%;
-    height: auto;
-    padding: 2.5rem 2rem;
-    text-align: left;
-    gap: 2rem;
-  }
-}
-
-/* Preserve exact desktop layout at 1025px and above */
-@media (min-width: 1025px) {
-  .homepage__content-engine-content {
-    /* Card-based layout */
-    width: 60%;
-    height: auto;
-    padding: 3rem 4rem;
-    gap: 2.5rem;
-  }
-}
-
-.homepage__content-engine-title {
-  position: relative;
-  align-self: stretch;
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
-  color: #3c1f13;
-  /* Responsive font size */
-  font-size: clamp(2rem, 4vw + 0.5rem, 4.5rem);
-  line-height: 1.1;
-}
-
-/* Mobile styles for content engine title */
-@media (max-width: 767px) {
-  .homepage__content-engine-title {
-    font-size: clamp(1.75rem, 6vw, 2.5rem);
-    text-align: center;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  .homepage__content-engine-title {
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
-    text-align: center;
-  }
-}
-
-/* Preserve exact desktop layout at 1025px and above */
-@media (min-width: 1025px) {
-  .homepage__content-engine-title {
-    /* Exact desktop positioning preserved */
-    font-size: 35px;
-    line-height: 40.39px;
-  }
-}
-
-.homepage__content-engine-title-text {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
-  color: #966F33;
-  /* Inherit responsive sizing from parent */
-  font-size: inherit;
-}
-
-.homepage__content-engine-description {
-  position: relative;
-  font-weight: 300;
-  color: black;
-  /* Responsive font size and width */
-  font-size: clamp(1rem, 1.5vw + 0.25rem, 2rem);
-  line-height: 1.3;
-  max-width: 480px;
-  width: 100%;
-}
-
-/* Mobile styles for content engine description */
-@media (max-width: 767px) {
-  .homepage__content-engine-description {
-    font-size: clamp(0.875rem, 4vw, 1.125rem);
-    max-width: none;
-    text-align: center;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  .homepage__content-engine-description {
-    font-size: clamp(1.125rem, 3vw, 1.5rem);
-    max-width: 600px;
-    text-align: center;
-  }
-}
-
-/* Preserve exact desktop layout at 1025px and above */
-@media (min-width: 1025px) {
-  .homepage__content-engine-description {
-    /* Exact desktop positioning preserved */
-    font-size: 14px;
-    line-height: 30px;
-    width: 430px;
-  }
-}
-
-.homepage__content-engine-description-text {
-  color: black;
-  /* Inherit responsive sizing from parent */
-  font-size: inherit;
-}
-
 .homepage__feature-content-item {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   position: absolute;
-  
   top: 0;
-  left: 3;
+  left: 0; /* Corrected from 'left: 3' */
   align-content: center;
   justify-content: center;
   gap: clamp(2rem, 4vw, 3.5rem);
@@ -1340,7 +1326,9 @@ code {
   transform: translateY(20px);
   pointer-events: none;
   z-index: 1;
-  padding: 0;
+  padding: clamp(2rem, 4vw, 4rem); /* Add padding to match parent */
+  /* --- Optimization: Use will-change to hint animations to the browser --- */
+  will-change: opacity, transform;
 }
 
 .homepage__feature-content-item:first-child {
@@ -2323,7 +2311,7 @@ code {
     overflow: visible;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     z-index: 15;
-    min-height: 100vh;
+    height: 100%;
     width: 100%;
   }
 
@@ -2384,6 +2372,10 @@ code {
     /* Exact desktop positioning preserved */
     padding-top: 111px;
     padding-left: 162px;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+
   }
 }
 
@@ -2513,6 +2505,7 @@ code {
   padding: 0 162px;
   margin-bottom: 20px;
   transition: all 0.3s ease;
+  width: fit-content;
 }
 
 /* Mobile styles for person info */
