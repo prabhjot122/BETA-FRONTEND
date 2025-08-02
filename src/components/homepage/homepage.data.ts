@@ -65,7 +65,7 @@ export const testimonialsData = [
           id: 6,
           name: "Dr. Vartika Pandey",
           credentials: "Professor, MUJ",
-          image: "/testimonial.jpg",
+          image: "/suhanijain.webp",
           testimonials: [
             "The most significant investment of time in my writing process is dedicated to the rigorous task of plagiarism removal. This crucial step ensures the absolute credibility and originality of the final work."
           ]
