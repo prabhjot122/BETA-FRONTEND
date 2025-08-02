@@ -122,8 +122,6 @@ export default function WhyUs() {
           <div
             ref={carouselRef}
             className="homepage__why-us-features homepage__why-us-carousel"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
           >
             <div data-carousel-position="top" className="homepage__feature-item-container homepage__carousel-item" onClick={() => navigateToFeature('up')}>
               <FeatureItem {...features[getPreviousIndex()]} />

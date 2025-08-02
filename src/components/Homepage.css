@@ -2322,6 +2322,7 @@ code {
 
 .homepage__testimonials-content {
   width: 100%;
+  justify-items: start;
 }
 
 /* Mobile styles for testimonials content */
@@ -2346,6 +2347,9 @@ code {
 }
 
 .homepage__testimonials-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: start;
   max-width: 100%;
   line-height: 1;
   color: #5d4037;
