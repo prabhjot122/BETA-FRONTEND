@@ -129,7 +129,13 @@
   color: rgba(0, 0, 0, 0.9);
   font-size: 16px;
 }
-
+.logo-container {
+  background-image: url('/logo3.png');
+  width: 22px;
+  height: 22px;
+  margin-right: 5px;
+  background-size:cover;
+}
 .navbar--scrolled .navbar__nav-link:hover {
   color: #966F33;
 }
@@ -149,6 +155,14 @@
     padding: 20px;
     width: calc(100vw - 40px);
     height: auto;
+  }
+  .text-container {
+    display: none;
+  }
+  .logo-container{
+    width: 30px;
+    height: 30px;
+    padding-right: 10px;
   }
 
   .navbar--scrolled {

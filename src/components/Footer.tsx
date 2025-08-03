@@ -9,7 +9,7 @@ export default function Footer() {
           <div className="footer__brand-section">
             <div className="footer__brand">
               <div className="footer__logo">
-                <img src="/logo2.png" alt="LawVriksh Logo" className="footer__logo-image" />
+                <img src="/logo3.png" alt="LawVriksh Logo" className="footer__logo-image" />
               </div>
               <span className="footer__brand-text">LawVriksh</span>
             </div>

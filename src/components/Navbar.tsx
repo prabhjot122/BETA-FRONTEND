@@ -196,7 +196,12 @@ export default function Navbar({ onJoinWaitlist }: NavbarProps) {
   return (
     <nav className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
       <a href="/" onClick={() => window.location.reload()} className="navbar__brand">
+      <div className='logo-container'>
+
+      </div>
+      <div className='text-container'>
         LawVriksh
+        </div>
       </a>
 
       <div className="navbar__content">

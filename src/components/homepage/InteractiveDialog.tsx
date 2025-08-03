@@ -41,7 +41,7 @@ const InteractiveDialog = ({ hoveredFeature, onDialogEnter, onDialogLeave }: Int
               </div>
             </div>
             <div className="dialog__header-logo">
-              <img src="/logo2.png" alt="LawVriksh Logo" className="dialog__logo-image" />
+              <img src="/logo3.png" alt="LawVriksh Logo" className="dialog__logo-image" />
             </div>
           </div>
         </div>
