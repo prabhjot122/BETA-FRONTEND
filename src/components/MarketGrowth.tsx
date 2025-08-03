@@ -18,7 +18,7 @@ const AnimatedNumber = ({ value, unit, isVisible, delay = 0 }: { value: number; 
         if (isVisible && !started.current) {
             setTimeout(() => {
                 started.current = true;
-                let start = 0;
+                const start = 0;
                 const end = value;
                 const duration = 1500;
                 let startTime: number | null = null;

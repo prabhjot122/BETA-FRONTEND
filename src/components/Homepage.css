@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;1,400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap");
 
@@ -280,7 +279,7 @@ code {
 }
 
 .homepage__content-engine-title {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   color: #966f33;
   font-size: clamp(2rem, 3vw, 2.75rem);
   line-height: 1.2;
@@ -288,7 +287,7 @@ code {
 }
 
 .homepage__content-engine-description {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   color: black;
   font-size: clamp(1rem, 1.5vw, 1.125rem);
   line-height: 1.6;
@@ -298,7 +297,7 @@ code {
   list-style: none;
   padding: 0;
   margin: 0;
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
 }
 
 .homepage__feature-bullets li {
@@ -517,7 +516,7 @@ code {
 .homepage__feature-title {
   position: relative;
   align-self: stretch;
-  font-family: "Battambang", sans-serif;
+  font-family: 'Playfair Display', serif;
   letter-spacing: -0.05em;
   /* Responsive font size */
   font-size: clamp(1.125rem, 1.5vw + 0.25rem, 1.5rem);
@@ -536,7 +535,7 @@ code {
 @media (min-width: 1025px) {
   .homepage__feature-title {
     /* Exact desktop positioning preserved */
-    font-size: 18px;
+    font-size: 20px;
     line-height: 18px;
   }
 }
@@ -544,7 +543,7 @@ code {
 .homepage__feature-description {
   position: relative;
   align-self: stretch;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   letter-spacing: -0.05em;
   color: #966f33;
   /* Responsive font size */
@@ -600,9 +599,9 @@ code {
   gap: 12px;
   align-items: center;
   justify-content: center;
-  font-family: 'Battambang', sans-serif;
-  font-size: 18px;
-  font-weight: 600;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 500;
   color: #fdfbf4;
   letter-spacing: 0.05em;
   text-align: center;
@@ -614,7 +613,7 @@ code {
 }
 
 .homepage__divider-word {
-  font-family: 'Battambang', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 18px;
   font-weight: 700;
   color: #fdfbf4;
@@ -738,7 +737,7 @@ code {
 
 .homepage__hero-title {
   flex-shrink: 0;
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   color: #5D4037;
   /* Responsive font size using clamp for smooth scaling */
   font-size: clamp(2.5rem, 4vw + 1rem, 6rem);
@@ -981,7 +980,7 @@ code {
 .homepage__main-title {
   position: relative;
   align-self: stretch;
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   letter-spacing: -0.05em;
   color: #b99c6d;
   /* Responsive font size */
@@ -1504,7 +1503,7 @@ code {
 }
 
 .homepage__why-us-title {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   color: #966f33;
   /* Responsive font size */
   font-size: clamp(3rem, 6vw + 1rem, 8rem);
@@ -1983,7 +1982,7 @@ code {
 }
 
 .homepage__feature-item-title {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   letter-spacing: -0.025em;
   width: fit-content;
   color: #966f33;
@@ -2027,7 +2026,7 @@ code {
 }
 
 .homepage__feature-item-description {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   color: black;
   /* Responsive font size and spacing */
   font-size: clamp(0.875rem, 1.2vw + 0.25rem, 1.25rem);
@@ -2198,7 +2197,7 @@ code {
   color: white;
   padding: 4px 8px;
   font-size: 12px;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-weight: 500;
   white-space: nowrap;
   border-radius: 0;
@@ -2381,7 +2380,7 @@ code {
 
 .homepage__testimonials-title {
   letter-spacing: 2px;
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   color: #5d4037;
   /* Responsive font size */
   font-size: clamp(2rem, 3vw + 0.5rem, 3rem);
@@ -2415,7 +2414,7 @@ code {
   background-image: url("/qoutation.png");
   background-size: cover;
   background-position: center;
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   color: #966f33;
   width: clamp(30px, 4vw, 50px);
   height: clamp(24px, 3.2vw, 40px);
@@ -2495,8 +2494,9 @@ code {
 }
 
 .homepage__testimonials-quote-text {
-  font-family: "Instrument Serif", serif;
-  font-weight: 200;
+  font-family: "Spirax", system-ui;
+  font-weight: 400;
+  font-style: normal;
   transition: all 0.3s ease;
 }
 
@@ -2526,7 +2526,7 @@ code {
 }
 
 .homepage__testimonials-person-name {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   font-size: clamp(1.25rem, 2vw + 0.5rem, 1.75rem);
   font-weight: bold;
   color: #5d4037;
@@ -2566,7 +2566,7 @@ code {
   color: white;
   padding: 12px 16px;
   
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: 0.875rem;
   text-align: center;
   backdrop-filter: blur(5px);
@@ -2841,7 +2841,7 @@ code {
 
 .homepage__team-testimonial-title {
   position: relative;
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   letter-spacing: -0.025em;
   color: #966f33;
   /* Responsive font size */
@@ -3028,7 +3028,7 @@ code {
   position: relative;
   align-self: stretch;
   color: #650a0a;
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   /* Responsive font size */
   font-size: clamp(2.5rem, 5vw + 0.5rem, 6rem);
   line-height: 1.1;
@@ -3069,7 +3069,7 @@ code {
   font-weight: 300;
   letter-spacing: -0.025em;
   color: #71717a;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   /* Responsive font size */
   font-size: clamp(0.875rem, 1.2vw + 0.25rem, 1.25rem);
   line-height: 1.4;
@@ -3117,8 +3117,9 @@ code {
   font-size: 20px;
   letter-spacing: 0.05em;
   line-height: 24px;
+  font-weight: 400;
   color: white;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: 'Playfair Display', serif;
 }
 
 .homepage__cta-image {
@@ -3328,7 +3329,7 @@ img {
   transform: translate(-50%, -50%);
   width: 70vw;
   opacity: 0;
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-style: italic;
   font-size: clamp(1.1rem, 2.2vw, 1.8rem);
   line-height: 1.7;
@@ -3546,7 +3547,7 @@ img {
 }
 
 .market-growth__title {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   color: #5D4037;
   font-size: clamp(3rem, 6vw + 1rem, 8rem);
   line-height: 1.1;
@@ -3566,7 +3567,7 @@ img {
 /* Mobile title adjustments */
 @media (max-width: 767px) {
   .market-growth__title {
-    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-size: 40px;
     margin:0;
   }
   .market-growth__chart-title{
@@ -3646,7 +3647,7 @@ img {
 }
 
 .market-growth__chart-title {
-  font-family: "Battambang", sans-serif;
+  font-family: 'Playfair Display', serif;
   color: #966f33;
  
   margin-bottom: clamp(0.5rem, 2vw, 1rem);
@@ -3679,7 +3680,7 @@ img {
 }
 
 .market-growth__bar-label {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-weight: 600;
   color: #333;
   font-size: clamp(0.875rem, 1.5vw, 1rem);
@@ -3736,7 +3737,7 @@ img {
 }
 
 .market-growth__value {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-weight: 600;
   color: #966f33;
   font-size: clamp(0.75rem, 1.2vw, 0.875rem);
@@ -3763,7 +3764,7 @@ img {
 }
 
 .market-growth__legend-item span {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   color: #666;
   font-size: clamp(0.75rem, 1.2vw, 0.875rem);
 }
@@ -4044,7 +4045,7 @@ img {
 }
 
 .dialog__title {
-  font-family: "Battambang", sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 28px;
   font-weight: 700;
   color: #966f33;
@@ -4054,7 +4055,7 @@ img {
 }
 
 .dialog__header-subtitle {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: 14px;
   font-weight: 400;
   color: #666;
@@ -4187,7 +4188,7 @@ img {
 }
 
 .dialog__card-number span {
-  font-family: "Battambang", sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 14px;
   font-weight: 700;
   color: white;
@@ -4195,7 +4196,7 @@ img {
 }
 
 .dialog__card-title {
-  font-family: "Battambang", sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 16px;
   font-weight: 600;
   color: #937643;
@@ -4210,7 +4211,7 @@ img {
 
 /* Name styling for testimonials */
 .dialog__card-name {
-  font-family: "Battambang", sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 16px;
   font-weight: 700;
   color: #937643;
@@ -4220,7 +4221,7 @@ img {
 
 /* Profession styling for testimonials */
 .dialog__card-profession {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: 12px;
   font-weight: 400;
   color: #666;
@@ -4236,7 +4237,7 @@ img {
 }
 
 .dialog__card-description {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: 13px;
   font-weight: 400;
   color: #2c2c2c;
@@ -4306,7 +4307,7 @@ img {
 }
 
 .dialog__quote-mark {
-  font-family: "Battambang", serif;
+  font-family: 'Playfair Display', serif;
   font-size: 28px;
   color: #937643;
   line-height: 1;
@@ -4319,7 +4320,7 @@ img {
 }
 
 .dialog__quote-text {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: 13px;
   font-weight: 400;
   color: #2c2c2c;
@@ -4330,7 +4331,7 @@ img {
 }
 
 .dialog__testimonial-attribution {
-  font-family: "Battambang", sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 13px;
   font-weight: 600;
   color: #937643;
@@ -4420,7 +4421,7 @@ img {
 }
 
 .dialog__footer-text {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: 12px;
   font-weight: 400;
   color: #666;
@@ -4697,7 +4698,7 @@ img {
 }
 
 .founding-member-perks__title {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   color: #966f33;
   font-size: clamp(3rem, 6vw + 1rem, 8rem);
   line-height: 1.1;
@@ -4725,7 +4726,7 @@ img {
 }
 
 .founding-member-perks__perk-title {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   color: #3c1f13;
   font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
   line-height: 1.2;
@@ -4735,7 +4736,7 @@ img {
 }
 
 .founding-member-perks__perk-description {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   color: #333;
   font-size: clamp(1.25rem, 2.5vw + 0.5rem, 2rem);
   line-height: 1.6;

@@ -4,7 +4,7 @@
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
 }
 
 /* Enhanced Mobile CTA Section Styles */
@@ -215,7 +215,7 @@
 }
 
 .homepage-mobile__hero-title {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   font-size: clamp(36px, 8vw, 70px);
   line-height: 1.1;
   color: #5D4037;
@@ -269,7 +269,7 @@
 }
 
 .homepage-mobile__feature-description {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: 15px;
   color: #000000;
   margin: 0;
@@ -297,7 +297,7 @@
 }
 
 .homepage-mobile__hero-subtitle {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   font-size: 20px;
   color: #b99c6d;
   margin: 0;
@@ -434,7 +434,7 @@
 }
 
 .homepage-mobile__section-title {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   font-size: 40px;
   font-weight: 400;
   color: #3c1f13;
@@ -465,7 +465,7 @@
 }
 
 .homepage-mobile__content-description {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: 16px;
   color: #3c1f13;
   margin: 0;
@@ -491,7 +491,7 @@
 }
 
 .homepage-mobile__team-title {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   font-size: clamp(28px, 6vw, 36px);
   color: #966f33;
   margin: 0 0 40px 0;
@@ -582,7 +582,7 @@
 }
 
 .homepage-mobile__rating-text {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: 12px;
   color: #666;
   margin: 0;
@@ -787,7 +787,7 @@
 }
 
 .homepage-mobile__dialog-item {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: 14px;
   line-height: 1.4;
   color: #333;
@@ -862,7 +862,7 @@
 }
 
 .homepage-mobile .founding-member-perks__title-static {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   color: #966f33;
   font-size: clamp(2.5rem, 8vw, 4rem);
   line-height: 1.1;
@@ -892,7 +892,7 @@
 }
 
 .homepage-mobile .founding-member-perks__perk-title-static {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   color: #3c1f13;
   font-size: clamp(1.5rem, 5vw, 2rem);
   line-height: 1.2;
@@ -902,7 +902,7 @@
 }
 
 .homepage-mobile .founding-member-perks__perk-description-static {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   color: #333;
   font-size: clamp(0.9rem, 3.5vw, 1.1rem);
   line-height: 1.6;
@@ -932,7 +932,7 @@
 }
 
 .homepage-mobile .founding-member-perks__title {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   color: #966f33;
   font-size: clamp(2.5rem, 8vw, 4rem);
   line-height: 1.1;
@@ -960,7 +960,7 @@
 }
 
 .homepage-mobile .founding-member-perks__perk-title {
-  font-family: "Baskerville Old Face", "Times New Roman", serif;
+  font-family: 'Playfair Display', serif;
   color: #3c1f13;
   font-size: clamp(1.75rem, 6vw, 2.5rem);
   line-height: 1.2;
@@ -970,7 +970,7 @@
 }
 
 .homepage-mobile .founding-member-perks__perk-description {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   color: #333;
   font-size: clamp(1rem, 4vw, 1.25rem);
   line-height: 1.6;
@@ -1217,12 +1217,12 @@
 }
 
 .homepage-mobile__testimonials-title {
-  font-family: "Baskerville Old Face", serif;
+  font-family: 'Playfair Display', serif;
   font-size: clamp(1.5rem, 5vw, 2rem);
   color: #966f33;
   margin-bottom: 0.5rem;
   line-height: 1.2;
-  font-weight: 600;
+  font-weight: 400;
   opacity: 1; /* Ensure visibility by default */
 }
 
@@ -1295,7 +1295,7 @@
   padding: 6px 12px;
   border-radius: 15px;
   font-size: 0.75rem;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   backdrop-filter: blur(10px);
   opacity: 0.9;
   transition: all 0.3s ease;
@@ -1322,7 +1322,7 @@
 }
 
 .homepage-mobile__person-name {
-  font-family: "Baskerville Old Face", serif;
+  font-family: 'Playfair Display', serif;
   font-size: clamp(1.25rem, 4vw, 1.4rem);
   color: #333333;
   font-weight: 600;
@@ -1331,7 +1331,7 @@
 }
 
 .homepage-mobile__person-credentials {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: clamp(0.75rem, 2.5vw, 0.85rem);
   color: #966f33;
   line-height: 1.4;

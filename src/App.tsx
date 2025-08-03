@@ -8,6 +8,7 @@ import ForgotPassword from './components/ForgotPassword'
 import ResetPassword from './components/ResetPassword'
 import ProtectedRoute from './components/ProtectedRoute'
 import NotFound from './components/NotFound'
+import PrivacyPolicy from './components/PrivacyPolicy'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/thank-you" element={<ThankYou />} />
         <Route path="/demo-thank-you" element={<ThankYou />} />
         <Route path="/feedback" element={<Feedback />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />

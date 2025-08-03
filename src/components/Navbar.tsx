@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+
 import Button from './Button';
 import './Navbar.css';
 import { gsap } from 'gsap';
@@ -164,7 +164,7 @@ const Navigation = () => {
       <span className="navbar__nav-separator"> • </span>
       <a href="#contact-us" className="navbar__nav-link" onClick={(e) => handleSmoothScroll(e, 'contact-us')}>Contact Us</a>
       <span className="navbar__nav-separator"> • </span>
-      <a href="#why-us" className="navbar__nav-link" onClick={(e) => handleSmoothScroll(e, 'why-us')}>Why Us</a>
+      <a href="/privacy-policy" className="navbar__nav-link">Privacy Policy</a>
     </div>
   );
 };
@@ -195,9 +195,9 @@ export default function Navbar({ onJoinWaitlist }: NavbarProps) {
 
   return (
     <nav className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
-      <Link to="/" className="navbar__brand">
+      <a href="/" onClick={() => window.location.reload()} className="navbar__brand">
         LawVriksh
-      </Link>
+      </a>
 
       <div className="navbar__content">
         <Navigation />

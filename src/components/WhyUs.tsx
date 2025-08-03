@@ -90,7 +90,7 @@ export default function WhyUs() {
             text-align: center; 
             margin-bottom: 2rem; 
             color: #b99c6d; 
-            font-family: "Baskerville Old Face", "Times New Roman", serif;
+            font-family: 'Playfair Display', serif;
             line-height: 1.1;
           }
           .why-us-mobile__features { 

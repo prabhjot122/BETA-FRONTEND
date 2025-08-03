@@ -567,7 +567,8 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
         "You spend up to 60% of your time on research and content creation.",
         "Our legal-specific AI, trained on Indian compliance and frameworks, automates your drafting process",
         "It's more than a tool; it's an integrated engine for writing, research, and SEO optimization that frees you to focus on what truly matters—your expertise."
-      ]
+      ],
+      image: "/feature1.webp"
     },
     {
       title: "Beyond the Billable Hour: The Monetization Hub",
@@ -575,7 +576,8 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
         "The $191.6 billion creator economy has largely excluded legal professionals. We're correcting this.",
         "Our platform provides the first direct path from legal expertise to sustainable revenue.",
         "With a credit-based economy and tools for premium subscriptions, you can finally build income streams beyond the traditional billable hour."
-      ]
+      ],
+      image: "/feature4.webp"
     },
     {
       title: "Your Digital Gavel: The Automated Portfolio",
@@ -583,7 +585,8 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
         "While 73% of legal professionals use digital tools, they lack a single, comprehensive system to showcase their expertise.",
         "Our Automated Portfolio Builder creates a credible, SEO-optimized digital presence for you.",
         "Combined with our Professional Verification System, you don't just get found—you get trusted."
-      ]
+      ],
+      image: "/feature2.webp"
     },
     {
       title: "An All-India Reach: The Multilingual Engine",
@@ -591,7 +594,8 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
         "Your insights are too valuable to be confined to one language.",
         "Our platform's multi-language support allows you to create and disseminate your work across India's diverse linguistic landscape.",
         "Reach a wider audience, connect with more clients, and build a truly national reputation."
-      ]
+      ],
+      image: "/feature3.webp"
     }
   ];
 
@@ -677,36 +681,37 @@ const HomepageMobile = ({ onJoinWaitlist: _onJoinWaitlist }: HomepageMobileProps
 
       {/* Content Creation Section - Static Vertical Layout */}
       <section className="homepage-mobile__content-section-static">
-        {featureContents.map((feature, index) => (
-          <div key={index} className="homepage-mobile__feature-container">
-            <div className="homepage-mobile__feature-image-container">
-              <div
-                className="homepage-mobile__feature-image-static"
-                style={{
-                  backgroundImage: `url("/feature${index + 1}.webp")`
-                }}
-              ></div>
-            </div>
+  {featureContents.map((feature, index) => (
+    <div key={index} className="homepage-mobile__feature-container">
+      <div className="homepage-mobile__feature-image-container">
+        <div
+          className="homepage-mobile__feature-image-static"
+          style={{
+            // MODIFIED: Use the imageUrl from your data
+            backgroundImage: `url("${feature.image}")` 
+          }}
+        ></div>
+      </div>
 
-            <div className="homepage-mobile__feature-content-static">
-              <h2 className="homepage-mobile__section-title">
-                {feature.title.split(':')[0]}:<br />{feature.title.split(':')[1]}
-              </h2>
+      <div className="homepage-mobile__feature-content-static">
+        <h2 className="homepage-mobile__section-title">
+          {feature.title.split(':')[0]}:<br />{feature.title.split(':')[1]}
+        </h2>
 
-              <div className="homepage-mobile__content-features">
-                {feature.bullets.map((bullet, bulletIndex) => (
-                  <div key={bulletIndex} className="homepage-mobile__content-feature">
-                    <span className="homepage-mobile__content-icon">•</span>
-                    <p className="homepage-mobile__content-description">
-                      {bullet}
-                    </p>
-                  </div>
-                ))}
-              </div>
+        <div className="homepage-mobile__content-features">
+          {feature.bullets.map((bullet, bulletIndex) => (
+            <div key={bulletIndex} className="homepage-mobile__content-feature">
+              <span className="homepage-mobile__content-icon">•</span>
+              <p className="homepage-mobile__content-description">
+                {bullet}
+              </p>
             </div>
-          </div>
-        ))}
-      </section>
+          ))}
+        </div>
+      </div>
+    </div>
+  ))}
+</section>
 
       {/* Decorative Strip Divider */}
       <div className="homepage__divider-strip">

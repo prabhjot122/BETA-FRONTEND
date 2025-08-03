@@ -6,8 +6,8 @@
   padding: 20px 32px;
   border: 2px solid transparent;
   cursor: pointer;
-  font-family: 'Merriweather', serif;
-  font-weight: bold;
+  font-family: 'Playfair Display', serif;
+  
   letter-spacing: 0.05em;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -41,6 +41,7 @@
 .button--primary {
   background-color: #927D70;
   color: white;
+  
   border-color: #927D70;
 }
 
@@ -95,13 +96,13 @@
 /* Sizes */
 .button--small {
   padding: 12px 24px;
-  font-size: 14px;
+  font-size: 17px;
   line-height: 16px;
 }
 
 .button--medium {
   padding: 20px 32px;
-  font-size: 16px;
+  font-size: 20px;
   line-height: 16px;
   height: 40px;
   min-width: 156px;
@@ -109,7 +110,7 @@
 
 .button--large {
   padding: 20px 32px;
-  font-size: 20px;
+  font-size: 25px;
   line-height: 24px;
   letter-spacing: 0.1em;
   height: 65px;
