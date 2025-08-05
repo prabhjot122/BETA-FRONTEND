@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import Button from './Button';
 import { feedbackService, FeedbackSubmission } from '../services/feedbackService';
+import SEO from './SEO';
+import { seoData } from '../utils/seoData';
 import './Feedback.css';
 
 interface FeedbackFormData {
@@ -196,6 +198,13 @@ const Feedback: React.FC = () => {
 
   return (
     <div className="feedback">
+      <SEO
+        title={seoData.feedback.title}
+        description={seoData.feedback.description}
+        keywords={seoData.feedback.keywords}
+        url={seoData.feedback.url}
+        structuredData={seoData.feedback.structuredData}
+      />
       <div className="feedback__container">
         {/* Header */}
         <div className="feedback__header">

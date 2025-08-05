@@ -53,7 +53,32 @@
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
+.privacy-policy .navbar {
+  flex-direction: row !important;
+  gap: 0 !important;
+  height: 59px !important;
+  padding-right: 20px !important;
+  padding-right: 20px !important;
+  padding-left: 20px !important;
+  padding-bottom: 20px !important;
 
+ 
+}
+
+.privacy-policy .navbar__content {
+  flex-direction: row !important;
+  gap: 20px !important;
+  justify-content: flex-end !important;
+}
+
+.privacy-policy .navbar__nav {
+  display: none !important; /* Hide navigation links on mobile for cleaner look */
+}
+
+.privacy-policy .navbar__brand {
+  font-size: 28px !important;
+  text-align: left !important;
+}
 .privacy-policy__subtitle {
   font-family: "Roboto Flex", sans-serif;
   
@@ -285,7 +310,8 @@
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .privacy-policy__hero {
-    padding: 100px 0 60px 0;
+    padding: 50px 0 60px 0;
+
   }
 
   .privacy-policy__hero-content {
@@ -344,6 +370,13 @@
 @media (max-width: 480px) {
   .privacy-policy__hero {
     padding: 80px 0 50px 0;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100vw;
+  }
+  .navbar{
+    width: 100vw;
   }
 
   .privacy-policy__hero-content {

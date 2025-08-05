@@ -5,6 +5,8 @@ import LoadingSpinner from './LoadingSpinner';
 import { useLeaderboard, useUserLeaderboardStats, useAroundMe } from '../hooks/useLeaderboard';
 import { sharesService } from '../services/sharesService';
 import { authService } from '../services/authService';
+import SEO from './SEO';
+import { seoData } from '../utils/seoData';
 import './ThankYou.css';
 
 interface ThankYouState {
@@ -414,6 +416,14 @@ Join us at LawVriksh - the ultimate platform for legal professionals! 🏛️⚖
 
   return (
     <div className="thankyou-hero">
+      <SEO
+        title={seoData.thankYou.title}
+        description={seoData.thankYou.description}
+        keywords={seoData.thankYou.keywords}
+        url={seoData.thankYou.url}
+        noIndex={seoData.thankYou.noIndex}
+        structuredData={seoData.thankYou.structuredData}
+      />
       {/* Back to Home Button - Top Left */}
       <div className="thankyou__back-button-top-left">
         <button className="thankyou__custom-back-btn" onClick={handleBackToHome}>

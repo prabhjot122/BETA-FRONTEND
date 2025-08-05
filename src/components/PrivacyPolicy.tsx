@@ -1,12 +1,36 @@
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import SEO from './SEO';
+import { useState } from 'react';
+import { seoData } from '../utils/seoData';
 import './PrivacyPolicy.css';
+import WaitlistPopup from "./WaitlistPopup";
 
-export default function PrivacyPolicy() {
+interface PrivacyPolicyProps {
+    onJoinWaitlist: () => void;
+}
+const PrivacyPolicy = ({ onJoinWaitlist: _onJoinWaitlist }: PrivacyPolicyProps): JSX.Element => {
+  const [isWaitlistPopupOpen, setIsWaitlistPopupOpen] = useState(false);
+  
+
+  const handleJoinWaitlist = () => {
+    setIsWaitlistPopupOpen(true);
+  };
+
+  const handleCloseWaitlistPopup = () => {
+    setIsWaitlistPopupOpen(false);
+  };
   return (
     <div className="privacy-policy">
-      <Navbar />
+      <SEO
+        title={seoData.privacyPolicy.title}
+        description={seoData.privacyPolicy.description}
+        keywords={seoData.privacyPolicy.keywords}
+        url={seoData.privacyPolicy.url}
+        structuredData={seoData.privacyPolicy.structuredData}
+      />
+      <Navbar onJoinWaitlist={handleJoinWaitlist} />
       
       <div className="privacy-policy__container">
         <div className="privacy-policy__hero">
@@ -174,6 +198,11 @@ export default function PrivacyPolicy() {
       </div>
 
       <Footer />
+      <WaitlistPopup
+              isOpen={isWaitlistPopupOpen}
+              onClose={handleCloseWaitlistPopup}
+            />
     </div>
   );
 }
+export default PrivacyPolicy;

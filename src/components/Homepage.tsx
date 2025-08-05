@@ -8,6 +8,8 @@ import Navbar from "./Navbar";
 import HeroSection from "./homepage/HeroSection";
 import LoadingSpinner from "./LoadingSpinner";
 import { ctaContent } from "./homepage/homepage.data";
+import SEO from "./SEO";
+import { seoData } from "../utils/seoData";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -143,6 +145,13 @@ export default function Homepage() {
 
   return (
     <div ref={mainContainer}>
+      <SEO
+        title={seoData.homepage.title}
+        description={seoData.homepage.description}
+        keywords={seoData.homepage.keywords}
+        url={seoData.homepage.url}
+        structuredData={seoData.homepage.structuredData}
+      />
       <Navbar onJoinWaitlist={handleJoinWaitlist} />
       
       <HeroSection onJoinWaitlist={handleJoinWaitlist} />
