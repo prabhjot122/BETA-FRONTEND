@@ -3,10 +3,11 @@
   gap: 10px;
   justify-content: center;
   align-items: center;
+  
   padding: 20px 32px;
   border: 2px solid transparent;
   cursor: pointer;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Nyght Serif', sans-serif;
   
   letter-spacing: 0.05em;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -39,20 +40,20 @@
 
 /* Variants */
 .button--primary {
-  background-color: #927D70;
+  background-color: #000000;
   color: white;
   
-  border-color: #927D70;
+  border-color: #000000;
 }
 
 .button--primary::before {
-  background-color: #927D70;
+  background-color: #000000;
 }
 
 .button--primary:hover {
   background-color: transparent;
-  color: #927D70;
-  border-color: #927D70;
+  color: #000000;
+  border-color: #000000;
 }
 
 .button--primary:hover::before {
@@ -109,12 +110,17 @@
 }
 
 .button--large {
-  padding: 20px 32px;
-  font-size: 25px;
+  padding: 15px 25px;
+  font-size: 20px;
+  display: flex;  
+  justify-content: center;
+  align-items: center;
+  
   line-height: 24px;
   letter-spacing: 0.1em;
-  height: 65px;
-  min-width: 206px;
+  
+  font-weight: light;
+  max-width: 206px;
 }
 
 /* FOMO Dialog Styles */

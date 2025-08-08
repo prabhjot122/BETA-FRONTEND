@@ -7,16 +7,11 @@ import { seoData } from '../utils/seoData';
 import './PrivacyPolicy.css';
 import WaitlistPopup from "./WaitlistPopup";
 
-interface PrivacyPolicyProps {
-    onJoinWaitlist: () => void;
-}
-const PrivacyPolicy = ({ onJoinWaitlist: _onJoinWaitlist }: PrivacyPolicyProps): JSX.Element => {
+
+const PrivacyPolicy = (): JSX.Element => {
   const [isWaitlistPopupOpen, setIsWaitlistPopupOpen] = useState(false);
   
 
-  const handleJoinWaitlist = () => {
-    setIsWaitlistPopupOpen(true);
-  };
 
   const handleCloseWaitlistPopup = () => {
     setIsWaitlistPopupOpen(false);
@@ -30,7 +25,7 @@ const PrivacyPolicy = ({ onJoinWaitlist: _onJoinWaitlist }: PrivacyPolicyProps):
         url={seoData.privacyPolicy.url}
         structuredData={seoData.privacyPolicy.structuredData}
       />
-      <Navbar onJoinWaitlist={handleJoinWaitlist} />
+      <Navbar />
       
       <div className="privacy-policy__container">
         <div className="privacy-policy__hero">

@@ -1,216 +1,134 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, MouseEvent } from "react";
+import "./Navbar.css";
+import { IoArrowForward, IoClose } from "react-icons/io5";
+import { HiOutlineMenuAlt4 } from "react-icons/hi";
+import { gsap } from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import NavDialog from './homepage/NavDialog';
+import { dialogContent } from './homepage/homepage.data';
+import MobileSidebar from './homepage/MobileSidebar';
 
-import Button from './Button';
-import './Navbar.css';
-import { gsap } from 'gsap';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// Register GSAP plugins
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
-interface NavbarProps {
-  onJoinWaitlist?: () => void;
+// FIX 1: Removed unused 'onJoinWaitlist' from props
+interface NavbarProps {}
+
+// FIX 2: Define props for the Navigation component
+interface NavigationProps {
+  onNavigate: (e: MouseEvent<HTMLAnchorElement>, targetId: string) => void;
 }
 
-const Navigation = () => {
-  // Handle URL hash navigation on page load
-  useEffect(() => {
-    const handleHashNavigation = () => {
-      const hash = window.location.hash.substring(1); // Remove the # symbol
-      if (hash) {
-        // Small delay to ensure page is fully loaded
-        setTimeout(() => {
-          let targetElement: HTMLElement | null = null;
-          const scrollOffset = 80;
+// FIX 2: Update Navigation to accept and use the 'onNavigate' prop
+const Navigation = ({ onNavigate }: NavigationProps) => {
+    const [activeDialogIndex, setActiveDialogIndex] = useState<number | null>(null);
 
-          // Handle specific hash cases
-          if (hash === 'home') {
-            // Scroll to top for home
-            gsap.to(window, {
-              duration: 0.8,
-              scrollTo: { y: 0 },
-              ease: "power2.out"
-            });
-            return;
-          } else if (hash === 'contact-us') {
-            targetElement = document.getElementById('contact-us');
-          } else if (hash === 'why-us') {
-            targetElement = document.getElementById('why-us');
-          } else {
-            targetElement = document.getElementById(hash);
-          }
+    const navLinks = [
+        { title: "What we Offer?", label: "Features" },
+        { title: "Why join us?", label: "Perks" },
+        { title: "What they say?", label: "Testimonials" },
+    ];
 
-          if (targetElement) {
-            gsap.to(window, {
-              duration: 0.8,
-              scrollTo: {
-                y: targetElement,
-                offsetY: scrollOffset
-              },
-              ease: "power2.out"
-            });
-          }
-        }, 50);
-      }
-    };
-
-    // Handle initial page load with hash
-    handleHashNavigation();
-
-    // Handle hash changes (browser back/forward)
-    window.addEventListener('hashchange', handleHashNavigation);
-
-    return () => {
-      window.removeEventListener('hashchange', handleHashNavigation);
-    };
-  }, []);
-
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    e.preventDefault();
-
-    // Check if we're on the homepage (has .homepage element)
-    const isOnHomepage = document.querySelector('.homepage') !== null;
-
-    if (!isOnHomepage) {
-      // If not on homepage, navigate to homepage first, then scroll
-      window.location.href = `/#${targetId}`;
-      return;
-    }
-
-    let targetElement: HTMLElement | null = null;
-    const scrollOffset = 80; // Reduced offset for better positioning
-
-    // Handle different target sections
-    switch (targetId) {
-      case 'home':
-        // Scroll to the very top of the page (hero section)
-        gsap.to(window, {
-          duration: 0.8,
-          scrollTo: { y: 0 },
-          ease: "power2.out",
-          overwrite: true // Prevent conflicts with other animations
-        });
-        return;
-
-      case 'contact-us':
-        targetElement = document.getElementById('contact-us');
-        break;
-
-      case 'why-us':
-        targetElement = document.getElementById('why-us');
-        break;
-
-      default:
-        targetElement = document.getElementById(targetId);
-    }
-
-    if (targetElement) {
-      // Kill any existing scroll animations first
-      gsap.killTweensOf(window);
-
-      // Calculate target position
-      const targetTop = targetElement.offsetTop - scrollOffset;
-
-      // Use faster, more reliable scrolling with fallback for other sections
-      gsap.to(window, {
-        duration: 0.8,
-        scrollTo: {
-          y: targetElement,
-          offsetY: scrollOffset
-        },
-        ease: "power2.out",
-        overwrite: true,
-        onComplete: () => {
-          // Verify we reached the target
-          const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-          const tolerance = 15; // Allow 15px tolerance
-
-          if (Math.abs(currentScroll - targetTop) > tolerance) {
-            // If we didn't reach the target, do a quick correction
-            window.scrollTo({
-              top: targetTop,
-              behavior: 'auto' // Use instant scroll for correction
-            });
-          }
-        },
-        onInterrupt: () => {
-          // If animation is interrupted, fallback to native scroll
-          window.scrollTo({
-            top: targetTop,
-            behavior: 'smooth'
-          });
-        }
-      });
-
-      // Fallback timeout in case GSAP fails
-      setTimeout(() => {
-        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-        if (Math.abs(currentScroll - targetTop) > 50) {
-          // If we're still far from target after timeout, use native scroll
-          gsap.killTweensOf(window);
-          window.scrollTo({
-            top: targetTop,
-            behavior: 'smooth'
-          });
-        }
-      }, 1000);
-    }
-  };
-
-  return (
-    <div className="navbar__nav">
-      <a href="#home" className="navbar__nav-link" onClick={(e) => handleSmoothScroll(e, 'home')}>Home</a>
-      <span className="navbar__nav-separator"> • </span>
-      <a href="#contact-us" className="navbar__nav-link" onClick={(e) => handleSmoothScroll(e, 'contact-us')}>Contact Us</a>
-      <span className="navbar__nav-separator"> • </span>
-      <a href="/privacy-policy" className="navbar__nav-link">Privacy Policy</a>
-    </div>
-  );
+    return (
+        <div className="navbar__nav">
+            {navLinks.map((link, index) => (
+                <div
+                    key={index}
+                    className="nav-item-wrapper"
+                    onMouseEnter={() => setActiveDialogIndex(index)}
+                    onMouseLeave={() => setActiveDialogIndex(null)}
+                >
+                    <div className="navlink-container">
+                        <div className="navlink-container-left">
+                            <p>{link.title}</p>
+                            {/* FIX 2: Apply the onNavigate function to the onClick handler */}
+                            <a 
+                              href={`#${link.label.toLowerCase()}`} 
+                              className="navbar__nav-link"
+                              onClick={(e) => onNavigate(e, link.label.toLowerCase())}
+                            >
+                                {link.label}
+                            </a>
+                        </div>
+                        <div className="navlink-container-right">
+                            <IoArrowForward color="#838383" />
+                        </div>
+                    </div>
+                    <NavDialog
+                        isOpen={activeDialogIndex === index}
+                        content={dialogContent[index as keyof typeof dialogContent]}
+                    />
+                </div>
+            ))}
+        </div>
+    );
 };
 
-export default function Navbar({ onJoinWaitlist }: NavbarProps) {
+// FIX 1: Removed unused 'onJoinWaitlist' from function signature
+export default function Navbar({}: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const threshold = 80; // Scroll threshold in pixels
-
-      if (scrollPosition > threshold) {
-        setIsScrolled(true);
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 80);
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsNavbarVisible(false);
       } else {
-        setIsScrolled(false);
+        setIsNavbarVisible(true);
       }
+      setLastScrollY(currentScrollY);
     };
 
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
-    // Cleanup function to remove event listener
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const scrollToSection = (targetId: string) => {
+    const targetElement = document.getElementById(targetId);
+    const scrollOffset = 80;
+    if (targetElement) {
+      gsap.to(window, { duration: 1, scrollTo: { y: targetElement, offsetY: scrollOffset }, ease: "power2.inOut", overwrite: true });
+    }
+  };
+
+  const handleDesktopNavigate = (e: MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    scrollToSection(targetId);
+  };
 
   return (
-    <nav className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
-      <a href="/" onClick={() => window.location.reload()} className="navbar__brand">
-      <div className='logo-container'>
-
-      </div>
-      <div className='text-container'>
-        LawVriksh
+    <>
+      <nav className={
+        `navbar 
+        ${isScrolled ? "navbar--scrolled" : ""} 
+        ${isNavbarVisible ? "navbar--visible" : "navbar--hidden"}`
+      }>
+        <a href="/" onClick={() => window.location.reload()} className="navbar__brand">
+          <div className="logo-parent-container">
+            <div className="logo-container"></div>
+          </div>
+          <div className="text-container">LawVriksh</div>
+        </a>
+        <div className="navbar__content">
+          <Navigation onNavigate={handleDesktopNavigate} />
         </div>
-      </a>
-
-      <div className="navbar__content">
-        <Navigation />
-
-        <Button onClick={onJoinWaitlist}>
-          Join Waitlist
-        </Button>
-      </div>
-    </nav>
+        <button 
+          className="navbar__contentmobile" 
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          aria-label="Toggle navigation menu"
+        >
+          {isSidebarOpen ? <IoClose size={32} color="#7F7F7F" /> : <HiOutlineMenuAlt4 size={32} color="#7F7F7F" />}
+        </button>
+      </nav>
+      <MobileSidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        onNavigate={scrollToSection}
+      />
+    </>
   );
 }

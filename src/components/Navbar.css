@@ -2,38 +2,35 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
-  top: 16px;
-  left: 67px;
-  right: 67px;
+  position: sticky;
+  background-color: #f7f3ed;
+
   z-index: 100;
-  width: calc(100vw - 134px);
-  height: 59px;
+  width: 100vw;
+  border-bottom: 1px solid #dfdbd7;
+  height: 10.2vh;
   z-index: 3000;
   padding-top: 20px;
   padding-bottom: 20px;
   transition: all 0.3s ease-in-out;
+  transition: top 0.4s ease-in-out, background-color 0.4s ease, box-shadow 0.4s ease;
+
   border-radius: 0;
 }
-
-/* Scrolled state with blur effect */
-.navbar--scrolled {
+.navbar--visible {
   top: 0;
-  left: 0;
-  right: 0;
-  width: 100vw;
-  padding: 15px 67px;
-  background-color: rgba(253, 251, 244, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(150, 111, 51, 0.1);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* This class will move the navbar out of the viewport when hidden */
+.navbar--hidden {
+  top: -100px; /* Adjust this value if your navbar is taller */
 }
 
 .navbar__brand {
   font-family: "Playfair Display", serif;
-  font-size: 30px;
+  font-size: clamp(1rem, 2rem, 2.5rem);
   letter-spacing: -0.05em;
+
   line-height: 40px;
   color: black;
   transition: all 0.3s ease-in-out;
@@ -45,18 +42,7 @@
 }
 
 .navbar__brand:hover {
-  color: #966F33;
-}
-
-/* Brand styling in scrolled state */
-.navbar--scrolled .navbar__brand {
-  font-size: 26px;
-  line-height: 36px;
-  color: black;
-}
-
-.navbar--scrolled .navbar__brand:hover {
-  color: #966F33;
+  color: #966f33;
 }
 
 .navbar__content {
@@ -68,9 +54,6 @@
 }
 
 /* Content styling in scrolled state */
-.navbar--scrolled .navbar__content {
-  gap: 100px;
-}
 
 /* Ensure button aligns properly with nav links */
 .navbar__content .button {
@@ -80,37 +63,44 @@
   font-size: 18px;
   line-height: 20px;
 }
-
-/* Button styling in scrolled state */
-.navbar--scrolled .navbar__content .button {
-  padding: 10px 20px;
-  font-size: 12px;
-  line-height: 18px;
-  min-height: 36px;
+.navbar__contentmobile {
+  display: none;
 }
 
+/* Button styling in scrolled state */
+
 .navbar__nav {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: auto;
-  font-size: 15px;
-  letter-spacing: 0.1em;
-  line-height: 24px;
+
   transition: all 0.3s ease-in-out;
 }
 
 .navbar__nav-link {
   color: black;
-  font-family: "Roboto Flex", sans-serif;
+  font-family: "Helvetica", sans-serif;
+
   text-decoration: none;
+  font-size: clamp(12px, 0.7vw + 0.2rem, 20px);
   cursor: pointer;
+  flex-direction: row;
+  align-items: center;
+
+  display: flex;
+
   transition: all 0.3s ease-in-out;
+}
+.navlink-container p {
+  font-family: "Nyght Serif", sans-serif;
+  font-weight: 400;
+  font-size: clamp(10px, 0.7vw + 0.2rem, 20px);
+  font-style: italic;
+  color: #838383;
 }
 
 .navbar__nav-link:hover {
-  color: #966F33;
+  color: #966f33;
 }
 
 .navbar__nav-separator {
@@ -120,115 +110,79 @@
 }
 
 /* Navigation styling in scrolled state */
-.navbar--scrolled .navbar__nav {
-  font-size: 18px;
-  line-height: 22px;
+
+.logo-parent-container {
+  height: 10.2vh;
+  width: 12vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-right: 1px solid #dfdbd7;
+}
+.navlink-container {
+  height: 10.2vh;
+  border-right: 1px solid #dfdbd7;
+  border-left: 1px solid #dfdbd7;
+  width: 20vh;
+  align-items: center;
+
+  justify-content: space-between;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.navlink-container-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.navlink-container-right {
+  padding-right: 10px;
 }
 
-.navbar--scrolled .navbar__nav-link {
-  color: rgba(0, 0, 0, 0.9);
-  font-size: 16px;
-}
 .logo-container {
-  background-image: url('/logo3.png');
-  width: 22px;
-  height: 22px;
-  margin-right: 5px;
-  background-size:cover;
-}
-.navbar--scrolled .navbar__nav-link:hover {
-  color: #966F33;
+  background-image: url("/logo3.png");
+
+  padding: 18px;
+
+  background-size: cover;
 }
 
-.navbar--scrolled .navbar__nav-separator {
-  color: rgba(0, 0, 0, 0.7);
+.text-container {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .navbar {
-    left: 0;
-    top: 20px;
-    right: 0;
-    flex-direction: column;
+    flex-direction: row;
     gap: 20px;
-    padding: 20px;
-    width: calc(100vw - 40px);
-    height: auto;
+    padding-top: 0;
+    padding-bottom:0;
+    position:absolute;
+
+    width: 100vw;
+    height: 10vh;
+  }
+  .navbar__content {
+    display: none;
   }
   .text-container {
     display: none;
   }
-  .logo-container{
-    width: 30px;
-    height: 30px;
-    padding-right: 10px;
-  }
-
-  .navbar--scrolled {
-    top: 0;
-    padding: 15px 20px;
-  }
-
-  .navbar__content {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .navbar--scrolled .navbar__content {
-    gap: 15px;
-  }
-
-  .navbar__nav {
+  .navbar__contentmobile {
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    width: 100%;
-    height: auto;
-    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100px;
+    border-left:1px solid #DFDBD7;
+    height:100%;
   }
-
-  .navbar__nav-separator {
-    margin: 0 4px;
-  }
-
-  .navbar__brand {
-    font-size: 28px;
-    text-align: center;
-  }
-
-  .navbar--scrolled .navbar__brand {
-    font-size: 26px;
-  }
-}
-
-@media (max-width: 640px) {
-  .navbar__nav {
-    display: none;
-  }
-  .navbar--scrolled{
-    z-index: 1003;
-  }
-
-  .navbar__content {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .navbar--scrolled .navbar__content {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  .navbar__content .button {
-    
-    max-height: 30px;
-    
-    min-height: 30px;
-    max-width: 150px;
-    min-width: 50px;
-    
-    padding: 12px 10px;
-    font-size: 12px;
-    line-height: 20px;
+  .logo-parent-container{
+    border-right: 0;
   }
 }

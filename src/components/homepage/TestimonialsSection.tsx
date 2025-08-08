@@ -1,299 +1,523 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { testimonialsData } from './homepage.data';
-import '../Homepage.css';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import './TestimonialsSection.css';
 
-gsap.registerPlugin(ScrollTrigger);
+interface TestimonialData {
+  id: number;
+  name: string;
+  credentials: string;
+  image: string;
+  testimonials: string[];
+ 
 
-const TestimonialsSection = () => {
-  const [currentPersonIndex, setCurrentPersonIndex] = useState(0);
-  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
-  const [isPersonTransitioning, setIsPersonTransitioning] = useState(false);
-  const hasAnimated = useRef(false);
-  const personIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const quoteIntervalRef = useRef<NodeJS.Timeout | null>(null);
+}
+interface TestimonialProps{
+ onJoinWaitlist: () => void;
+}
 
-  const resetPersonInterval = useCallback(() => {
-    if (personIntervalRef.current) clearInterval(personIntervalRef.current);
-    personIntervalRef.current = setInterval(() => {
-      handlePersonChange(1); // Go to next person
-    }, 15000);
-  }, []);
+// Define props for the new TestimonialCard component
+interface TestimonialCardProps {
+  isMobile: boolean;
+  handleCardClick: () => void;
+  currentPerson: TestimonialData;
+  currentTestimonial: string;
+  currentTestimonialIndex: number;
+  currentPersonIndex: number;
+  cardVariants: any;
+  stackVariants: any;
+ 
+}
 
-  const resetQuoteInterval = useCallback(() => {
-    if (quoteIntervalRef.current) clearInterval(quoteIntervalRef.current);
-    const currentPerson = testimonialsData[currentPersonIndex];
-    if (currentPerson.testimonials.length <= 1) return;
+// Define the TestimonialCard component outside of TestimonialsSection
+const TestimonialCard: React.FC<TestimonialCardProps> = ({
+  isMobile,
+  handleCardClick,
+  currentPerson,
+  currentTestimonial,
+  currentTestimonialIndex,
+  currentPersonIndex,
+  cardVariants,
+  stackVariants,
+}) => (
+  <div className="testimonials-stack" onClick={handleCardClick}>
+    {/* Background stack cards */}
+    <motion.div
+      className="testimonial-card stack-card stack-2"
+      variants={stackVariants}
+      animate="stack2"
+    />
+    <motion.div
+      className="testimonial-card stack-card stack-1"
+      variants={stackVariants}
+      animate="stack1"
+    />
 
-    quoteIntervalRef.current = setInterval(() => {
-      handleQuoteChange((prevIndex) => (prevIndex + 1) % currentPerson.testimonials.length);
-    }, 7000);
-  }, [currentPersonIndex]);
-
-  const handlePersonChange = useCallback((direction: number) => {
-    if (isPersonTransitioning) return;
-    setIsPersonTransitioning(true);
-    resetPersonInterval();
-
-    const nextPersonIndex = (currentPersonIndex + direction + testimonialsData.length) % testimonialsData.length;
-
-    const tl = gsap.timeline({ onComplete: () => setIsPersonTransitioning(false) });
-    tl.to([".homepage__testimonials-person-info", ".homepage__testimonials-quote-box", ".testimonialimage", ".homepage__testimonials-quote-dots", ".homepage__testimonials-nav-container"], {
-      opacity: 0,
-      y: -20,
-      duration: 0.4,
-      ease: "power2.in",
-      stagger: 0.05
-    })
-      .call(() => {
-        setCurrentPersonIndex(nextPersonIndex);
-        setCurrentTestimonialIndex(0);
-      })
-      .fromTo([".homepage__testimonials-person-info", ".homepage__testimonials-quote-box", ".testimonialimage", ".homepage__testimonials-quote-dots", ".homepage__testimonials-nav-container"],
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.1, delay: 0.1 }
-      );
-  }, [currentPersonIndex, isPersonTransitioning, resetPersonInterval]);
-
-  const handleQuoteChange = (newIndex: number | ((prev: number) => number)) => {
-    resetQuoteInterval();
-    gsap.to(".homepage__testimonials-quote-text", {
-      opacity: 0,
-      y: -15,
-      duration: 0.3,
-      ease: "power2.in",
-      onComplete: () => {
-        setCurrentTestimonialIndex(newIndex);
-        gsap.fromTo(".homepage__testimonials-quote-text",
-          { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
-        );
-      }
-    });
-  };
-
-  useEffect(() => {
-    resetPersonInterval();
-    return () => {
-      if (personIntervalRef.current) clearInterval(personIntervalRef.current);
-    };
-  }, [resetPersonInterval]);
-
-  useEffect(() => {
-    resetQuoteInterval();
-    return () => {
-      if (quoteIntervalRef.current) clearInterval(quoteIntervalRef.current);
-    };
-  }, [currentPersonIndex, resetQuoteInterval]);
-
-  useGSAP(() => {
-    gsap.set([
-      ".testimonialimage", ".homepage__testimonials-title", ".homepage__testimonials-person-info",
-      ".homepage__testimonials-quote-box", ".homepage__testimonials-nav-button"
-    ], { opacity: 0 });
-
-    const tl = gsap.timeline({ paused: true });
-    tl.to(".homepage__testimonials-title", { duration: 0.4, opacity: 1, y: 0, ease: "power2.out" })
-      .to(".testimonialimage", { duration: 0.8, opacity: 1, scale: 1, ease: "power2.out" }, "-=0.3")
-      .to(".homepage__testimonials-person-info", { duration: 0.4, opacity: 1, y: 0, ease: "power2.out" }, "-=0.6")
-      .to(".homepage__testimonials-quote-box", { duration: 0.4, opacity: 1, y: 0, ease: "power2.out" }, "-=0.4")
-      .to(".homepage__testimonials-nav-button", { duration: 0.3, opacity: 1, ease: "power2.out" }, "-=0.2");
-
-    ScrollTrigger.create({
-      trigger: ".homepage4",
-      start: "top 75%",
-      onEnter: () => {
-        if (!hasAnimated.current) {
-          tl.play();
-          hasAnimated.current = true;
-        }
-      }
-    });
-  }, []);
-
-  const currentPerson = testimonialsData[currentPersonIndex];
-
-  return (
-    <div id="testimonials" className="homepage4">
-      <style>{`
-        #testimonials.homepage4 {
-          display: flex;
-          align-items: center;
-          justify-content: space-around;
-          gap: 2rem;
-          padding: 4rem 2rem;
-          background-color: #FDFBF4;
-          overflow: hidden;
-          min-height: 100vh;
-        }
-        .homepage__testimonials-content {
-          flex: 1;
-          max-width: 45%;
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-          color: #333;
-          font-family: 'Source Sans Pro', sans-serif;
-        }
-        .homepage__testimonials-header {
-          text-align: left;
-        }
-        .homepage__testimonials-title {
-          font-family: 'Baskerville Old Face', serif;
-          font-size: 2.5rem;
-          color: #966f33;
-          margin-bottom: 1rem;
-        }
-        .homepage__testimonials-person-info {
-          text-align: left;
-        }
-        .homepage__testimonials-person-name {
-          font-family: 'Battambang', serif;
-          font-size: 1.75rem;
-          font-weight: bold;
-        }
-        .homepage__testimonials-person-credentials {
-          font-size: 1rem;
-          color: #666;
-          margin-top: 0.25rem;
-        }
-        .homepage__testimonials-quote-box {
-          background-color: #FFF8E4;
-          padding: 2rem;
-          border-left: 5px solid #966f33;
-          position: relative;
-          min-height: 150px;
-        }
-        .homepage__testimonials-quote-text {
-          font-family: 'Kalam', cursive;
-          font-size: 1.2rem;
-          line-height: 1.6;
-        }
-        .homepage__hero2 {
-          flex: 1;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          max-width: 45%;
-        }
-        .testimonialimage {
-          width: 450px;
-          height: 450px;
-          background-size: cover;
-          background-position: center;
-          border-radius: 10px;
-          position: relative;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-        .homepage__subhero {
-          display: none;
-        }
-        .homepage__testimonials-nav-container {
-          display: flex;
-          gap: 1rem;
-          margin-top: 1.5rem;
-          justify-content: flex-start;
-        }
-        .homepage__testimonials-nav-button {
-          background-color: #966f33;
-          color: white;
-          border: none;
-          padding: 0.75rem 1.5rem;
-          font-family: 'Source Sans Pro', sans-serif;
-          font-size: 1rem;
-          font-weight: 600;
-          border-radius: 5px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-        .homepage__testimonials-nav-button:hover {
-          background-color: #7a5a2a;
-          transform: translateY(-2px);
-        }
-        .homepage__testimonials-quote-dots {
-          text-align: left;
-          margin-top: 1rem;
-        }
-        .quote-dot {
-          background-color: #ccc;
-          border: none;
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          margin: 0 6px;
-          cursor: pointer;
-          transition: background-color 0.3s ease;
-          padding: 0;
-        }
-        .quote-dot.active {
-          background-color: #966F33;
-        }
-
-        @media (max-width: 768px) {
-          #testimonials.homepage4 {
-            flex-direction: column;
-            padding: 2rem 1rem;
-            height: auto;
-          }
-          .homepage__testimonials-content {
-            max-width: 100%;
-            order: 2;
-            text-align: center;
-          }
-          .homepage__testimonials-header, .homepage__testimonials-person-info, .homepage__testimonials-quote-dots {
-            text-align: center;
-          }
-          .homepage__hero2 {
-            max-width: 100%;
-            order: 1;
-            margin-bottom: 2rem;
-          }
-          .testimonialimage {
-            width: 250px;
-            height: 250px;
-          }
-          .homepage__testimonials-nav-container {
-            justify-content: center;
-          }
-        }
-      `}</style>
-      <div className="homepage__testimonials-content">
-        <div className="homepage__testimonials-header">
-          <div className="homepage__testimonials-title">What problems We are targetting?</div>
+    {/* Main animated card */}
+    <AnimatePresence mode="wait" custom={1}>
+      <motion.div
+        key={currentPersonIndex} // This key ensures animation only on person change
+        className="testimonial-card main-card"
+        custom={1}
+        variants={cardVariants}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        whileHover={!isMobile ? {
+          scale: 1.02,
+          y: -5,
+          transition: { duration: 0.3 }
+        } : {}}
+      >
+        <div className="testimonial-image">
+          <img
+            src={currentPerson.image}
+            alt={currentPerson.name}
+          />
         </div>
-        <div className="homepage__testimonials-person-info">
-          <div className="homepage__testimonials-person-name">{currentPerson.name}</div>
-          <div className="homepage__testimonials-person-credentials">{currentPerson.credentials}</div>
-        </div>
-        <div className="homepage__testimonials-quote-box">
-          <div className="homepage__testimonials-quote-text">{currentPerson.testimonials[currentTestimonialIndex]}</div>
-        </div>
-        {currentPerson.testimonials.length > 1 && (
-          <div className="homepage__testimonials-quote-dots">
+        <div className="testimonial-content">
+          <h3 className="testimonial-name">
+            {currentPerson.name}
+          </h3>
+          <p className="testimonial-profession">
+            {currentPerson.credentials}
+          </p>
+
+          <div className="testimonial-quote-container">
+            <AnimatePresence mode="wait">
+              <motion.blockquote
+                key={`${currentPersonIndex}-${currentTestimonialIndex}`} // This key ensures animation on testimonial change
+                className="testimonial-quote"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                "{currentTestimonial}"
+              </motion.blockquote>
+            </AnimatePresence>
+          </div>
+
+          <div className="testimonial-dots">
             {currentPerson.testimonials.map((_, index) => (
-              <button
+              <span
                 key={index}
-                className={`quote-dot ${index === currentTestimonialIndex ? 'active' : ''}`}
-                onClick={() => handleQuoteChange(index)}
+                className={index === currentTestimonialIndex ? 'active' : ''}
               />
             ))}
           </div>
-        )}
-        <div className="homepage__testimonials-nav-container">
-          <button className="homepage__testimonials-nav-button prev" onClick={() => handlePersonChange(-1)}>Previous</button>
-          <button className="homepage__testimonials-nav-button next" onClick={() => handlePersonChange(1)}>See Next</button>
         </div>
-      </div>
-      <div className="homepage__hero2">
-        <div
-          className="testimonialimage"
-          style={{ backgroundImage: `url(${currentPerson.image})` }}
+      </motion.div>
+    </AnimatePresence>
+  </div>
+);
+
+
+const TestimonialsSection = ({ onJoinWaitlist }: TestimonialProps) => {
+  const [currentPersonIndex, setCurrentPersonIndex] = useState(0);
+  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const testimonialsData: TestimonialData[] = [
+    {
+      id: 1,
+      name: "Om Patil",
+      credentials: "Mangalayatan University Jabalpur Ba.llb 5th year",
+      image: "/ompatil.jpg",
+      testimonials: [
+        "When sharing legal insights online, a big frustration is second-guessing my opinion—worrying it might hurt someone's feelings or credibility. Another is explaining my thoughts to overconfident people who act like they already know everything.",
+        "The most time consuming part of the legal article writing is content framing and the legal citeations and formatting all the articles and  , these are the main reasons which causes time consuming parts of the article writing"
+      ]
+    },
+    {
+      id: 2,
+      name: "Paras Shukla",
+      credentials: "LLB(H) complete. Practicing lawyer at MP High court and District and session court Jabalpur",
+      image: "/paras.jpg",
+      testimonials: [
+        "The biggest hurdle is simplifying complex legal concepts for a general audience without losing accuracy, along with the lack of visibility on credible platforms.",
+        "Monetizing legal writing is a great idea, but uncertainty about where to start and ethical concerns have kept me from exploring it more.",
+        "Research and ensuring legal accuracy take the most time, especially when balancing clarity with technical depth."
+      ]
+    },
+    {
+      id: 3,
+      name: "Ritanshu Dhangar",
+      credentials: "BA. LLB, 5th Year, Mangalayatan University, Jabalpur",
+      image: "/ritanshu.jpg",
+      testimonials: [
+        "Between court, clients, and paperwork, it's tough to sit down and write.",
+        "Research: Even if you know the topic, you need to check the latest laws and cases.",
+        "Not sure how to start or where to post and earn."
+      ]
+    },
+    {
+      id: 4,
+      name: "Dr. Vartika Pandey",
+      credentials: "Professor, MUJ",
+      image: "/suhanijain.webp",
+      testimonials: [
+        "The most significant investment of time in my writing process is dedicated to the rigorous task of plagiarism removal. This crucial step ensures the absolute credibility and originality of the final work",
+        
+      ]
+    },
+    {
+      id: 5,
+      name: "Suhani Jain",
+      credentials: "BA. LLB, 3rd Year, Jagran Lakecity University, Bhopal",
+      image: "/tanisha.webp",
+      testimonials: [
+        "One of the biggest challenges I face... is striking the right balance between accessibility and accuracy. Simplifying them for a general audience without losing the nuance—or worse, spreading misinformation—is a constant struggle.",
+        "I believe lawyers should absolutely monetize their expertise through writing... However, the reason many... may hesitate... is due to a mix of time constraints, uncertainty about monetization models, and fear of non-compliance",
+        "For me, the most time-consuming part of writing a legal article is the structuring and outlining phase... crafting a coherent flow that integrates statutes, case law, and interpretation is a mentally demanding task"
+      ]
+    },
+    {
+      id: 6,
+      name: "Tanisha Shrivastav",
+      credentials: "BA. LLB, 5th Year, Mangalayatan University, Jabalpur",
+      image: "/suhanijain.webp",
+      testimonials: [
+        "...rather than focusing on what I am saying they start to judge my credibility... and that in turn makes it difficult to... put forth your Idea or your insight."
+       
+      ]
+    }
+  ];
+
+  // Check screen size for mobile/desktop behavior
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Desktop scroll setup - always initialize but only use on desktop
+  const { scrollYProgress } = useScroll({
+    target: wrapperRef,
+    offset: ["start start", "end end"]
+  });
+
+  // Perfect scroll timing with equal distribution and proper margins
+  const scrollProgress = useTransform(scrollYProgress, [0.2, 0.8], [0, 2]);
+
+  // Progress bar transform - always initialize
+  const progressBarTransform = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  // Handle scroll-triggered person changes - DESKTOP ONLY
+ useMotionValueEvent(scrollProgress, "change", (latest) => {
+  // Skip scroll-triggered changes on mobile
+  if (isMobile) return;
+
+  let newPersonIndex;
+  
+  // Ranges for 6 people over a scroll progress from 0 to 2.0
+  if (latest < 0.333) {
+    newPersonIndex = 0;
+  } else if (latest < 0.667) {
+    newPersonIndex = 1;
+  } else if (latest < 1.0) {
+    newPersonIndex = 2;
+  } else if (latest < 1.333) {
+    newPersonIndex = 3;
+  } else if (latest < 1.667) {
+    newPersonIndex = 4;
+  } else {
+    newPersonIndex = 5;
+  }
+
+  if (newPersonIndex !== currentPersonIndex && newPersonIndex >= 0 && newPersonIndex < testimonialsData.length) {
+    setCurrentPersonIndex(newPersonIndex);
+    setCurrentTestimonialIndex(0); // Reset to first testimonial when person changes
+  }
+});
+  // Auto-rotate testimonials every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentPerson = testimonialsData[currentPersonIndex];
+      const nextTestimonialIndex = (currentTestimonialIndex + 1) % currentPerson.testimonials.length;
+      setCurrentTestimonialIndex(nextTestimonialIndex);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [currentPersonIndex, currentTestimonialIndex, testimonialsData]);
+
+  const handleCardClick = () => {
+    if (isAnimating) return;
+
+    setIsAnimating(true);
+    setCurrentPersonIndex((prev) => (prev + 1) % testimonialsData.length);
+    setCurrentTestimonialIndex(0); // Reset to first testimonial when changing person
+
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 600);
+  };
+
+
+
+  const currentPerson = testimonialsData[currentPersonIndex];
+  const currentTestimonial = currentPerson.testimonials[currentTestimonialIndex];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        staggerChildren: 0.3,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const leftVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.3
+      }
+    }
+  };
+
+  const titleVariants = {
+    hidden: {
+      opacity: 0,
+      y: 50,
+      x: -30
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        duration: 1.2,
+        ease: [0.25, 0.46, 0.45, 0.94] as const
+      }
+    }
+  };
+
+  const buttonVariants = {
+    hidden: {
+      opacity: 0,
+      y: 30
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94] as const
+      }
+    }
+  };
+
+  const cardsVariants = {
+    hidden: {
+      opacity: 0,
+      x: 100,
+      y: 30
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: {
+        duration: 1,
+        ease: [0.25, 0.46, 0.45, 0.94] as const
+      }
+    }
+  };
+
+  const cardVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 50 : -50,
+      opacity: 0,
+      scale: 0.9,
+      rotateY: direction > 0 ? 15 : -15,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      rotateY: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94] as const
+      }
+    },
+    exit: (direction: number) => ({
+      x: direction < 0 ? 50 : -50,
+      opacity: 0,
+      scale: 0.9,
+      rotateY: direction < 0 ? 15 : -15,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94] as const
+      }
+    })
+  };
+
+  const stackVariants = {
+    stack1: {
+      x: -8,
+      y: 8,
+      scale: 0.95,
+      opacity: 0.7,
+      rotateZ: -2,
+      transition: { duration: 0.3 }
+    },
+    stack2: {
+      x: -16,
+      y: 16,
+      scale: 0.9,
+      opacity: 0.4,
+      rotateZ: -4,
+      transition: { duration: 0.3 }
+    }
+  };
+
+  // MOBILE VERSION - Simple tap functionality, no pinning
+  if (isMobile) {
+    return (
+      <motion.section
+        ref={sectionRef}
+        className="testimonials-section"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
+        <div className="testimonials-content">
+          <motion.div
+            className="testimonials-left"
+            variants={leftVariants}
+          >
+            <motion.h2
+              className="testimonials-title"
+              variants={titleVariants}
+            >
+              What Problems we are targeting?
+            </motion.h2>
+          </motion.div>
+
+          <motion.div
+            className="testimonials-right"
+            variants={cardsVariants}
+          >
+            <TestimonialCard
+              isMobile={isMobile}
+              handleCardClick={handleCardClick}
+              currentPerson={currentPerson}
+              currentTestimonial={currentTestimonial}
+              currentTestimonialIndex={currentTestimonialIndex}
+              currentPersonIndex={currentPersonIndex}
+              cardVariants={cardVariants}
+              stackVariants={stackVariants}
+             
+            />
+          </motion.div>
+
+          {/* Mobile tap instruction - moved to bottom */}
+          <div className="mobile-tap-instruction">
+            <p>Tap to see more</p>
+            <div className="person-indicators">
+              {testimonialsData.map((_, index) => (
+                <span
+                  key={index}
+                  className={`person-dot ${index === currentPersonIndex ? 'active' : ''}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.section>
+    );
+  }
+
+  // DESKTOP VERSION - With pinning and scroll-triggered changes
+  return (
+    <div ref={wrapperRef} className="pinned-testimonials-wrapper">
+      <motion.div
+        className="pinned-content"
+        style={{
+          position: "sticky",
+          top: "0",
+          
+        }}
+      >
+        <motion.section
+          ref={sectionRef}
+          className="testimonials-section"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
         >
-        </div>
-        <div className="homepage__subhero"></div>
-      </div>
+          <div className="testimonials-content">
+            <motion.div
+              className="testimonials-left"
+              variants={leftVariants}
+            >
+              <motion.h2
+                className="testimonials-title"
+                variants={titleVariants}
+              >
+                What Problems<br />
+                we are targeting?
+              </motion.h2>
+              <motion.a
+                
+                className="testimonials-button desktop-only"
+                variants={buttonVariants}
+                whileHover={{
+                  scale: 1.02,
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{ scale: 0.98 }}
+                onClick={onJoinWaitlist}
+              >
+                Join Us →
+              </motion.a>
+            </motion.div>
+
+            <motion.div
+              className="testimonials-right"
+              variants={cardsVariants}
+            >
+              <TestimonialCard
+                isMobile={isMobile}
+                handleCardClick={handleCardClick}
+                currentPerson={currentPerson}
+                currentTestimonial={currentTestimonial}
+                currentTestimonialIndex={currentTestimonialIndex}
+                currentPersonIndex={currentPersonIndex}
+                cardVariants={cardVariants}
+                stackVariants={stackVariants}
+                
+              />
+            </motion.div>
+          </div>
+
+          {/* Scroll progress indicator - desktop only */}
+          <div className="scroll-progress-indicator">
+            <motion.div
+              className="progress-bar"
+              style={{
+                scaleX: progressBarTransform
+              }}
+            />
+            <p className="scroll-hint">Scroll to explore testimonials</p>
+          </div>
+        </motion.section>
+      </motion.div>
     </div>
   );
 };

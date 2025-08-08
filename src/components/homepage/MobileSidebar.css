@@ -1,0 +1,71 @@
+.mobile-sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80%;
+  max-width: 300px;
+  height: 100%;
+  background-color: #ffffff;
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.mobile-sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+}
+
+.mobile-sidebar-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+.mobile-sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left; /* Ensure text is aligned left */
+}
+
+/* --- UPDATED STYLES FOR BUTTON --- */
+.mobile-sidebar-links li button {
+  /* Reset button styles */
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: "Nyght Serif", sans-serif; /* Inherit font from parent */
+  
+  /* Make it look like a link */
+  display: block;
+  width: 100%; /* Make the button take full width of li */
+  text-align: left; /* Align text to the left */
+  padding: 16px 0;
+  font-size: 1.2rem;
+  height:80px;
+  font-weight: 500;
+  color: #000000;
+  text-decoration: none;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.mobile-sidebar-links li button:hover {
+  color: #007bff; /* Example hover color */
+}

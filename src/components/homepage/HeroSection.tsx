@@ -1,10 +1,11 @@
 // @/Users/pranshubansal/Documents/Lawvriksh/BETA-FRONTEND/src/components/homepage/HeroSection.tsx
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Button from "../Button";
-import InteractiveDialog from './InteractiveDialog';
-import { heroQuotes, features } from './homepage.data';
-import '../Homepage.css';
+import InteractiveDialog from "./InteractiveDialog";
+import { heroQuotes } from "./homepage.data";
+
+import "../Homepage.css";
 
 interface HeroSectionProps {
   onJoinWaitlist: () => void;
@@ -49,10 +50,7 @@ const HeroSection = ({ onJoinWaitlist }: HeroSectionProps) => {
     }
   };
 
-  const handleFeatureHover = (index: number) => {
-    clearHideTimeout();
-    setHoveredFeature(index);
-  };
+
 
   const startHideTimeout = () => {
     clearHideTimeout();
@@ -72,47 +70,68 @@ const HeroSection = ({ onJoinWaitlist }: HeroSectionProps) => {
   return (
     <motion.div
       id="home"
-      className={`homepage ${hoveredFeature !== null ? 'feature-hovered' : ''}`}
+      className={`homepage ${hoveredFeature !== null ? "feature-hovered" : ""}`}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
       <motion.div className="homepage__hero5" variants={itemVariants}>
         <div className="homepage__main-wrapper">
-          <motion.div className="homepage__hero-title" variants={containerVariants}>
-            <motion.span variants={wordVariants} className="homepage__hero-word">Be</motion.span>{" "}
-            <motion.span variants={wordVariants} className="homepage__hero-word">a</motion.span>{" "}
-            <motion.span variants={wordVariants} className="homepage__hero-word">legal</motion.span> <br />
-            <motion.span variants={wordVariants} className="homepage__hero-word">entrepreneur</motion.span>
+          <motion.div
+            className="homepage__hero-title"
+            variants={containerVariants}
+          >
+            <motion.span
+              variants={wordVariants}
+              className="homepage__hero-word"
+            >
+              Be
+            </motion.span>{" "}
+            <motion.span
+              variants={wordVariants}
+              className="homepage__hero-word"
+            >
+              a
+            </motion.span>{" "}
+            <motion.span
+              variants={wordVariants}
+              className="homepage__hero-word"
+            >
+              legal
+            </motion.span>{" "}
+            <br />
+            <motion.span
+              variants={wordVariants}
+              className="homepage__hero-word"
+            >
+              entrepreneur
+            </motion.span>
           </motion.div>
           <motion.div
             className="homepage__features-section"
             onMouseLeave={startHideTimeout}
             variants={containerVariants}
           >
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                className="homepage__feature-item"
-                onMouseEnter={() => handleFeatureHover(index)}
-                variants={itemVariants}
-              >
-                <img src={feature.icon} alt="" className={feature.iconClass} />
-                <div className={feature.contentClass || "homepage__feature-content"}>
-                  <div className="homepage__feature-title">{feature.title}</div>
-                  <div className="homepage__feature-description">{feature.description}</div>
-                </div>
-              </motion.div>
-            ))}
+            <motion.div
+              className="homepage__main-title"
+              variants={itemVariants}
+            >
+              Creator platform for modern
+              <br />
+              --- legal professionals
+            </motion.div>
           </motion.div>
         </div>
       </motion.div>
       <motion.div className="homepage__hero" variants={itemVariants}>
         <div className="homepage__main-section">
-          <motion.div className="homepage__main-title" variants={itemVariants}>
-            Creator platform for modern<br />--- legal professionals
-          </motion.div>
-          <motion.div className="homepage__main-content" variants={itemVariants}>
+          <div className="decorative1"></div>
+          <div className="decorative2"></div>
+
+          <motion.div
+            className="homepage__main-content"
+            variants={itemVariants}
+          >
             <div className="homepage__main-quote">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -126,7 +145,15 @@ const HeroSection = ({ onJoinWaitlist }: HeroSectionProps) => {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <Button size="large" onClick={onJoinWaitlist} showFomoDialog={true}>Join Waitlist</Button>
+            <div className="gold-accent-container">
+              <div className="gold-accent1"></div>
+              <div className="gold-accent2"></div>
+              <div className="gold-accent3"></div>
+            </div>
+
+            <Button size="large" onClick={onJoinWaitlist} showFomoDialog={true}>
+              Join Waitlist
+            </Button>
           </motion.div>
         </div>
       </motion.div>

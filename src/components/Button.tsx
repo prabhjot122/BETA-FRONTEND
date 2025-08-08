@@ -96,15 +96,7 @@ export default function Button({
     }
   };
 
-  const handleDialogMouseEnter = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-  };
 
-  const handleDialogMouseLeave = () => {
-    hideDialog();
-  };
 
   return (
     <div className="button-container" style={{ position: 'relative', display: 'inline-block' }}>
@@ -120,30 +112,7 @@ export default function Button({
         {children}
       </button>
 
-      {isJoinButton && (
-        <div
-          ref={dialogRef}
-          className="fomo-dialog"
-          onMouseEnter={handleDialogMouseEnter}
-          onMouseLeave={handleDialogMouseLeave}
-        >
-          <div className="fomo-dialog__content">
-            <div className="decorative-border"></div>
-            <div className="corner-accent top-left"></div>
-            <div className="corner-accent top-right"></div>
-            <div className="corner-accent bottom-left"></div>
-            <div className="corner-accent bottom-right"></div>
-
-            <div className="fomo-dialog__title">⚡ Limited Seats Available!</div>
-            <div className="fomo-dialog__message">Secure Your Exclusive Beta Access</div>
-            <div className="urgency-dots">
-              <div className="urgency-dot"></div>
-              <div className="urgency-dot"></div>
-              <div className="urgency-dot"></div>
-            </div>
-          </div>
-        </div>
-      )}
+      
     </div>
   );
 }

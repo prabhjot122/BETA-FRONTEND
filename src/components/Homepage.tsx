@@ -1,30 +1,39 @@
-import { useState, useEffect, useRef, lazy, Suspense, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  lazy,
+  Suspense,
+  useCallback,
+} from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { useGSAP } from "@gsap/react";
-
+import Lenis from "lenis";
+import Feature from "../components/homepage/Feature";
+import MeetOurTeam from "./homepage/MeetOurTeam";
 import Navbar from "./Navbar";
 import HeroSection from "./homepage/HeroSection";
 import LoadingSpinner from "./LoadingSpinner";
-import { ctaContent } from "./homepage/homepage.data";
+
+import Perks from "./homepage/Perks";
+import WhyLawVrikshSection from "./homepage/WhyLawVrikshSection";
+// Import the PerksMobile component
+import PerksMobile from "./homepage/PerksMobile";
 import SEO from "./SEO";
+import InfiniteCarouselDivider from "./homepage/InfiniteCarouselDivider";
+import CTASection from "./homepage/CTASection";
 import { seoData } from "../utils/seoData";
+import TestimonialsSection from "./homepage/TestimonialsSection";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 // Lazy-loaded components
 const WaitlistPopup = lazy(() => import("./WaitlistPopup"));
 const Footer = lazy(() => import("./Footer"));
-const HomepageMobile = lazy(() => import("./HomepageMobile"));
-const CTASection = lazy(() => import("./CTASection"));
+
 const MarketGrowth = lazy(() => import("./MarketGrowth"));
-const WhyUs = lazy(() => import("./WhyUs"));
-const Divider = lazy(() => import("./homepage/Divider"));
-const FeaturesSection = lazy(() => import("./homepage/FeaturesSection"));
-const TestimonialsSection = lazy(() => import("./homepage/TestimonialsSection"));
-const FoundingPerksSection = lazy(() => import("./homepage/FoundingPerksSection"));
-const TeamSection = lazy(() => import("./homepage/TeamSection"));
+// Note: WhyUs was pointing to WhyLawVrikshSection, removed the duplicate import.
 
 const ContentLoader = ({ onLoaded }: { onLoaded: () => void }) => {
   useEffect(() => {
@@ -35,10 +44,10 @@ const ContentLoader = ({ onLoaded }: { onLoaded: () => void }) => {
 
 export default function Homepage() {
   const [isWaitlistPopupOpen, setIsWaitlistPopupOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [activeFeatureIndex, setActiveFeatureIndex] = useState(0);
-  const [activeFoundingPerkIndex, setActiveFoundingPerkIndex] = useState(0);
   const [isContentLoaded, setIsContentLoaded] = useState(false);
+  // --- START: Added for responsive rendering ---
+  const [isMobile, setIsMobile] = useState(false);
+  // --- END: Added for responsive rendering ---
   const mainContainer = useRef<HTMLDivElement>(null);
 
   const handleContentLoaded = useCallback(() => {
@@ -47,101 +56,34 @@ export default function Homepage() {
     }
   }, [isContentLoaded]);
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 767);
-    checkMobile();
-    const handleResize = () => {
-      checkMobile();
-      ScrollTrigger.refresh(true);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useGSAP(() => {
-    if (isMobile || !mainContainer.current || !isContentLoaded) return;
-
-    const triggers: ScrollTrigger[] = [];
-
-    const sectionsToPin = [
-      { id: '#home', end: "+=100%" },
-      { id: '#features', end: "+=300%" },
-      { id: '#market-growth', end: "+=100%" },
-      { id: '.homepage__cta-section', end: "+=100%" },
-      { id: '#why-us', end: "+=100%" },
-      { id: '#team', end: "+=100%" },
-      { id: '#testimonials', end: "+=100%" },
-      { id: '#founding-member-perks', end: "+=300%" }
-    ];
-
-    sectionsToPin.forEach(sectionInfo => {
-      const sectionElements = mainContainer.current!.querySelectorAll(sectionInfo.id);
-      sectionElements.forEach(sectionElement => {
-        const trigger = ScrollTrigger.create({
-          trigger: sectionElement as gsap.DOMTarget,
-          start: "top top",
-          pin: true,
-          pinSpacing: true,
-          end: sectionInfo.end,
-          scrub: sectionInfo.id === '#features' || sectionInfo.id === '#founding-member-perks' ? 1 : false,
-          onUpdate: (self) => {
-            if (sectionInfo.id === '#features') {
-              const progress = self.progress;
-              let targetFeature = 0;
-              if (progress >= 0.75) targetFeature = 3;
-              else if (progress >= 0.5) targetFeature = 2;
-              else if (progress >= 0.25) targetFeature = 1;
-              setActiveFeatureIndex(targetFeature);
-            } else if (sectionInfo.id === '#founding-member-perks') {
-              const progress = self.progress;
-              let targetPerk = 0;
-              if (progress >= 0.75) targetPerk = 3;
-              else if (progress >= 0.5) targetPerk = 2;
-              else if (progress >= 0.25) targetPerk = 1;
-              setActiveFoundingPerkIndex(targetPerk);
-            }
-          },
-        });
-        triggers.push(trigger);
-      });
-    });
-
-    return () => {
-      triggers.forEach(t => t.kill());
-    };
-
-  }, { dependencies: [isMobile, isContentLoaded], scope: mainContainer });
-
   const handleJoinWaitlist = () => setIsWaitlistPopupOpen(true);
   const handleCloseWaitlistPopup = () => setIsWaitlistPopupOpen(false);
 
+  // --- START: Effect to check screen size ---
   useEffect(() => {
-    const handleSmoothScroll = (e: Event) => {
-      if (!(e.target instanceof Element)) return;
-      
-      const anchor = e.target.closest('a');
-      const href = anchor?.getAttribute('href');
-
-      if (href && href.startsWith('#')) {
-        e.preventDefault();
-        gsap.to(window, {
-          duration: 1.5,
-          scrollTo: { y: href, autoKill: true, offsetY: 0 },
-          ease: "power2.inOut"
-        });
-      }
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
     };
-    document.addEventListener('click', handleSmoothScroll);
-    return () => document.removeEventListener('click', handleSmoothScroll);
-  }, []);
 
-  if (isMobile) {
-    return (
-      <Suspense fallback={<LoadingSpinner fullPage message="Loading mobile experience..." />}>
-        <HomepageMobile onJoinWaitlist={handleJoinWaitlist} />
-      </Suspense>
-    );
-  }
+    // Check on initial mount
+    checkScreenSize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", checkScreenSize);
+
+    // Cleanup function to remove the event listener
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []); // Empty dependency array ensures this runs only on mount and unmount
+  // --- END: Effect to check screen size ---
+
+  useEffect(() => {
+    const lenis = new Lenis();
+    function raf(time: any) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }, []);
 
   return (
     <div ref={mainContainer}>
@@ -152,37 +94,54 @@ export default function Homepage() {
         url={seoData.homepage.url}
         structuredData={seoData.homepage.structuredData}
       />
-      <Navbar onJoinWaitlist={handleJoinWaitlist} />
-      
-      <HeroSection onJoinWaitlist={handleJoinWaitlist} />
+      <Navbar  />
 
-      <Suspense fallback={<LoadingSpinner fullPage message="Loading content..." />}>
+      <HeroSection onJoinWaitlist={handleJoinWaitlist} />
+      <div id="features">
+        <Feature />
+      </div>
+
+      <Suspense
+        fallback={<LoadingSpinner fullPage message="Loading content..." />}
+      >
         <ContentLoader onLoaded={handleContentLoaded} />
-        <Divider />
-        <FeaturesSection activeFeatureIndex={activeFeatureIndex} />
-        <Divider />
-        <div id="market-growth" className="homepage__market-growth-section">
-          <MarketGrowth />
-        </div>
+
+        <MeetOurTeam />
+
         <CTASection
-          contentItems={ctaContent.first}
-          onButtonClick={handleJoinWaitlist}
+          introText="Join us Today because The future of law isn't built in isolation; it's built in a community of leaders.
+ "
+          mainText="Get started with Law Vriksh today."
+          linkText="become a founding member"
+          
+          backgroundImage="/public/ctabg.png"
+          quoteSet="second"
+          className="homepage-cta"
+          onJoinWaitlist={handleJoinWaitlist} 
         />
-        <Divider />
-        <div id="why-us" className="homepage3">
-          <WhyUs />
+        <WhyLawVrikshSection onJoinWaitlist={handleJoinWaitlist} />
+        <InfiniteCarouselDivider />
+        <MarketGrowth />
+        <InfiniteCarouselDivider />
+        <div id="testimonials">
+        <TestimonialsSection onJoinWaitlist={handleJoinWaitlist} />
         </div>
-        <Divider />
-        <TeamSection />
-        <Divider />
-        <TestimonialsSection />
-        <Divider />
-        <FoundingPerksSection activeFoundingPerkIndex={activeFoundingPerkIndex} />
+        <div id="perks">
+          {/* --- START: Conditional rendering for Perks component --- */}
+          {isMobile ? <PerksMobile onJoinWaitlist={handleJoinWaitlist} /> : <Perks onJoinWaitlist={handleJoinWaitlist} />}
+        </div>
+        {/* --- END: Conditional rendering for Perks component --- */}
         <CTASection
-          contentItems={ctaContent.second}
-          onButtonClick={handleJoinWaitlist}
+          introText="Join us Today because The future of law isn't built in isolation; it's built in a community of leaders.
+ "
+          mainText="Get started with Law Vriksh today."
+          linkText="become a founding member"
+          
+          backgroundImage="/public/ctabg.png"
+          quoteSet="second"
+          className="homepage-cta"
+          onJoinWaitlist={handleJoinWaitlist} 
         />
-        <Divider />
         <Footer />
         <WaitlistPopup
           isOpen={isWaitlistPopupOpen}

@@ -18,9 +18,7 @@ function App() {
         <Route path="/thank-you" element={<ThankYou />} />
         <Route path="/demo-thank-you" element={<ThankYou />} />
         <Route path="/feedback" element={<Feedback />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy onJoinWaitlist={function (): void {
-          throw new Error('Function not implemented.')
-        } } />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
