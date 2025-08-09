@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
 
 @font-face {
-    font-family: 'NyghtSerif';
-    src: url('/fonts/NyghtSerif-LightItalic.ttf') format('truetype');
+    font-family: 'Nyght Serif';
+    src: url('/src/fonts/nyght/NyghtSerif-LightItalic.woff2') format('woff2');
     font-weight: 300;
     font-style: italic;
     font-display: swap;
@@ -44,7 +44,7 @@
 }
 
 .cta-intro {
-    font-family: 'Helvetica';
+    font-family: 'Arial';
     font-weight: 400;
     font-size: clamp(0.9rem, 1.5vw, 1rem);
     line-height: 1.5;
@@ -62,7 +62,7 @@
 }
 
 .cta-link {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Arial';
     font-weight: 400;
     font-size: clamp(0.9rem, 1.5vw, 1.4rem);
     color: #000000;
@@ -88,7 +88,7 @@
 }
 
 .cta-main-text {
-    font-family: "Nyght Serif", sans-serif;
+    font-family: "Nyght Serif", serif;
     font-style: italic;
     font-size: clamp(1.8rem, 2.5vw, 3rem);
     line-height: clamp(1.2, 1.3, 1.4);

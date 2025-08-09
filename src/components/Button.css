@@ -7,7 +7,7 @@
   padding: 20px 32px;
   border: 2px solid transparent;
   cursor: pointer;
-  font-family: 'Nyght Serif', sans-serif;
+  font-family: 'Nyght Serif', serif;
   
   letter-spacing: 0.05em;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

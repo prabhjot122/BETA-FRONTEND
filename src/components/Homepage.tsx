@@ -114,7 +114,7 @@ export default function Homepage() {
           mainText="Get started with Law Vriksh today."
           linkText="become a founding member"
           
-          backgroundImage="/public/ctabg.png"
+          
           quoteSet="second"
           className="homepage-cta"
           onJoinWaitlist={handleJoinWaitlist} 
@@ -137,7 +137,7 @@ export default function Homepage() {
           mainText="Get started with Law Vriksh today."
           linkText="become a founding member"
           
-          backgroundImage="/public/ctabg.png"
+          backgroundImage="/ctabg.png"
           quoteSet="second"
           className="homepage-cta"
           onJoinWaitlist={handleJoinWaitlist} 

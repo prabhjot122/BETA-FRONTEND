@@ -135,14 +135,14 @@
   }
 
   .footer-title {
-    font-family: 'Helvetica Light';
+    font-family: 'Arial';
     font-weight: 600;
     color: #9C9C9C;
     font-size: clamp(17px, 1.2vw, 20px);
   }
 
   .footer-desc {
-    font-family: 'Helvetica';
+    font-family: 'Arial';
     font-weight: 400;
     font-size: clamp(16px, 1.6vw, 20px);
   }

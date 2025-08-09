@@ -1,14 +1,14 @@
 @font-face {
-    font-family: 'NyghtSerifLight';
-    src: url('/fonts/NyghtSerif-Light.ttf') format('truetype');
+    font-family: 'Nyght Serif';
+    src: url('/src//fonts//nyght/NyghtSerif-Light.woff2') format('woff2');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'NyghtSerifLightItalic';
-    src: url('/fonts/NyghtSerif-LightItalic.ttf') format('truetype');
+    font-family: 'Nyght Serif';
+    src: url('/src/fonts/nyght/NyghtSerif-LightItalic.woff2') format('woff2');
     font-weight: 300;
     font-style: italic;
     font-display: swap;
@@ -78,7 +78,7 @@
 }
 
 .testimonials-title {
-    font-family: "Nyght Serif", sans-serif;
+    font-family: "Nyght Serif", serif;
     font-weight: lighter;
     font-size: clamp(2.5rem, 6vw, 5rem);
     line-height: clamp(1.05, 1.1, 1.15);
@@ -88,7 +88,7 @@
 }
 
 .testimonials-button {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Arial';
     font-weight: light;
     font-size: 20px;
     background: transparent;
@@ -190,7 +190,7 @@
 }
 
 .testimonial-name {
-    font-family: 'NyghtSerifLightItallic', serif;
+    font-family: 'Nyght Serif',serif;
     font-weight: 300;
     font-size: clamp(1.5rem, 3vw, 2.5rem);
     color: #000000;
@@ -200,7 +200,7 @@
 }
 
 .testimonial-profession {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Arial';
     font-weight: 400;
     font-size: clamp(0.8rem, 1.2vw, 1rem);
     color: #888888;
@@ -222,7 +222,7 @@
 }
 
 .testimonial-quote {
-    font-family: "Nyght Serif", sans-serif;
+    font-family: "Nyght Serif", serif;
     font-weight: 300;
     font-style: italic;
     font-size: clamp(0.9rem, 1.3vw, 1.1rem);
@@ -271,7 +271,7 @@
 }
 
 .mobile-tap-instruction p {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Arial';
     font-size: clamp(0.9rem, 3vw, 1rem);
     color: rgba(255, 255, 255, 0.8);
     margin: 0;
@@ -339,7 +339,7 @@
 }
 
 .scroll-hint {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Arial';
     font-size: clamp(0.8rem, 2.5vw, 0.9rem);
     color: rgba(255, 255, 255, 0.7);
     margin: 0;

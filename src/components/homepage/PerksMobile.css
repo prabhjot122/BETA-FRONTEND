@@ -1,8 +1,15 @@
 @font-face {
-    font-family: 'NyghtSerifLight';
-    src: url('/fonts/NyghtSerif-Light.ttf') format('truetype');
+    font-family: 'Nyght Serif';
+    src: url('/src/fonts/nyght/NyghtSerif-Light.woff2') format('woff2');
     font-weight: 300;
     font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Nyght Serif';
+    src: url('/src/fonts/nyght/NyghtSerif-LightItalic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
     font-display: swap;
 }
 
@@ -32,7 +39,7 @@
 }
 
 .perksmobile-title {
-    font-family: "Nyght Serif", sans-serif;
+    font-family: "Nyght Serif",serif;
     font-weight: 300;
     font-size: clamp(2.5rem, 6vw, 5rem);
     line-height: clamp(1.05, 1.1, 1.15);
@@ -41,7 +48,7 @@
 }
 
 .perksmobile-button {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Arial';
     font-weight: 400;
     font-size: clamp(0.9rem, 1.2vw, 1.1rem);
     background: transparent;
@@ -92,7 +99,7 @@
 }
 
 .perksmobile-feature-title {
-    font-family: 'NyghtSerifLightItalic', serif;
+    font-family: 'Nyght Serif', serif;
     font-weight: 300;
     font-size: clamp(2rem, 2.2vw, 3rem);
     line-height: clamp(1.15, 1.2, 1.25);
@@ -102,7 +109,7 @@
 }
 
 .perksmobile-feature-description {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Arial';
     font-weight: 400;
     font-size: clamp(1rem, 1.2vw, 1.1rem);
     line-height: clamp(1.5, 1.6, 1.7);

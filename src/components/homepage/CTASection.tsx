@@ -17,7 +17,7 @@ const CTASection: React.FC<CTASectionProps> = ({
   introText,
   linkText,
   
-  backgroundImage = "/CTA-background.png",
+  backgroundImage = "/ctabg.png",
   className = "",
   quoteSet = 'first',
   onJoinWaitlist,

@@ -1,8 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;1,400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap");
 
 /* CSS Custom Properties for Responsive Design */
 :root {
@@ -100,9 +98,7 @@ body {
 body {
   overflow-x: hidden;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* Enhanced smooth scrolling performance */
@@ -659,7 +655,7 @@ code {
 
 .homepage__hero-title {
   flex-shrink: 0;
-  font-family: "Nyght Serif", sans-serif;
+  font-family: "Nyght Serif", serif;
   font-weight: 300;
   padding-top: 20px;
   color: #28231f;
@@ -1036,7 +1032,7 @@ code {
 .homepage__main-quote {
   position: relative;
   align-self: stretch;
-  font-family: "Nyght Serif", sans-serif;
+  font-family: "Nyght Serif", serif;
   font-style: italic;
 
   font-weight: 400;
@@ -3331,7 +3327,7 @@ img {
 }
 
 .market-growth__title {
-  font-family: "Nyght Serif", sans-serif;
+  font-family: "Nyght Serif", serif;
   color: #000000;
   font-size: clamp(3rem, 6vw + 1rem, 8rem);
   line-height: 1.1;
@@ -3391,7 +3387,7 @@ img {
 }
 
 .market-growth__description {
-  font-family: 'Helvetica';
+  font-family: 'Arial';
   font-style: italic;
   color: #3b3b3b;
   font-size: clamp(1rem, 2vw, 1.25rem);
@@ -3430,7 +3426,7 @@ img {
 }
 
 .market-growth__chart-title {
-  font-family: "Nyght Serif", sans-serif;
+  font-family: "Nyght Serif", serif;
   color: #000000;
 
   margin-bottom: clamp(0.5rem, 2vw, 1rem);
@@ -3463,7 +3459,7 @@ img {
 }
 
 .market-growth__bar-label {
-  font-family:'helvetica';
+  font-family:'Arial';
   font-weight: 400;
   color: #333;
   font-size: clamp(0.875rem, 1.5vw, 1rem);
@@ -3520,7 +3516,7 @@ img {
 }
 
 .market-growth__value {
-  font-family: 'helvetica';
+  font-family: 'Arial';
   font-weight: 400;
   color: #966f33;
   font-size: clamp(0.75rem, 1.2vw, 0.875rem);

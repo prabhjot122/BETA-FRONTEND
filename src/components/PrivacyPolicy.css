@@ -7,6 +7,7 @@
 
 .privacy-policy {
   min-height: 100vh;
+  
   background: linear-gradient(135deg, #FDFBF4 0%, #FFF8E4 50%, #FDFBF4 100%);
   overflow-x: hidden;
 }
@@ -56,11 +57,7 @@
 .privacy-policy .navbar {
   flex-direction: row !important;
   gap: 0 !important;
-  height: 59px !important;
-  padding-right: 20px !important;
-  padding-right: 20px !important;
-  padding-left: 20px !important;
-  padding-bottom: 20px !important;
+
 
  
 }
@@ -312,6 +309,9 @@
   .privacy-policy__hero {
     padding: 50px 0 60px 0;
 
+  }
+  .privacy-policy{
+    margin-top:10vh;
   }
 
   .privacy-policy__hero-content {

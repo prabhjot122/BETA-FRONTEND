@@ -91,7 +91,7 @@ const PrivacyPolicy = (): JSX.Element => {
                 <ul>
                   <li>Your information is stored securely on servers with industry-standard encryption protocols.</li>
                   <li>Data collected during beta will be retained for the duration of the beta program and may be migrated securely to your profile upon full launch.</li>
-                  <li>You can request deletion of your data anytime by contacting us at <a href="mailto:support@lawvriksh.com">support@lawvriksh.com</a>.</li>
+                  <li>You can request deletion of your data anytime by contacting us at <a href="mailto:info@lawvriksh.com">info@lawvriksh.com</a>.</li>
                 </ul>
               </div>
             </section>
@@ -149,7 +149,7 @@ const PrivacyPolicy = (): JSX.Element => {
                   <li>Withdraw your beta participation</li>
                 </ul>
                 <p>
-                  To exercise any of these rights, please email us at: <a href="mailto:support@lawvriksh.com">support@lawvriksh.com</a>
+                  To exercise any of these rights, please email us at: <a href="mailto:info@lawvriksh.com">info@lawvriksh.com</a>
                 </p>
               </div>
             </section>
@@ -172,7 +172,7 @@ const PrivacyPolicy = (): JSX.Element => {
                 <div className="privacy-policy__contact">
                   <div className="privacy-policy__contact-item">
                     <span className="privacy-policy__contact-icon">📧</span>
-                    <span>Email: <a href="mailto:support@lawvriksh.com">support@lawvriksh.com</a></span>
+                    <span>Email: <a href="mailto:info@lawvriksh.com">info@lawvriksh.com</a></span>
                   </div>
                   <div className="privacy-policy__contact-item">
                     <span className="privacy-policy__contact-icon">📍</span>

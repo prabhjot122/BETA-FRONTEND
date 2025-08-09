@@ -79,7 +79,7 @@
 
 .navbar__nav-link {
   color: black;
-  font-family: "Helvetica", sans-serif;
+  font-family: "Arial";
 
   text-decoration: none;
   font-size: clamp(12px, 0.7vw + 0.2rem, 20px);
@@ -92,7 +92,7 @@
   transition: all 0.3s ease-in-out;
 }
 .navlink-container p {
-  font-family: "Nyght Serif", sans-serif;
+  font-family: "Nyght Serif", serif;
   font-weight: 400;
   font-size: clamp(10px, 0.7vw + 0.2rem, 20px);
   font-style: italic;
