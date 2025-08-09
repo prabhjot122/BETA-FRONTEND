@@ -106,20 +106,20 @@ const WhyLawVrikshSection = ({ onJoinWaitlist }: WhyLawVrikshSectionProps) => {
 
   const features = [
     {
-      title: "Content Quality & Accuracy",
-      description: "Establish the platform as India's premier legal information source. Rigorous editorial standards and peer review ensure factual accuracy and practical relevance."
+      title: "Guarantee Your Credibility",
+      description: "We stake our reputation on accuracy so you can confidently stake yours. Every article is rigorously peer-reviewed to serve as an unshakable foundation for your work."
     },
     {
-      title: "Empower Legal Writers",
-      description: "Establish the platform as India's premier legal information source. Rigorous editorial standards and peer review ensure factual accuracy and practical relevance."
+      title: "Lead the Conversation",
+      description: "We don't just give you tools to write; we give you a platform to be heard. Our AI-powered suite helps you move beyond participating in the conversation to actively leading it."
     },
     {
-      title: "Cultivate Legal Community",
-      description: "Establish the platform as India's premier legal information source. Rigorous editorial standards and peer review ensure factual accuracy and practical relevance."
+      title: "Build in Community",
+      description: "The future of law isn't built in isolation; it's built in a community of leaders. Here, you will connect and collaborate with peers to collectively elevate the entire profession."
     },
     {
-      title: "Enhance Expert Digital Presence",
-      description: "Establish the platform as India's premier legal information source. Rigorous editorial standards and peer review ensure factual accuracy and practical relevance."
+      title: "Solidify Your Legacy",
+      description: "Your career is your life's work; we make sure the world recognizes it as your legacy. Through strategic amplification, your expertise achieves the lasting authority and impact it deserves."
     }
   ];
 
