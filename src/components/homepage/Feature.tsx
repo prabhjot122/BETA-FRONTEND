@@ -16,8 +16,8 @@ function Feature() {
     target: targetRef,
     offset: ["start 50vh", "end 50vh"]
   });
-  const isMobile = useMediaQuery('(max-width: 768px)'); 
-  
+  const isMobile = useMediaQuery('(max-width: 1024px)');
+
   // This scroll progress is just for the rotation
   const { scrollYProgress: rotateProgress } = useScroll({
     target: targetRef,
@@ -35,14 +35,14 @@ function Feature() {
       setStickyState('sticky');
     }
   });
-  
+
   // 3. Define styles based on the current state
   let compassStyle: React.CSSProperties = { // Default is the 'initial' state
     position: 'absolute',
     top: '-65px',
     left: '-45px',
     transform: 'none',
-    
+
   };
   if (isMobile) {
     compassStyle = {
@@ -51,40 +51,40 @@ function Feature() {
       left: '-20px',   // Override the 'left' property for mobile
     };
     if (stickyState === 'sticky') {
-    compassStyle = {
-      position: 'fixed',
-      top: '50vh',
-      left: '10px',
-      
-    };
-  } else if (stickyState === 'final') {
-    compassStyle = {
-      position: 'absolute',
-      bottom: '0', // Park it 40px from the bottom of its container
-      left: '-20px',
-      transform: 'none',
-    };
-  }
-  } else{
-if (stickyState === 'sticky') {
-    compassStyle = {
-      position: 'fixed',
-      top: '50vh',
-      left: 'calc(50% - 46px)',
-      transform: 'translateY(-50%)',
-    };
-  } else if (stickyState === 'final') {
-    compassStyle = {
-      position: 'absolute',
-      bottom: '0', // Park it 40px from the bottom of its container
-      left: '-45px',
-      transform: 'none',
-    };
-  }
+      compassStyle = {
+        position: 'fixed',
+        top: '50vh',
+        left: '10px',
+
+      };
+    } else if (stickyState === 'final') {
+      compassStyle = {
+        position: 'absolute',
+        bottom: '0', // Park it 40px from the bottom of its container
+        left: '-20px',
+        transform: 'none',
+      };
+    }
+  } else {
+    if (stickyState === 'sticky') {
+      compassStyle = {
+        position: 'fixed',
+        top: '50vh',
+        left: 'calc(50% - 46px)',
+        transform: 'translateY(-50%)',
+      };
+    } else if (stickyState === 'final') {
+      compassStyle = {
+        position: 'absolute',
+        bottom: '0', // Park it 40px from the bottom of its container
+        left: '-45px',
+        transform: 'none',
+      };
+    }
 
   }
 
-  
+
   // 2. useTransform maps the scroll progress to a rotation value.
   // As scrollYProgress goes from 0 to 1, `rotate` will go from 0 to 360.
   return (
@@ -99,7 +99,7 @@ if (stickyState === 'sticky') {
       <div className="feature-content" ref={targetRef}>
         <div className="timeline-container">
           <div className="timeline"></div>
-           <motion.div
+          <motion.div
             className="compass"
             style={{
               ...compassStyle, // Apply the styles from our logic
