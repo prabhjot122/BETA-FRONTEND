@@ -57,7 +57,7 @@
 }
 
 .feature-content-item-left1 {
-    background-image: url('../../../../public/feature1.png');
+    background-image: url('/feature1.png');
     background-size: cover;
     background-position: center;
     aspect-ratio: 743/514;
@@ -65,7 +65,7 @@
 }
 
 .feature-content-item-left2 {
-    background-image: url('../../../../public/feature2.png');
+    background-image: url('/feature2.png');
     background-size: cover;
     background-position: center;
     aspect-ratio: 743/514;
@@ -73,7 +73,7 @@
 }
 
 .feature-content-item-left3 {
-    background-image: url('../../../../public/feature3.png');
+    background-image: url('/feature3.png');
     background-size: cover;
     background-position: center;
     aspect-ratio: 743/514;
@@ -81,7 +81,7 @@
 }
 
 .feature-content-item-left4 {
-    background-image: url('../../../../public/feature4.png');
+    background-image: url('/feature4.png');
     background-size: cover;
     background-position: center;
     aspect-ratio: 743/514;
@@ -140,7 +140,7 @@
 
 
 
-    background-image: url('../../../../public/compass.png');
+    background-image: url('/compass.png');
     background-size: cover;
     aspect-ratio: 1/1;
     left: -42px;
