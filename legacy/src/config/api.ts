@@ -4,7 +4,7 @@ export const API_CONFIG = {
   // Base API URL - will be set from environment variable or default based on environment
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || (
     process.env.NODE_ENV === 'production'
-      ? 'https://lawvriksh.com/api'  // Production default
+      ? 'https://www.lawvriksh.com/api'  // Production default
       : 'http://localhost:8000'      // Development default
   ),
 
