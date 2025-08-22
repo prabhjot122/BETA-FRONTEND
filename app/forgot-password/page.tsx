@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Reset your account password.",
   robots: { index: false, follow: false },
   alternates: {
-    canonical: "https://www.lawvriksh.com/forgot-password",
+    canonical: "https://lawvriksh.com/forgot-password",
   },
 };
 

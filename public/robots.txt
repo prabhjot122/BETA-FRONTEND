@@ -18,7 +18,7 @@ Allow: /favicon.ico
 Disallow: /api/
 
 # Sitemap
-Sitemap: https://www.lawvriksh.com/sitemap.xml
+Sitemap: https://lawvriksh.com/sitemap.xml
 
 # Crawl delay to be respectful
 Crawl-delay: 1
