@@ -1,0 +1,202 @@
+.perk-container{
+  display: flex;
+  height: fit-content;
+  flex-direction: row;
+  width: 100vw;
+  position: relative;
+  margin-bottom: 200px;
+  margin-top: 100px;
+  background-color: #F7F3ED;
+  justify-content: space-evenly;
+  
+
+
+  
+}
+
+.perk-right-container{
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+    gap: 400px;
+}
+.perk-right-item{
+    display: flex;
+    flex-direction: column;
+}
+.perk-right-decorative{
+    width: 8px;
+    height: 8px;
+    background-color: #7C5D00;
+    border-radius: 50%;
+    
+}
+.perk-right-top{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.perk-right-top-title{
+    font-size: 20px;
+    font-family: 'Arial';
+}
+.perk-right-title{
+    font-size: clamp(2.19rem, 1.39rem + 3.98vw, 4.38rem);
+
+    font-family: 'Nyght Serif', serif;
+    font-weight: lighter;
+    padding-right: 40px;
+    padding-top: 35px;
+    max-width:890px;
+    line-height: 1.2;
+    
+}
+.perk-right-description{
+    font-size: clamp(1rem, 0.8rem + 1.02vw, 1.56rem);
+
+    font-family: 'Arial';
+    line-height: 1.2;
+    padding-top: 50px;
+    padding-bottom:100px;
+    max-width: 580px;
+    
+}
+.perk-right-cta-button{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    font-size: clamp(1.25rem, 1.02rem + 1.14vw, 1.88rem);
+    font-weight:400;
+    text-decoration: underline 2px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+.perk-right-cta-button:hover {
+    color: #7C5D00;
+    transform: translateX(5px);
+}
+.perk-left{
+  height: 300vh; /* Adjust this height to match the scrollable length of the right column */
+  position: relative;
+  width: 15%;
+  padding-right: 320px;
+}
+.perk-left-container{
+    display: flex;
+    flex-direction: column;
+    height:167px;
+    width: clamp(15rem, 11.16rem + 11.2vw, 20.38rem);
+
+}
+.perk-left-item{
+    display: flex;
+    height:43px;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    border-bottom: solid 1px black;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px 0;
+}
+
+.perk-left-item:hover {
+    background-color: rgba(124, 93, 0, 0.1);
+    transform: translateX(5px);
+}
+
+.perk-left-item:hover .perk-left-toc-item-title {
+    color: #7C5D00;
+}
+
+.perk-left-item:hover .perk-left-toc-item-arrow {
+    color: #7C5D00;
+    transform: translateX(3px);
+}
+
+.perk-left-item.active {
+    background-color: rgba(124, 93, 0, 0);
+    border-left: 3px solid #7C5D00;
+    padding-left: 8px;
+}
+
+.perk-left-item.active .perk-left-toc-item-title {
+    color: #7C5D00;
+    font-weight: 400;
+}
+
+.perk-left-item.active .perk-left-toc-item-arrow {
+    color: #7C5D00;
+}
+
+.perk-left-toc-item-title{
+    font-size: 20px;
+    font-family: "Playfair Display", serif;
+    font-weight: 300;
+    transition: all 0.3s ease;
+}
+
+.perk-left-toc-item-arrow {
+    transition: all 0.3s ease;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .perk-container {
+        flex-direction: column;
+        margin-bottom: 100px;
+        margin-top: 50px;
+    }
+    
+    .perk-left {
+        width: 100%;
+        height: auto;
+        padding-right: 0;
+        margin-bottom: 40px;
+        position: static;
+    }
+    
+    .perk-left-container {
+        position: static !important;
+        width: 100%;
+        height: auto;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .perk-left-item {
+        height: auto;
+        padding: 12px 0;
+        font-size: 18px;
+    }
+    
+    .perk-left-toc-item-title {
+        font-size: 18px;
+    }
+    
+    .perk-right-container {
+        padding-left: 0;
+        gap: 200px;
+        padding: 0 20px;
+    }
+    
+    .perk-right-title {
+        padding-right: 0;
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+    }
+    
+    .perk-right-description {
+        max-width: 100%;
+        padding-bottom: 60px;
+    }
+}
+

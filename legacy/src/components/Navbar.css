@@ -1,0 +1,188 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  background-color: #f7f3ed;
+
+  z-index: 100;
+  width: 100vw;
+  border-bottom: 1px solid #dfdbd7;
+  height: 10.2vh;
+  z-index: 3000;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  transition: all 0.3s ease-in-out;
+  transition: top 0.4s ease-in-out, background-color 0.4s ease, box-shadow 0.4s ease;
+
+  border-radius: 0;
+}
+.navbar--visible {
+  top: 0;
+}
+
+/* This class will move the navbar out of the viewport when hidden */
+.navbar--hidden {
+  top: -100px; /* Adjust this value if your navbar is taller */
+}
+
+.navbar__brand {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1rem, 2rem, 2.5rem);
+  letter-spacing: -0.05em;
+
+  line-height: 40px;
+  color: black;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  height: auto;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.navbar__brand:hover {
+  color: #966f33;
+}
+
+.navbar__content {
+  display: flex;
+  gap: 100px;
+  align-items: center;
+  justify-content: flex-end;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Content styling in scrolled state */
+
+/* Ensure button aligns properly with nav links */
+.navbar__content .button {
+  height: auto;
+  min-height: 40px;
+  padding: 12px 24px;
+  font-size: 18px;
+  line-height: 20px;
+}
+.navbar__contentmobile {
+  display: none;
+}
+
+/* Button styling in scrolled state */
+
+.navbar__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar__nav-link {
+  color: black;
+  font-family: "Arial";
+
+  text-decoration: none;
+  font-size: clamp(12px, 0.7vw + 0.2rem, 20px);
+  cursor: pointer;
+  flex-direction: row;
+  align-items: center;
+
+  display: flex;
+
+  transition: all 0.3s ease-in-out;
+}
+.navlink-container p {
+  font-family: "Nyght Serif", serif;
+  font-weight: 400;
+  font-size: clamp(10px, 0.7vw + 0.2rem, 20px);
+  font-style: italic;
+  color: #838383;
+}
+
+.navbar__nav-link:hover {
+  color: #966f33;
+}
+
+.navbar__nav-separator {
+  color: black;
+  margin: 0 8px;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Navigation styling in scrolled state */
+
+.logo-parent-container {
+  height: 10.2vh;
+  width: 12vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-right: 1px solid #dfdbd7;
+}
+.navlink-container {
+  height: 10.2vh;
+  border-right: 1px solid #dfdbd7;
+  border-left: 1px solid #dfdbd7;
+  width: 20vh;
+  align-items: center;
+
+  justify-content: space-between;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.navlink-container-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.navlink-container-right {
+  padding-right: 10px;
+}
+
+.logo-container {
+  background-image: url("/logo3.png");
+
+  padding: 18px;
+
+  background-size: cover;
+}
+
+.text-container {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    gap: 20px;
+    padding-top: 0;
+    padding-bottom:0;
+    position:absolute;
+
+    width: 100vw;
+    height: 10vh;
+  }
+  .navbar__content {
+    display: none;
+  }
+  .text-container {
+    display: none;
+  }
+  .navbar__contentmobile {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100px;
+    border-left:1px solid #DFDBD7;
+    height:100%;
+  }
+  .logo-parent-container{
+    border-right: 0;
+  }
+}

@@ -1,0 +1,107 @@
+.team-section {
+    background-color: #FDFBF4;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+}
+
+.team-section::before,
+.team-section::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #966f33 50%, transparent 100%);
+    opacity: 0.3;
+}
+
+.team-section::before {
+    top: 0;
+}
+
+.team-section::after {
+    bottom: 0;
+}
+
+.team-section__container {
+    max-width: 1280px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.team-section__title {
+    font-family: 'Playfair Display', serif;
+    color: #5D4037;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 200;
+    text-align: center;
+    letter-spacing: -0.02em;
+}
+
+.team-section__cards {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: nowrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .team-section__cards {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .team-section {
+        height: auto;
+        padding: 3rem 1rem;
+    }
+    .team-section__container {
+        gap: 2rem;
+    }
+    .team-section__cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(8, calc(350px / 3)); /* Extended to 13 rows to accommodate all 4 cards */
+        gap: 0;
+        justify-items: center;
+        align-items: start;
+        width: 100%;
+        max-width: 320px; /* Accommodate 2 cards with some spacing */
+    }
+    
+    /* Position cards in the grid */
+    .team-section__cards .team-member-card:nth-child(1) {
+        grid-column: 1;
+        grid-row: 1 / 7; /* Card 1: rows 1-6, column 1 */
+    }
+    
+    .team-section__cards .team-member-card:nth-child(2) {
+        grid-column: 2;
+        grid-row: 2 / 8; /* Card 2: rows 2-7, column 2 */
+    }
+    
+    .team-section__cards .team-member-card:nth-child(3) {
+        grid-column: 1;
+        margin-top: 2rem;
+        grid-row: 4 / 10; /* Card 3: rows 7-12, column 1 */
+    }
+    
+    .team-section__cards .team-member-card:nth-child(4) {
+        grid-column: 2;
+        margin-top: 2rem;
+        grid-row: 5 / 11; /* Card 4: rows 8-13, column 2 */
+    }
+}
