@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
 }
