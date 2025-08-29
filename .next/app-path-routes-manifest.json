@@ -1,12 +1,13 @@
 {
   "/_not-found/page": "/_not-found",
   "/page": "/",
-  "/forgot-password/page": "/forgot-password",
+  "/about/page": "/about",
   "/feedback/page": "/feedback",
-  "/privacy-policy/page": "/privacy-policy",
+  "/forgot-password/page": "/forgot-password",
   "/demo-thank-you/page": "/demo-thank-you",
-  "/thank-you/page": "/thank-you",
   "/reset-password/page": "/reset-password",
+  "/thank-you/page": "/thank-you",
+  "/privacy-policy/page": "/privacy-policy",
   "/admin/page": "/admin",
   "/admin/dashboard/page": "/admin/dashboard",
   "/admin/login/page": "/admin/login"
