@@ -60,6 +60,8 @@ const Footer = () => {
             <h2 className="footer-title">Other</h2>
           </header>
           <div className="footer__meta footer-desc">
+            <a className="footer__link" href="/about">About Us</a>
+            <span className="footer__separator">•</span>
             <a className="footer__link" href="/privacy-policy">Privacy Policy</a>
             <span>2025 LawVriksh</span>
           </div>
