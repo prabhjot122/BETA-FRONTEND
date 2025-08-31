@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { seoData } from "../../legacy/src/utils/seoData";
+import { createMetadataWithIcons } from "../../legacy/src/utils/metadata";
 import FeedbackClient from "../_clients/FeedbackClient";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadataWithIcons({
   title: seoData.feedback.title,
   description: seoData.feedback.description,
   openGraph: {
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: seoData.feedback.url,
   },
-};
+});
 
 export default function Page() { return <FeedbackClient />; }
 

@@ -12,11 +12,11 @@ interface SEOProps {
 }
 
 const defaultSEO = {
-  title: 'LawVriksh - Legal Professionals Platform',
+  title: 'LawVriksh',
   description: 'Join LawVriksh, the premier platform for legal professionals',
-  keywords: 'legal professionals, legal networking, law practice, legal platform, advocate network, legal community India, lawyer platform',
+  keywords: 'lawvriksh, Law Vriksh',
   image: 'https://lawvriksh.com/assets/lawvriksh-og-image.png',
-  url: 'https://www.lawvriksh.com',
+  url: 'https://lawvriksh.com',
   type: 'website'
 };
 

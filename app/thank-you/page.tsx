@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { seoData } from "../../legacy/src/utils/seoData";
+import { createMetadataWithIcons } from "../../legacy/src/utils/metadata";
 import ThankYouClient from "../_clients/ThankYouClient";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadataWithIcons({
   title: seoData.thankYou.title,
   description: seoData.thankYou.description,
   robots: seoData.thankYou.noIndex ? { index: false, follow: false } : undefined,
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: seoData.thankYou.url,
   },
-};
+});
 
 export default function Page() {
   return (

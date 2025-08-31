@@ -1,24 +1,34 @@
-User-agent: *
+
+# ✅ Allow all major search engines
+User-agent: Googlebot
 Allow: /
-Allow: /feedback
 
-# Main pages
-Disallow: /admin/login
-Disallow: /admin
+User-agent: Bingbot
+Allow: /
 
-# Static assets
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+# ✅ Default rules for all other bots
+User-agent: *
+Allow: /$
 Allow: /assets/
 Allow: /images/
 Allow: /favicon.ico
 
-# Block admin-only areas from general crawling
-
-
-# Block API endpoints
+# ❌ Disallow sensitive/admin-only areas
+Disallow: /admin/
+Disallow: /admin/login
 Disallow: /api/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /private/
 
-# Sitemap
-Sitemap: https://www.lawvriksh.com/sitemap.xml
-
-# Crawl delay to be respectful
+# 🕐 Crawl-delay to avoid overload (applies to non-Google bots)
 Crawl-delay: 1
+
+# 📌 Sitemap location
+Sitemap: https://lawvriksh.com/sitemap.xml
